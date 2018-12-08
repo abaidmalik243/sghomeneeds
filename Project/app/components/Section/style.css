@@ -1,0 +1,39 @@
+.mybanner_setting {
+    width: 100%;
+    height: 330px; 
+ }
+
+ /* Only small screen */
+ @media only screen and (max-width : 768px) {
+
+    .mybanner_setting{
+        height: 150px !important;
+    }
+
+    /* #mybanner_paper{
+        width: 95% !important;
+    } */
+
+ }
+
+
+/* not on small screen */
+ @media only screen and (min-width : 769px) {
+
+    .banner_position {
+        position: absolute;
+    }
+
+    .banner_child {
+        position: relative;
+    }
+
+ }
+
+
+ /* Only small screen */
+
+ /* @media only screen and (max-width : 769px) {
+
+ } */
+

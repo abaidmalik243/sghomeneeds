@@ -1,0 +1,814 @@
+
+<!doctype html>
+<html>
+   <head>
+      <meta charset="utf-8">
+         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Home Page</title> 
+       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+      <link href="css/bootstrap.min.css" rel="stylesheet">
+      <link href="slick/slick.css" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" type="text/css" href="slick/slick-theme.css">
+      <link href="style.css" type="text/css" rel="stylesheet">
+     
+   </head>
+    <body ccID="741">
+     <div ccID="754" class="container-fluid">
+         <header ccID="794" class="myheader">
+             <div ccID="834" class="row">
+                 <div ccID="870" class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                   <div ccID="943" class="logo">
+                     <img ccID="984" src="images/logo.png" title="" alt=""/>
+                     </div>
+                 </div>
+                 <div ccID="1101" class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                   <div ccID="1174" class="center_header">
+                      <h3 ccID="1225">| <a ccID="1231" href="" title="">+65 31591485</a></h3>
+                       
+                       <ul ccID="1322">
+                           <li ccID="1355"><a ccID="1359" href="" title="">Articles</a></li>
+                             <li ccID="1427"><a ccID="1431" href="" title="">Gallery</a></li>
+                             <li ccID="1498"><a ccID="1502" href="" title="">Join as a Pro</a></li>
+                       </ul>
+                       <div ccID="1599" class="searchbox">
+                         <form ccID="1649">
+                           <input ccID="1684" type="text" placeholder="What Service Do You need?"/>
+                             <button ccID="1775" type="submit">| <i ccID="1799" class="fas fa-search"></i></button>
+                           </form>
+                       </div>
+                       <div ccID="1929" class="clearfix"></div>
+                       
+                     </div>
+                 </div>
+                 <div ccID="2055" class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                     <div ccID="2130" class="sign_up">
+                      <div ccID="2175" class="myaccount">
+                        <a ccID="2224" href="" title="" class="btn"><img ccID="2256" src="images/login_icon.png" title="" alt=""/>
+                              
+                            | Login</a>
+                       
+                     </div>
+                      <div ccID="2457" class="myaccount2">
+                        <a ccID="2507" href="" title="" class="btn">Sign up</a>
+                     </div>
+                     <div ccID="2602" class="clearfix"></div>
+                     </div>
+                  
+                 </div>
+             
+             </div>
+         </header> 
+         
+         <section ccID="2783" class="section_one">
+           <img ccID="2825" src="images/banner.jpg" title="" alt=""/>
+             <div ccID="2886" class="container">
+               <div ccID="2926" class="section_one_connecting">
+                    <h2 ccID="2984">Connecting You to Reliable SG Home Professionals </h2>
+                   <h4 ccID="3063">Your trusted Home Adviser</h4>
+                   
+                   <form ccID="3139">
+                     <div ccID="3168" id="app">
+  <label ccID="3186">
+    <button ccID="3199" @click="toggleDropdown">{{ selecteditem }}</button>
+    <div ccID="3264" class="dropdown">
+      <input ccID="3294" type="text" v-model="searchitem" @keydown="selectFirst"/>
+      <ul ccID="3366">
+        <li ccID="3380" v-for="item in filteredlist" @click="selectItem(item, $event)">{{ item }}</li>
+      </ul>
+    </div>
+  </label>
+</div>
+                       <button ccID="3532" ><i ccID="3541" class="fas fa-search"></i></button>
+                       <div ccID="3604" class="clearfix"></div>
+                   </form>
+                   <h6 ccID="3681">
+                    <a ccID="3707" href="" title="" >Search for A Sepecific Professional</a>
+                   </h6>
+                 </div>
+             </div>
+         </section>
+         
+         <section ccID="3882" class="section_two">
+            <div ccID="3925" class="container">
+                <div ccID="3966" class="yellow_shape_img">
+                <img ccID="4014" src="images/yellow_shape.png" title="" alt=""/>
+                  <div ccID="4086" class="section_two_div">
+                      <ul ccID="4139">
+                        <li ccID="4169">
+                            <div ccID="4203" class="icon_img">
+                             <a ccID="4256" href="" title=""><img ccID="4276" src="images/icon1.png" title="" alt=""/></a>
+                            </div>
+                            <h3 ccID="4391"><a ccID="4395" href="" title="">Home</a></h3>
+                          </li>
+                           <li ccID="4490">
+                            <div ccID="4524" class="icon_img">
+                             <a ccID="4577" href="" title=""><img ccID="4597" src="images/icon2.png" title="" alt=""/></a>
+                            </div>
+                            <h3 ccID="4712"><a ccID="4716" href="" title="">Carpenters</a></h3>
+                          </li>
+                           <li ccID="4817">
+                            <div ccID="4851" class="icon_img">
+                             <a ccID="4904" href="" title=""><img ccID="4924" src="images/icon3.png" title="" alt=""/></a>
+                            </div>
+                            <h3 ccID="5039"><a ccID="5043" href="" title="">HandyMan</a></h3>
+                          </li>
+                           <li ccID="5142">
+                            <div ccID="5176" class="icon_img">
+                             <a ccID="5229" href="" title=""><img ccID="5249" src="images/icon4.png" title="" alt=""/></a>
+                            </div>
+                            <h3 ccID="5364"><a ccID="5368" href="" title="">Pest Control</a></h3>
+                          </li>
+                           <li ccID="5471">
+                            <div ccID="5505" class="icon_img">
+                             <a ccID="5558" href="" title=""><img ccID="5578" src="images/icon5.png" title="" alt=""/></a>
+                            </div>
+                            <h3 ccID="5693"><a ccID="5697" href="" title="">Air Conditionar</a></h3>
+                          </li>
+                           <li ccID="5803">
+                            <div ccID="5837" class="icon_img white_dots">
+                             <a ccID="5901" href="" title=""><img ccID="5921" src="images/white_dots.png" title="" alt=""/></a>
+                            </div>
+                            <h3 ccID="6041"><a ccID="6045" href="" title="">View All</a></h3>
+                          </li>
+                          
+                         
+                      </ul>
+                    </div>
+                </div>
+                
+                <h3 ccID="6287">How its Works:</h3>
+              
+             </div>
+         
+         </section>
+         
+         
+         <section ccID="6412" class="section_three">
+             
+             <div ccID="6473" class="section_three_one">
+                 <div ccID="6523" class="section_three_one_left">
+                  
+                       <div ccID="6604" class="fill_up">
+                          <h4 ccID="6653">1</h4>
+                         <h3 ccID="6690">Fill Up a Form!</h3>
+                           <p ccID="6743">State your requirements in our guided HomeMatch form. It is designed to capture all your needs.</p>
+                     </div>
+                 </div>
+                 <div ccID="6918" class="section_three_one_right">
+                  <img ccID="6975" src="images/section_three_img1.png" title="" alt=""/>
+                     <div ccID="7056" class="section_three_one_right_content">
+                        <h3 ccID="7127">How Many Bedroom are in Your Home<span ccID="7164">?</span></h3>
+                         <h6 ccID="7210">Select the Number of Your Rooms!</h6>
+                     </div>
+                 </div>
+               <div ccID="7322" class="clearfix"></div>
+             </div>
+             
+             
+             
+             
+             
+                <div ccID="7464" class="section_three_one ">
+                 <div ccID="7515" class="section_three_two_left">
+                   <img ccID="7572" src="images/section_three_img2.png" title="" alt=""/>
+                     <div ccID="7653" class="section_three_one_right_content section_three_two_left_content">
+                        <h3 ccID="7755">Select Pros to Speak To<span ccID="7782">:</span></h3>
+                        
+                     </div>
+                 </div>
+                 <div ccID="7900" class="section_three_one_right section_three_two_right ">
+                    <div ccID="7984" class="fill_up">
+                          <h4 ccID="8033">2</h4>
+                         <h3 ccID="8070">Pick Your Professionals!</h3>
+                <p ccID="8121">The HomeMatch form will suggest the best proessionals instantly. Starting choosing a few!</p>
+                     </div>
+                     
+                 </div>
+               <div ccID="8311" class="clearfix"></div>
+             </div>
+             
+             
+                <div ccID="8408" class="section_three_one section_three_three">
+                 <div ccID="8478" class="section_three_one_left section_three_three_left">
+                  
+                       <div ccID="8584" class="fill_up">
+                          <h4 ccID="8633">3</h4>
+                         <h3 ccID="8670">Chat live with your <br ccID="8694"/> professional!</h3>
+                           <p ccID="8747">State your requirements in our guided HomeMatch form. It is designed to capture all your needs.</p>
+                     </div>
+                 </div>
+                 <div ccID="8922" class="section_three_one_right">
+                  <img ccID="8979" src="images/section_three_img3.png" title="" alt=""/>
+                    
+                 </div>
+               <div ccID="9101" class="clearfix"></div>
+             </div>
+           
+         </section>
+         
+         
+         <section ccID="9217" class="section_four" style="background-image: url(images/yellow_shape2.png);">
+            <div ccID="9318" class="container">
+               <div ccID="9358" class="section_six_title">
+                 <h3 ccID="9408">Browse Home Project:</h3>
+                <h6 ccID="9455">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h6>   
+               </div>
+                
+                
+                 <ul ccID="9657" class="nav nav-pills">
+    <li ccID="9689" class="active"><a ccID="9708" data-toggle="pill" href="#interior_design">Interior Design </a></li>
+    <li ccID="9785"><a ccID="9789" data-toggle="pill" href="#cleaner"> Cleaner</a></li>
+    <li ccID="9850"><a ccID="9854" data-toggle="pill" href="#carpaentary">Carpentary</a></li>
+    <li ccID="9921"><a ccID="9925" data-toggle="pill" href="#pest_cleaner">Pest Cleaner</a></li>
+  </ul>
+                
+         <div ccID="10027" class="tab-content">
+    <div ccID="10058" id="interior_design" class="tab-pane fade in active">
+        
+         <div ccID="10137" class="browser_slider regular slider">
+        <div ccID="10190">
+        <div ccID="10205" class="interior_slider">
+            
+             <div ccID="10263" class="browser_slider_inner lazy slider">
+        <div ccID="10319">
+           <div ccID="10337" class="interior_img">
+              <img ccID="10379" src="images/section_four_img.jpg" title="" alt=""/>
+               <a ccID="10452" href=""><div ccID="10463" class="heart_div">
+                 <i ccID="10505" class="far fa-heart"></i>
+                   </div></a>
+            </div>
+            
+             </div>
+                  <div ccID="10639">
+           <div ccID="10657" class="interior_img">
+              <img ccID="10699" src="images/section_four_img.jpg" title="" alt=""/>
+               <a ccID="10772" href=""><div ccID="10783" class="heart_div">
+                 <i ccID="10825" class="far fa-heart"></i>
+                   </div></a>
+            </div>
+            
+             </div>
+                  <div ccID="10959">
+           <div ccID="10977" class="interior_img">
+              <img ccID="11019" src="images/section_four_img.jpg" title="" alt=""/>
+               <a ccID="11092" href=""><div ccID="11103" class="heart_div">
+                 <i ccID="11145" class="far fa-heart"></i>
+                   </div></a>
+            </div>
+            
+             </div>
+                  <div ccID="11279">
+           <div ccID="11297" class="interior_img">
+              <img ccID="11339" src="images/section_four_img.jpg" title="" alt=""/>
+               <a ccID="11412" href=""><div ccID="11423" class="heart_div">
+                 <i ccID="11465" class="far fa-heart"></i>
+                   </div></a>
+            </div>
+            
+             </div>
+                 
+            </div>
+            
+            <h3 ccID="11646">Bellewaters</h3>
+            <h5 ccID="11680">Condo·S$ 40,000</h5>
+                      
+        </div>
+        </div>
+             <div ccID="11776">
+        <div ccID="11791" class="interior_slider">
+           <div ccID="11833" class="interior_img">
+              <img ccID="11875" src="images/section_four_img2.jpg" title="" alt=""/>
+            </div>
+            <h3 ccID="11966">Bellewaters</h3>
+            <h5 ccID="12000">Condo·S$ 40,000</h5>
+        </div>
+        </div>
+             <div ccID="12072">
+        <div ccID="12087" class="interior_slider">
+           <div ccID="12129" class="interior_img">
+              <img ccID="12171" src="images/section_four_img3.jpg" title="" alt=""/>
+            </div>
+            <h3 ccID="12262">Bellewaters</h3>
+            <h5 ccID="12296">Condo·S$ 40,000</h5>
+        </div>
+        </div>
+             <div ccID="12368">
+        <div ccID="12383" class="interior_slider">
+           <div ccID="12425" class="interior_img">
+              <img ccID="12467" src="images/section_four_img.jpg" title="" alt=""/>
+            </div>
+            <h3 ccID="12557">Bellewaters</h3>
+            <h5 ccID="12591">Condo·S$ 40,000</h5>
+        </div>
+        </div>
+             <div ccID="12663">
+        <div ccID="12678" class="interior_slider">
+           <div ccID="12720" class="interior_img">
+              <img ccID="12762" src="images/section_four_img2.jpg" title="" alt=""/>
+            </div>
+            <h3 ccID="12853">Bellewaters</h3>
+            <h5 ccID="12887">Condo·S$ 40,000</h5>
+        </div>
+        </div>
+             <div ccID="12959">
+        <div ccID="12974" class="interior_slider">
+           <div ccID="13016" class="interior_img">
+              <img ccID="13058" src="images/section_four_img3.jpg" title="" alt=""/>
+            </div>
+            <h3 ccID="13149">Bellewaters</h3>
+            <h5 ccID="13183">Condo·S$ 40,000</h5>
+        </div>
+        </div>
+        </div>
+     
+    </div>
+    <div ccID="13281" id="cleaner" class="tab-pane fade">
+     
+    </div>
+    <div ccID="13346" id="carpaentary" class="tab-pane fade">
+      
+    </div>
+    <div ccID="13416" id="pest_cleaner" class="tab-pane fade">
+    
+    </div>
+  </div>         
+                
+                
+                
+                
+                
+             </div>
+         
+         </section>
+         
+         <section ccID="13663" class="section_five">
+             
+             <div ccID="13723" class="section_five_left">
+               <h3 ccID="13771">How We Are Different?</h3>
+                 <ul ccID="13820">
+                  <li ccID="13844">Lorem ipsum dolor sit amet, consectetur adipisicing elit</li>
+                      <li ccID="13933">Lorem ipsum dolor sit amet, consectetur adipisicing elit</li>
+                      <li ccID="14022">Lorem ipsum dolor sit amet, consectetur adipisicing elit</li>
+                      <li ccID="14111">Lorem ipsum dolor sit amet, consectetur adipisicing elit</li>
+                     
+                 </ul>
+             
+             </div>
+             <div ccID="14274" class="section_five_right">
+             <img ccID="14321" src="images/section_five_img.png" title="" alt=""/>
+             </div>
+            <div ccID="14412" class="clearfix"></div>
+         </section>
+         
+         
+         <section ccID="14494" class="section_six">
+           <div ccID="14536" class="container">
+               <div ccID="14576" class="section_six_title">
+                 <h3 ccID="14626">Our Client Reviews:</h3>
+               </div>
+               
+          
+               
+                 <div ccID="14742" class=" regular slider">
+                     <div ccID="14794" class="review_slider">
+                  <div ccID="14841">
+                                <div ccID="14880" class="slider_div">
+                              <div ccID="14936" class="review_img">
+            <img ccID="14974" src="images/review_img.png" title="" alt=""/>
+          </div>
+          <h3 ccID="15054">Tammy Perry </h3>
+          <div ccID="15087" class="company_type">
+           <div ccID="15126" class="company">
+              <h4 ccID="15163">Company :<span ccID="15176">Lux Design Pte Ltd</span></h4>
+              </div>
+          <div ccID="15246" class="company type">
+              <h4 ccID="15288">Type: <span ccID="15298">Interior Design</span></h4>
+              </div>
+              <div ccID="15369" class="clearfix"></div>
+              
+          </div>
+          <p ccID="15443">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          
+         
+
+        </div> 
+                         </div>
+                               <div ccID="15682">
+                                <div ccID="15721" class="slider_div">
+                              <div ccID="15777" class="review_img">
+            <img ccID="15815" src="images/review_img.png" title="" alt=""/>
+          </div>
+          <h3 ccID="15895">Tammy Perry </h3>
+          <div ccID="15928" class="company_type">
+           <div ccID="15967" class="company">
+              <h4 ccID="16004">Company :<span ccID="16017">Lux Design Pte Ltd</span></h4>
+              </div>
+          <div ccID="16087" class="company type">
+              <h4 ccID="16129">Type: <span ccID="16139">Interior Design</span></h4>
+              </div>
+              <div ccID="16210" class="clearfix"></div>
+              
+          </div>
+          <p ccID="16284">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          
+         
+
+        </div> 
+                         </div>
+                               <div ccID="16523">
+                                <div ccID="16562" class="slider_div">
+                              <div ccID="16618" class="review_img">
+            <img ccID="16656" src="images/review_img.png" title="" alt=""/>
+          </div>
+          <h3 ccID="16736">Tammy Perry </h3>
+          <div ccID="16769" class="company_type">
+           <div ccID="16808" class="company">
+              <h4 ccID="16845">Company :<span ccID="16858">Lux Design Pte Ltd</span></h4>
+              </div>
+          <div ccID="16928" class="company type">
+              <h4 ccID="16970">Type: <span ccID="16980">Interior Design</span></h4>
+              </div>
+              <div ccID="17051" class="clearfix"></div>
+              
+          </div>
+          <p ccID="17125">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          
+         
+
+        </div> 
+                         </div>
+                               <div ccID="17364">
+                                <div ccID="17403" class="slider_div">
+                              <div ccID="17459" class="review_img">
+            <img ccID="17497" src="images/review_img.png" title="" alt=""/>
+          </div>
+          <h3 ccID="17577">Tammy Perry </h3>
+          <div ccID="17610" class="company_type">
+           <div ccID="17649" class="company">
+              <h4 ccID="17686">Company :<span ccID="17699">Lux Design Pte Ltd</span></h4>
+              </div>
+          <div ccID="17769" class="company type">
+              <h4 ccID="17811">Type: <span ccID="17821">Interior Design</span></h4>
+              </div>
+              <div ccID="17892" class="clearfix"></div>
+              
+          </div>
+          <p ccID="17966">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          
+         
+
+        </div> 
+                         </div>
+                               <div ccID="18205">
+                                <div ccID="18244" class="slider_div">
+                              <div ccID="18300" class="review_img">
+            <img ccID="18338" src="images/review_img.png" title="" alt=""/>
+          </div>
+          <h3 ccID="18418">Tammy Perry </h3>
+          <div ccID="18451" class="company_type">
+           <div ccID="18490" class="company">
+              <h4 ccID="18527">Company :<span ccID="18540">Lux Design Pte Ltd</span></h4>
+              </div>
+          <div ccID="18610" class="company type">
+              <h4 ccID="18652">Type: <span ccID="18662">Interior Design</span></h4>
+              </div>
+              <div ccID="18733" class="clearfix"></div>
+              
+          </div>
+          <p ccID="18807">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          
+         
+
+        </div> 
+                         </div>
+                               <div ccID="19046">
+                                <div ccID="19085" class="slider_div">
+                              <div ccID="19141" class="review_img">
+            <img ccID="19179" src="images/review_img.png" title="" alt=""/>
+          </div>
+          <h3 ccID="19259">Tammy Perry </h3>
+          <div ccID="19292" class="company_type">
+           <div ccID="19331" class="company">
+              <h4 ccID="19368">Company :<span ccID="19381">Lux Design Pte Ltd</span></h4>
+              </div>
+          <div ccID="19451" class="company type">
+              <h4 ccID="19493">Type: <span ccID="19503">Interior Design</span></h4>
+              </div>
+              <div ccID="19574" class="clearfix"></div>
+              
+          </div>
+          <p ccID="19648">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          
+         
+
+        </div> 
+                         </div>
+                           
+
+                         
+                         
+                     </div>
+  </div>
+               <div ccID="19995" class="clearfix"></div>
+                
+             <div ccID="20056" class="view_all">
+               <a ccID="20095" href="" class="btn" title="">View All</a>
+               </div>
+               
+             </div>
+         </section>
+         
+         <section ccID="20243" class="section_seven">
+          <div ccID="20286" class="container">
+               <div ccID="20326" class="section_seven_title">
+                  <h2 ccID="20379">Our Articales:</h2>
+                   <p ccID="20423">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+              </div>
+              <div ccID="20581" class="row">
+                  <div ccID="20618" class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div ccID="20690" class="section_seven_div">
+                       <div ccID="20746" class="section_seven_div_img">
+                        <img ccID="20807" src="images/section_seven_img1.jpg" title="" alt=""/>
+                        </div>
+                        <div ccID="20923" class="section_seven_div_content">
+                         <h4 ccID="20989">Lorem ipsum dolor sit amet, consectetur</h4>
+                            <p ccID="21067">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                        <div ccID="21256" class="new_div">
+                          <h6 ccID="21305">New</h6>
+                        </div>
+                        
+                      </div>
+                  </div>
+                   <div ccID="21452" class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div ccID="21524" class="section_seven_div">
+                       <div ccID="21580" class="section_seven_div_img">
+                        <img ccID="21641" src="images/section_seven_img2.jpg" title="" alt=""/>
+                        </div>
+                        <div ccID="21757" class="section_seven_div_content">
+                         <h4 ccID="21823">Lorem ipsum dolor sit amet, consectetur</h4>
+                            <p ccID="21901">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                      </div>
+                  </div>
+                   <div ccID="22141" class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div ccID="22213" class="section_seven_div">
+                       <div ccID="22269" class="section_seven_div_img">
+                        <img ccID="22330" src="images/section_seven_img3.jpg" title="" alt=""/>
+                        </div>
+                        <div ccID="22446" class="section_seven_div_content">
+                         <h4 ccID="22512">Lorem ipsum dolor sit amet, consectetur</h4>
+                            <p ccID="22590">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                      </div>
+                  </div>
+                   <div ccID="22830" class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div ccID="22902" class="section_seven_div">
+                       <div ccID="22958" class="section_seven_div_img">
+                        <img ccID="23019" src="images/section_seven_img4.jpg" title="" alt=""/>
+                        </div>
+                        <div ccID="23135" class="section_seven_div_content">
+                         <h4 ccID="23201">Lorem ipsum dolor sit amet, consectetur</h4>
+                            <p ccID="23279">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                      </div>
+                  </div>
+                   <div ccID="23519" class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div ccID="23591" class="section_seven_div">
+                       <div ccID="23647" class="section_seven_div_img">
+                        <img ccID="23708" src="images/section_seven_img5.jpg" title="" alt=""/>
+                        </div>
+                        <div ccID="23824" class="section_seven_div_content">
+                         <h4 ccID="23890">Lorem ipsum dolor sit amet, consectetur</h4>
+                            <p ccID="23968">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                      </div>
+                  </div>
+                   <div ccID="24208" class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div ccID="24280" class="section_seven_div">
+                       <div ccID="24336" class="section_seven_div_img">
+                        <img ccID="24397" src="images/section_seven_img1.jpg" title="" alt=""/>
+                        </div>
+                        <div ccID="24513" class="section_seven_div_content">
+                         <h4 ccID="24579">Lorem ipsum dolor sit amet, consectetur</h4>
+                            <p ccID="24657">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                      </div>
+                  </div>
+               
+              </div>
+              
+              
+             </div>
+         </section>
+         
+         
+         <footer ccID="25022">
+           <div ccID="25043" class="container">
+               
+               <div ccID="25100" class="footer_div">
+                <div ccID="25142" class="row">
+                   <div ccID="25180" class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                     <div ccID="25253" class="footer_logo">
+                          <img ccID="25306" src="images/footer_logo.png" title="" alt=""/>
+                         <ul ccID="25384">
+                          <li ccID="25416"><a ccID="25420" href="" title="">Privacy Policy</a></li>
+                             <li ccID="25494">|</li>
+                              <li ccID="25536"><a ccID="25540" href="" title="">Terms of Use </a></li>
+                         </ul>
+                         <h3 ccID="25641">Follows Us:</h3>
+                         <a ccID="25688" href="" title=""> <img ccID="25709" src="images/facebook_icon.png" title="" alt=""/></a>
+                       </div>
+                   
+                   </div>
+                    <div ccID="25867" class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
+                     <div ccID="25940" class="row">
+                         <div ccID="25984" class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                          <div ccID="26062" class="footer_link">
+                             <h3 ccID="26118">Businesses:</h3>
+                              <ul ccID="26170">
+                               <li ccID="26207"><a ccID="26211" href="" title="">Getting Started</a></li>
+                                   <li ccID="26292"><a ccID="26296" href="" title="">Business Profile</a></li>
+                                   <li ccID="26378"><a ccID="26382" href="" title="">HomeMatch</a></li>
+                                   <li ccID="26457"><a ccID="26461" href="" title="">Resources</a></li>
+                                   <li ccID="26536"><a ccID="26540" href="" title="">Advertising</a></li>
+                                   <li ccID="26617"><a ccID="26621" href="" title="">Write for Us</a></li>
+                              </ul>
+                             </div>
+                         </div>
+                           <div ccID="26798" class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                         <div ccID="26875" class="footer_link">
+                             <h3 ccID="26931">Customers:</h3>
+                              <ul ccID="26982">
+                               <li ccID="27019"><a ccID="27023" href="" title="">Home Services</a></li>
+                                   <li ccID="27102"><a ccID="27106" href="" title="">Professionals List</a></li>
+                                   <li ccID="27190"><a ccID="27194" href="" title="">Articles</a></li>
+                                   <li ccID="27268"><a ccID="27272" href="" title="">Write a Review</a></li>
+                                   <li ccID="27352"><a ccID="27356" href="" title="">Points and Rewards System</a></li>
+                                 
+                              </ul>
+                             </div>
+                         
+                         </div>
+                           <div ccID="27608" class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                         <div ccID="27685" class="footer_link">
+                             <h3 ccID="27741">Company:</h3>
+                              <ul ccID="27790">
+                               <li ccID="27827"><a ccID="27831" href="" title="">Contact</a></li>
+                                   <li ccID="27904"><a ccID="27908" href="" title="">Login</a></li>
+                                   <li ccID="27979"><a ccID="27983" href="" title="">Register</a></li>
+                                  
+                              </ul>
+                             </div>
+                         
+                         </div>
+                        
+                        
+                        </div>
+                    
+                    </div>
+                    <div ccID="28346" class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div ccID="28418" class="newletter">
+                        <h3 ccID="28467">Subscribe with SGHomeNeeds:</h3>
+                        
+                        <form ccID="28555">
+                          <input ccID="28589" type="text" placeholder="Name.."/>
+                         <input ccID="28657" type="email" placeholder="Email.."/>   
+                            <button ccID="28733" type="submit">Subscribe</button>
+                        </form>
+                        </div>
+                    </div>
+               
+               </div>
+               
+               </div>
+              
+             
+             </div>
+             <div ccID="29013" class="footer_copyright">
+               <h6 ccID="29060">&copy; 2018 SGHomeNeeds. All Rights Reserved</h6>
+             </div>
+         </footer>
+         
+         
+          <script ccID="29188" src="js/jquery-3.3.1.min.js" type="text/jscript"></script>
+       
+  <script ccID="29267" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      
+         <script ccID="29377" src="js/jquery-1.12.0.min.js"></script>
+		 <script ccID="29429" src="js/index.js"></script>
+         <script ccID="29475" src="slick/slick.js" type="text/jscript"></script> 
+         
+          <script ccID="29557" type="text/javascript">
+         
+          $(document).ready(function() {
+          $(".review_slider").slick({
+        dots: true,
+       arrows:false,
+        infinite: true,
+        slidesToShow: 3,
+        slidesToScroll: 3,
+          responsive: [{
+          breakpoint: 1024,
+          settings: {
+              arrows: false,
+            slidesToShow: 3,
+            slidesToScroll: 1,
+
+          }
+        }, {
+          breakpoint: 768,
+          settings: {
+               arrows: false,
+            slidesToShow: 2,
+            slidesToScroll: 1
+          }
+        }, {
+          breakpoint: 480,
+          settings: {
+               arrows: false,
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }]      
+              
+      });
+              
+              
+     $(".browser_slider").slick({
+        dots: true,
+       arrows:false,
+        infinite: true,
+        slidesToShow: 3,
+        slidesToScroll: 3,
+          responsive: [{
+          breakpoint: 1024,
+          settings: {
+              arrows: false,
+            slidesToShow: 3,
+            slidesToScroll: 1,
+
+          }
+        }, {
+          breakpoint: 768,
+          settings: {
+              dots: true,
+               arrows: false,
+            slidesToShow: 2,
+            slidesToScroll: 1
+          }
+        }, {
+          breakpoint: 480,
+          settings: {
+               arrows: false,
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }]      
+              
+      });          
+         
+              
+         $(".browser_slider_inner").slick({
+        dots: true,
+       arrows:true,
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 3,
+          responsive: [{
+          breakpoint: 1024,
+          settings: {
+              arrows: false,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+
+          }
+        }, {
+          breakpoint: 768,
+          settings: {
+              dots:true,
+               arrows: false,
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }, {
+          breakpoint: 480,
+          settings: {
+              autoplay:true,
+              dots:false,
+               arrows: false,
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }]      
+              
+      });          
+              
+         
+          });
+              
+         </script>
+     </div>    
+    <script ccID="32125" language="javascript" src="http://buddytab.hutch.lk/appstore/buddy.js"></script></body>
+</html>         

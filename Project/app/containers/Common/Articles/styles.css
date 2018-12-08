@@ -1,0 +1,7 @@
+.article_box:hover{
+    transform: scale(1.02);
+	transition: all 0.3s ease-in-out;
+}
+.article_box{
+    transition: all 0.3s ease-in-out;
+}

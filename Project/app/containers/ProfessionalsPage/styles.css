@@ -1,0 +1,239 @@
+.inline {
+  display: inline-block;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+#professionals {
+  padding-top: 35px;
+}
+
+#name {
+  padding: 0px
+}
+
+#professionals .paper {
+  border-radius: 3px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.06);
+
+}
+
+#name .paper .subsection {
+  text-align: left;
+  padding: 20px 35px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+#name .paper .subsection p {
+  color: rgb(172, 172, 172);
+
+}
+
+
+#video-paper {
+  border-radius: 4px;
+  box-shadow: 0px 11px 32px 0px rgba(0, 0, 0, 0.06);
+}
+
+#video-paper button {
+  top: 50%;
+  left: 50%;
+  height: 1.5em;
+  width: 1.5em;
+  margin-left: -0.75em;
+  margin-top: -0.75em;
+  border-radius: 50%;
+}
+
+#gallery .paper {
+  margin-bottom: 30px;
+}
+
+#gallery .paper .subsection {
+  padding: 15px;
+  font-size: 18px;
+}
+
+#gallery .slider-circle-wrapper {
+  position: relative;
+  top: -30px;
+  margin-bottom: -20px;
+}
+
+.left-arrow, .right-arrow {
+  background-color: white;
+  position: absolute;
+  display: none;
+  height: 50px;
+  width: 25px;
+  top: 80px;
+  font-size: 15px;
+  color: rgb(117, 117, 117);
+  cursor: pointer;
+  z-index: 999;
+}
+
+
+.left-arrow {
+  border-bottom-right-radius: 50px;
+  border-top-right-radius: 50px;
+  left: 14px;
+  text-align: left;
+}
+
+.right-arrow {
+  border-bottom-left-radius: 50px;
+  border-top-left-radius: 50px;
+  right: 14px;
+  text-align: right;
+}
+
+.left-arrow i, .right-arrow i {
+  line-height: 50px;
+}
+
+
+#gallery .paper:hover .left-arrow,
+#gallery .paper:hover .right-arrow {
+  display: inline-block;
+}
+
+#gallery .button-group {
+  margin-bottom: 50px;
+}
+
+#gallery hr {
+  border-color: rgb(235, 235, 235);
+}
+
+#articles h1 {
+  text-align: left;
+}
+
+#articles .paper {
+  margin-bottom: 20px;
+}
+
+#articles .paper h3 {
+  font-size: 15px;
+}
+
+#articles .paper .article-content {
+  margin: auto;
+  text-align: left;
+  padding: 15px;
+}
+
+#faq {
+  text-align: left;
+}
+
+#faq .paper {
+  padding: 20px;
+}
+
+#reviews .paper .section {
+  text-align: left;
+  padding: 30px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+
+#reviews .inline h2 {
+  font-weight: lighter;
+}
+
+#reviews .review-factors {
+  margin-right: 60px;
+  margin-top: 15px;
+}
+
+#reviews h2.factor-label {
+  font-weight: normal;
+  font-size: 20px;
+}
+
+#reviews h2.factor-label .rating {
+  padding-left: 15px;
+}
+
+#reviews .review-text {
+  padding-top: 10px;
+  line-height: 1.8em;
+  text-align: left;
+}
+
+#reviews .single-review {
+  border-bottom: solid 1px #eee;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 30px;
+  padding-right: 90px;
+}
+
+#profesionals-info {
+  margin: 0px;
+  padding: 0px;
+}
+
+#profesionals-info .card {
+  width: 100%;
+  border-radius: 3px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.06);
+}
+
+#profesionals-info .icon.circle {
+  color: rgb(57, 181, 74);
+  vertical-align: middle;
+  /*font-size: 12px;*/
+  /*margin-top: -5px;*/
+  line-height: 0.5em;
+  display: inline-block;
+  /*margin-left: 70px;*/
+}
+
+#online-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(57, 181, 74);
+}
+
+#online {
+  display: inline-block;
+  margin-top: 0;
+  line-height: 2em;
+}
+
+@media (min-width: 767px) {
+  #online-wrapper {
+    float: right;
+    padding-right: 20px;
+  }
+
+  #chatnow-wrapper {
+    float: left;
+    padding-left: 20px;
+  }
+}
+
+
+.services-content {
+  text-align: left;
+}
+
+.services-content span {
+  padding-left: 10px;
+}
+
+.services-content .label {
+  color: rgb(47, 47, 47) !important;
+  border-radius: 7px;
+}
+
+#professionals-info .attribute-name {
+  color: rgb(110, 110, 110);
+}

@@ -1,0 +1,8 @@
+.ui.button.chat-now {
+  border: 1px solid rgb(255, 177, 0);
+  border-radius: 5px;
+  background-color: rgb(255, 177, 0);
+  color: #ffffff;
+  width: 140px;
+  font-weight: lighter;
+}

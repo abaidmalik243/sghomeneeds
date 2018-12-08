@@ -1,0 +1,11 @@
+.subsection {
+  margin: auto;
+  width: 95%;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 30px;
+}
+
+.section {
+  width: 100%;
+}

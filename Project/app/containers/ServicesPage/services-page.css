@@ -1,0 +1,14 @@
+.banner-title {
+  color: white;
+}
+
+.popular.paper {
+  margin-bottom: 20px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.popular.paper img {
+  width: 100%;
+}

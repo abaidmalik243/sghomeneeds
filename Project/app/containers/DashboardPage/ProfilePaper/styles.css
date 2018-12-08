@@ -1,0 +1,24 @@
+
+.ui.secondary.menu a.item.active,
+.ui.secondary.menu a.item.active:hover {
+  color: rgba(247, 177, 0, 1);
+  background-color: white;
+}
+
+.ui.secondary.menu a.item:hover .menu-item:before {
+  content:'';
+  width:20px;
+  height:3px;
+  background:rgba(247, 177, 0, 1);;
+  position:absolute;
+  bottom:8px;
+}
+
+.ui.secondary.menu a.item.active .menu-item:before {
+  content:'';
+  width:20px;
+  height:3px;
+  background:rgba(247, 177, 0, 1);;
+  position:absolute;
+  bottom:8px;
+}

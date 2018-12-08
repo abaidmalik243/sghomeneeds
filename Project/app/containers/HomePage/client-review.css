@@ -1,0 +1,98 @@
+#client-review {
+  background-color: white;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgb(235, 235, 235);
+}
+
+#client-review .card {
+  border-radius: 12px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 14px 46px 0px rgba(0, 0, 0, 0.06);
+  height: 245px;
+}
+
+#client-review .card .header {
+  margin-top: 65px;
+  font-size: 16px;
+}
+
+#client-review .card span.attr {
+  font-size: 11px;
+  color: rgb(123, 123, 123);
+  font-weight: bold;
+}
+
+#client-review .card span.attr-value {
+  font-size: 12px;
+  color: rgb(46, 46, 46);
+  font-weight: bold;
+}
+
+#client-review .card .label {
+  font-size: 8px;
+}
+
+#client-review .card .content {
+  border: none;
+}
+
+#client-review .card .content.review-text {
+  padding-top: 0;
+  color: rgb(96, 96, 96);
+}
+
+#client-review .slider-circle-wrapper {
+  margin-top: 85px;
+  margin-bottom: 35px;
+  display: inline-block;
+}
+
+#client-review button.button {
+  padding: 12px 30px;
+  border-radius: 2px;
+}
+
+.Company:_copy {
+  font-size: 15px;
+  font-family: "AtlasGrotesk";
+  color: rgb(123, 123, 123);
+  line-height: 1.2;
+  text-align: center;
+  -moz-transform: matrix( 0.74754098360656,0,0,0.74812030075188,0,0);
+  -webkit-transform: matrix( 0.74754098360656,0,0,0.74812030075188,0,0);
+  -ms-transform: matrix( 0.74754098360656,0,0,0.74812030075188,0,0);
+  position: absolute;
+  left: 149.2px;
+  top: 6464.944px;
+  z-index: 104;
+}
+
+.Lux_Design_Pte_Ltd_copy {
+  font-size: 18px;
+  font-family: "AtlasGrotesk";
+  color: rgb(46, 46, 46);
+  line-height: 1.2;
+  text-align: center;
+  -moz-transform: matrix( 0.74754098360656,0,0,0.74812030075188,0,0);
+  -webkit-transform: matrix( 0.74754098360656,0,0,0.74812030075188,0,0);
+  -ms-transform: matrix( 0.74754098360656,0,0,0.74812030075188,0,0);
+  position: absolute;
+  left: 130.113px;
+  top: 6465.495px;
+  width: 136.871px;
+  height: 16.79px;
+  z-index: 103;
+}
+
+
+.client-review-image {
+  border-width: 3px;
+  border-color: white;
+  position: absolute;
+  left: 50%;
+  z-index: 99;
+  height: 90px;
+  right: 50%;
+  margin-left: -45px;
+  margin-right: -45px;
+}
