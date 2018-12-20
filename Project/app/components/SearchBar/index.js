@@ -12,7 +12,7 @@ import { CATEGORIES } from '../../actions/restApi';
 import saga from '../../sagas';
 import { DAEMON } from '../../utils/constants';
 import './styles.css';
-
+ 
 const mapDispatchToProps = dispatch => ({
   dispatchAction: ({ type, payload, view }) => {
     dispatch({ type, payload, view });
