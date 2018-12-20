@@ -255,5 +255,6 @@
 
 #chatnow-wrapper .category-button:hover{
   background: #e8a205 !important;
+  text-decoration: underline;
   transition: all 0.3s ease-in-out !important;
 }
