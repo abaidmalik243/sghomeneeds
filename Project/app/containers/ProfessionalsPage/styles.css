@@ -232,3 +232,28 @@
 #professionals-info .attribute-name {
   color: rgb(110, 110, 110);
 }
+
+
+/* Heart */
+
+
+.favourite-wrapper>button.ui.basic.button.favourite {
+  background-color: white !important;
+}
+.favourite-wrapper>button.ui.basic.button.favourite:hover {
+  background: #fe0f37 !important;
+  color:#fff !important;
+}
+.favourite-wrapper>button.ui.basic.button.favourite:hover .heart {
+  color:#fff !important;
+}
+.heart{
+  color: red;
+}
+
+/* Chat now */
+
+#chatnow-wrapper .category-button:hover{
+  background: #e8a205 !important;
+  transition: all 0.3s ease-in-out !important;
+}

@@ -84,11 +84,13 @@ export default class ProfessionalsInfoCard extends React.PureComponent {
                 <i className="instagram icon" />
               </button>
             </Grid.Column>
-            <Grid.Column>
-              <FavoriteButton
-                buttonProps={{ style: { float: 'right' } }}
-                iconProps={{}}
-              />
+            <Grid.Column >
+              <div className="favourite-wrapper">
+                <FavoriteButton
+                  buttonProps={{ className: 'favourite', style: { float: 'right' } }}
+                  iconProps={{}}
+                />
+              </div>
             </Grid.Column>
           </TwoColumn>
           {professional.logo ? (
@@ -136,8 +138,8 @@ export default class ProfessionalsInfoCard extends React.PureComponent {
               </div>
             </Grid.Column>
             <Grid.Column>
-              <div id="chatnow-wrapper">
-                <ChatNowButton buttonProps={{ style: { padding: '11px 0' } }} />
+              <div id="chatnow-wrapper" >
+                <ChatNowButton buttonProps={{ className:"category-button", style: { padding: '11px 0' } }} />
               </div>
             </Grid.Column>
           </TwoColumn>
