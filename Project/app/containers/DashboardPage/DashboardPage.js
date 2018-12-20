@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 // import { Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
@@ -6,14 +7,20 @@ import { push } from 'react-router-redux';
 import PropTypes from 'prop-types';
 import Section from '../../components/Section/Section';
 import TemplatePage from '../Common/PageWrapper';
-import { LISTINGS, USERS } from '../../actions/restApi';
+import {
+  CATEGORIES,
+  FILES,
+  GALLERIES,
+  LISTINGS,
+  USERS,
+} from '../../actions/restApi';
 import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
 import dashboardReducer, { DASHBOARD_VIEW } from '../../reducers/dashboard';
 import saga from '../../sagas';
 import userReducer from '../../reducers/user';
 import userSaga from '../../sagas/user';
-import { DAEMON, RESTART_ON_REMOUNT } from '../../utils/constants';
+import { DAEMON } from '../../utils/constants';
 import Subsection from '../../components/Section/Subsection';
 import { profile, reviews } from './content';
 import AccountSubPage from './AccountSubPage';
@@ -27,8 +34,8 @@ import FavouritesSubPage from './FavouritesSubPage';
 import NotificationSettingSubPage from './NotificationSettingSubPage';
 
 const mapDispatchToProps = dispatch => ({
-  dispatchAction: ({ type, payload }) => {
-    dispatch({ type, payload, view: DASHBOARD_VIEW });
+  dispatchAction: ({ type, payload, contentType }) => {
+    dispatch({ type, payload, view: DASHBOARD_VIEW, contentType });
   },
   goTo: payload => {
     dispatch(push(payload.path));
@@ -54,6 +61,21 @@ const withListingSaga = injectSaga({
   saga: saga(LISTINGS),
   mode: DAEMON,
 });
+const withCategorySaga = injectSaga({
+  key: CATEGORIES.MODEL,
+  saga: saga(CATEGORIES),
+  mode: DAEMON,
+});
+const withGallerySaga = injectSaga({
+  key: GALLERIES.MODEL,
+  saga: saga(GALLERIES),
+  mode: DAEMON,
+});
+const withFilesSaga = injectSaga({
+  key: FILES.MODEL,
+  saga: saga(FILES),
+  mode: DAEMON,
+});
 const withUserReducer = injectReducer({
   key: USERS.MODEL,
   reducer: userReducer,
@@ -61,7 +83,7 @@ const withUserReducer = injectReducer({
 const withUserSaga = injectSaga({
   key: USERS.MODEL,
   saga: userSaga,
-  mode: RESTART_ON_REMOUNT,
+  mode: DAEMON,
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -75,34 +97,45 @@ class DashboardPage extends React.PureComponent {
     dispatchAction: PropTypes.func.isRequired,
   };
   render() {
+    const { currentTab, user } = this.props;
     return (
       <TemplatePage {...this.props}>
-        <Section>
+        <Section className="dashboard">
           <Subsection>
             <ProfilePaper profile={profile} {...this.props} />
-            <AccountSubPage {...this.props} profile={profile} />
-            <ListingsSubPage {...this.props} />
-            <ReviewsSubPage {...this.props} reviews={reviews} />
-            <CommentsSubPage
-              dispatchAction={this.props.dispatchAction}
-              {...this.props}
-            />
-            <FavouritesSubPage
-              dispatchAction={this.props.dispatchAction}
-              {...this.props}
-            />
-            <NotificationSettingSubPage
-              dispatchAction={this.props.dispatchAction}
-              {...this.props}
-            />
+            {currentTab === 'account' && (
+              <AccountSubPage {...this.props} profile={profile} />
+            )}
+            {currentTab === 'listings' &&
+              user.LOAD_AUTH.data.merchantId !== null &&
+              user.LOAD_AUTH.data.merchantId !== -1 && (
+              <ListingsSubPage {...this.props} />
+            )}
+            {currentTab === 'reviews' && (
+              <ReviewsSubPage {...this.props} reviews={reviews} />
+            )}
+            {currentTab === 'comments' && (
+              <CommentsSubPage
+                dispatchAction={this.props.dispatchAction}
+                {...this.props}
+              />
+            )}
+            {currentTab === 'favourites' && (
+              <FavouritesSubPage
+                dispatchAction={this.props.dispatchAction}
+                {...this.props}
+              />
+            )}
+            {currentTab === 'notifications' && (
+              <NotificationSettingSubPage
+                dispatchAction={this.props.dispatchAction}
+                {...this.props}
+              />
+            )}
           </Subsection>
         </Section>
       </TemplatePage>
     );
-  }
-
-  componentWillMount() {
-    this.props.dispatchAction({ type: USERS.LOAD_AUTH.REQUESTED });
   }
 }
 
@@ -112,5 +145,8 @@ export default compose(
   withDashboardReducer,
   withUserSaga,
   withListingSaga,
+  withCategorySaga,
+  withFilesSaga,
+  withGallerySaga,
   withConnect,
 )(DashboardPage);

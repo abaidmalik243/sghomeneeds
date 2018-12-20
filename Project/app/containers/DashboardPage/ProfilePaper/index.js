@@ -1,17 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Modal } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import TwoColumn from '../../../components/Section/TwoColumn';
 import Subsection from '../../../components/Section/Subsection';
-import ImageWrapper from '../../../components/Base/Image';
 import OneColumn from '../../../components/Section/OneColumn';
 import Divider from '../../../components/Base/Divider';
 import PaperWrapper from '../../../components/Base/Paper';
 import ButtonWrapper from '../../../components/Base/Button';
 import './styles.css';
-import { listingForm } from './content';
 import ListingModal from './ListingModal';
-import { LISTINGS } from '../../../actions/restApi';
+import {
+  CATEGORIES,
+  GALLERIES,
+  LISTINGS,
+  USERS,
+} from '../../../actions/restApi';
+import Avatar from '../../../components/Base/Avatar';
+import { MULTIPART_FORM_DATA } from '../../../utils/actionsUtil';
+import { DASHBOARD_VIEW } from '../../../reducers/dashboard';
+import GalleryModal from './GalleryModal';
+import FilesModal from './FilesModal';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class ProfilePaper extends React.PureComponent {
@@ -22,31 +30,118 @@ export default class ProfilePaper extends React.PureComponent {
     user: PropTypes.object,
     dispatchAction: PropTypes.func.isRequired,
   };
+
   render() {
-    const { profile, currentTab } = this.props;
+    const { profile, currentTab, user } = this.props;
+
+    const dashboardTabs = [
+      {
+        name: 'Account Settings',
+        link: 'account',
+      },
+      {
+        name: 'Notification Settings',
+        link: 'notifications',
+      },
+      {
+        name: 'Favourites',
+        link: 'favourites',
+      },
+      {
+        name: 'Listings & Galleries',
+        link: 'listings',
+      },
+      {
+        name: 'Reviews',
+        link: 'reviews',
+      },
+      {
+        name: 'Comments',
+        link: 'comments',
+      },
+    ];
+    const dashboardTabJsx = dashboardTabs
+      .filter(tab => {
+        if (tab.link === 'listings') {
+          return (
+            user.LOAD_AUTH.data.merchantId !== null &&
+            user.LOAD_AUTH.data.merchantId !== -1
+          );
+        }
+        return true;
+      })
+      .map(item => (
+        <a
+          className={`item ${currentTab === item.link ? 'active' : ''}`}
+          key={item.name}
+          href="/#" // this is a hack to apply the link styling without having to redo the css
+          onClick={e => {
+            e.preventDefault();
+            this.props.history.push(`/dashboard/${item.link}`);
+          }}
+        >
+          <div className="menu-item">{item.name}</div>
+        </a>
+      ));
+
     return (
       <PaperWrapper>
-        <TwoColumn>
+        <TwoColumn className="profile-summary">
           <Grid.Column width={4}>
-            <Subsection>
-              <ImageWrapper
-                src={profile.imageSource}
-                rounded
-                width="200px"
-                height="200px"
-                style={{ display: 'block', margin: 'auto' }}
+            <Subsection className="profile-avatar">
+              <FilesModal
+                modalProps={{
+                  dimmer: 'inverted',
+                  trigger: (
+                    <button style={{ cursor: 'pointer' }}>
+                      <Avatar
+                        src={
+                          this.props.user.user.profile_image
+                            ? this.props.user.user.profile_image
+                            : profile.imageSource
+                        }
+                        size={150}
+                        borderWidth={5}
+                        style={{
+                          margin: '40px auto 40px 80px',
+                          display: 'block',
+                        }}
+                      />
+                    </button>
+                  ),
+                }}
+                formProps={{
+                  onSubmit: formData => {
+                    // console.log(formData);
+                    this.props.dispatchAction({
+                      type: USERS.PATCH.REQUESTED,
+                      payload: { data: formData, id: this.props.user.user.id },
+                      contentType: MULTIPART_FORM_DATA,
+                    });
+                  },
+                }}
+                file={
+                  this.props.user.user.profile_image
+                    ? this.props.user.user.profile_image
+                    : profile.imageSource
+                }
+                fieldName="profile_image"
               />
             </Subsection>
           </Grid.Column>
-          <Grid.Column width={12}>
+          <Grid.Column
+            className="profile-summary"
+            width={12}
+            verticalAlign="middle"
+          >
             <TwoColumn>
               <Grid.Column width={10}>
                 <Subsection style={{ textAlign: 'left' }}>
-                  <h1>Hello, {this.props.user.user.first_name}</h1>
-                  <h3>
+                  <h1>Hello, {this.props.user.user.long_first_name}</h1>
+                  <h4>
                     {profile.numReviews} Reviews | {profile.numProjects}{' '}
                     Projects
-                  </h3>
+                  </h4>
                 </Subsection>
               </Grid.Column>
               <Grid.Column width={6}>
@@ -58,7 +153,6 @@ export default class ProfilePaper extends React.PureComponent {
                   <ListingModal
                     modalProps={{
                       dimmer: 'inverted',
-                      // defaultOpen: true,
                       trigger: (
                         <ButtonWrapper design="outline">
                           Add Listing
@@ -67,97 +161,64 @@ export default class ProfilePaper extends React.PureComponent {
                     }}
                     formProps={{
                       onSubmit: formData => {
-                        const data = {};
-                        listingForm.fields.forEach(field => {
-                          const key = field.inputProps.name;
-                          data[key] = formData.target[key].value;
-                        });
-                        this.createListing({ data, url: 'create' });
+                        // const data = new FormData(formData.target);
+                        const data = formData;
+                        data.append(
+                          'merchant',
+                          this.props.user.LOAD_AUTH.data.merchantId,
+                        );
+                        this.createListing({ data });
                       },
                     }}
-                  />
-                  <Modal
-                    dimmer="inverted"
-                    trigger={
-                      <ButtonWrapper design="outline">
-                        Add Gallery
-                      </ButtonWrapper>
+                    categories={
+                      this.props[DASHBOARD_VIEW][CATEGORIES.MODEL].LIST
                     }
-                  >
-                    <h1>Gallery</h1>
-                  </Modal>
+                    listing={null}
+                    isCreate
+                  />
+                  <GalleryModal
+                    modalProps={{
+                      dimmer: 'inverted',
+                      trigger: (
+                        <ButtonWrapper design="outline">
+                          Add Gallery
+                        </ButtonWrapper>
+                      ),
+                    }}
+                    formProps={{
+                      onSubmit: formData => {
+                        const data = formData;
+                        this.props.dispatchAction({
+                          type: GALLERIES.POST.REQUESTED,
+                          payload: {
+                            data,
+                          },
+                        });
+                      },
+                    }}
+                    listings={this.props[DASHBOARD_VIEW][LISTINGS.MODEL].LIST}
+                    isCreate
+                  />
                 </Subsection>
               </Grid.Column>
             </TwoColumn>
           </Grid.Column>
         </TwoColumn>
-        <OneColumn>
+        <Divider className="profile-divider" />
+        <OneColumn className="profile-summary-nav">
           <Subsection style={{ paddingTop: 0, marginTop: 0 }}>
-            <Divider />
-            <div className="ui secondary menu">
-              <button
-                onClick={() => {
-                  this.props.history.push('/dashboard/account');
-                }}
-                className={`${currentTab === 'account' ? 'active' : ''} item`}
-              >
-                <div className="menu-item">Account Settings</div>
-              </button>
-              <button
-                onClick={() => {
-                  this.props.history.push('/dashboard/notifications');
-                }}
-                className={`${
-                  currentTab === 'notifications' ? 'active' : ''
-                } item`}
-              >
-                <div className="menu-item">Notification Setting</div>
-              </button>
-              <button
-                onClick={() => {
-                  this.props.history.push('/dashboard/favourites');
-                }}
-                className={`${
-                  currentTab === 'favourites' ? 'active' : ''
-                } item`}
-              >
-                <div className="menu-item">Favourites</div>
-              </button>
-
-              <button
-                onClick={() => {
-                  this.props.history.push('/dashboard/listings');
-                }}
-                className={`${currentTab === 'listings' ? 'active' : ''} item`}
-              >
-                <div className="menu-item">Listings & Galleries</div>
-              </button>
-              <button
-                onClick={() => {
-                  this.props.history.push('/dashboard/reviews');
-                }}
-                className={`${currentTab === 'reviews' ? 'active' : ''} item`}
-              >
-                <div className="menu-item">Reviews</div>
-              </button>
-              <button
-                onClick={() => {
-                  this.props.history.push('/dashboard/comments');
-                }}
-                className={`${currentTab === 'comments' ? 'active' : ''} item`}
-              >
-                <div className="menu-item">Comments</div>
-              </button>
-            </div>
+            <div className="ui secondary menu">{dashboardTabJsx}</div>
           </Subsection>
         </OneColumn>
       </PaperWrapper>
     );
   }
-  onToggle = () => {
-    this.setState({ showMenu: !this.state.showMenu });
-  };
+
   createListing = payload => {
-    this.props.dispatchAction({ type: LISTINGS.POST.REQUESTED, payload });
+    this.props.dispatchAction({
+      type: LISTINGS.POST.REQUESTED,
+      payload,
+      contentType: MULTIPART_FORM_DATA,
+    });
   };
 }

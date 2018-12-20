@@ -5,7 +5,7 @@ import './styles.css';
 
 function NavigationMenuItem(props) {
   return (
-    <a className="item" {...props.a} style={{padding:'0px 10px'}}>
+    <a className="item" {...props.a} style={{ padding: '0px 10px' }}>
       <span className="menu-item">{props.a.text}</span>
     </a>
   );

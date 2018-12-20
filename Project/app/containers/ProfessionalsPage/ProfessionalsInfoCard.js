@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
 import renderHTML from 'react-render-html';
 import CardContent from '../../components/Base/Card/CardContent';
-import ThreeColumn from '../../components/Section/ThreeColumn';
 import IconWrapper from '../../components/Base/Icon';
 import ImageWrapper from '../../components/Base/Image';
 import OneColumn from '../../components/Section/OneColumn';
@@ -62,7 +61,7 @@ export default class ProfessionalsInfoCard extends React.PureComponent {
       },
     ];
     return (
-      <Card style={{}}>
+      <Card>
         <CardContent>
           <TwoColumn stackable={false}>
             <Grid.Column>
@@ -93,13 +92,11 @@ export default class ProfessionalsInfoCard extends React.PureComponent {
             </Grid.Column>
           </TwoColumn>
           {professional.logo ? (
-            <ThreeColumn>
-              <Grid.Column />
+            <OneColumn>
               <Grid.Column>
-                <ImageWrapper src={professional.logo} />
+                <ImageWrapper src={professional.logo} width="33%" />
               </Grid.Column>
-              <Grid.Column />
-            </ThreeColumn>
+            </OneColumn>
           ) : null}
           <OneColumn>
             <h2 style={{ fontWeight: 'normal', fontSize: '18px' }}>
@@ -140,21 +137,19 @@ export default class ProfessionalsInfoCard extends React.PureComponent {
             </Grid.Column>
             <Grid.Column>
               <div id="chatnow-wrapper">
-                <ChatNowButton
-                  buttonProps={{ style: { padding: '11px 0' } }}
-                  iconProps={{}}
-                />
+                <ChatNowButton buttonProps={{ style: { padding: '11px 0' } }} />
               </div>
             </Grid.Column>
           </TwoColumn>
         </CardContent>
         <CardContent className="services-content">
           <span>Services: </span>
-          {professional.cateogries_text.split(',').map(item => (
-            <Label key={item} color="rgb(225, 225, 225)">
-              {renderHTML(item)}
-            </Label>
-          ))}
+          {professional.cateogries_text &&
+            professional.cateogries_text.split(',').map(item => (
+              <Label key={item} color="rgb(225, 225, 225)">
+                {renderHTML(item)}
+              </Label>
+            ))}
         </CardContent>
         {attributes.map(item => (
           <CardContent key={item.key}>

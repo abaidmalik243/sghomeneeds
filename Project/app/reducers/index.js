@@ -1,6 +1,12 @@
 import { fromJS } from 'immutable';
-import { getActionModel, LISTINGS, MODEL_MAP } from '../actions/restApi';
+import {
+  CATEGORIES,
+  getActionModel,
+  LISTINGS,
+  MODEL_MAP,
+} from '../actions/restApi';
 import { DIRECTORY_VIEW } from '../containers/DirectoryPage/DirectoryPage';
+import { SERVICES_VIEW } from '../containers/ServicesPage/ServicesPage';
 
 function generateDefaultStore() {
   return {
@@ -13,6 +19,9 @@ function generateDefaultStore() {
 const initialState = fromJS({
   [DIRECTORY_VIEW]: {
     [LISTINGS.MODEL]: generateDefaultStore(),
+  },
+  [SERVICES_VIEW]: {
+    [CATEGORIES.MODEL]: generateDefaultStore(),
   },
 });
 

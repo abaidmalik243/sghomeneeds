@@ -2,12 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, List } from 'semantic-ui-react';
 import Section from '../../components/Section/Section';
-import ImageWrapper from '../../components/Base/Image';
-import Phone from '../../images/HomePage/Iphone-X-SGHomeNeeds.png';
-import Tick from '../../images/HomePage/tick.jpg';
+import ImageWrapper from '../../components/Base/Image/index';
+
 import Subsection from '../../components/Section/Subsection';
 
 import './how-different.css';
+import { getS3Image } from '../../utils/images';
+
+const Phone = getS3Image('/images/HomePage/Iphone-X-SGHomeNeeds.png');
+const Tick = getS3Image('/images/HomePage/tick.jpg');
 
 /* eslint-disable react/prefer-stateless-function */
 export default class HowDifferentSection extends React.PureComponent {

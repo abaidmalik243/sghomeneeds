@@ -1,13 +1,22 @@
 import { generateText } from '../../utils/loremIpsumGenerator';
-import Home from '../../images/HomePage/home.jpg';
-import Carpenter from '../../images/HomePage/carpenter.jpg';
-import HandyMan from '../../images/HomePage/handyman.jpg';
-import PestControl from '../../images/HomePage/pest-control.jpg';
-import AirConditioner from '../../images/HomePage/air-conditioner.jpg';
+import { getS3Image } from '../../utils/images';
+// import Home from '../../images/HomePage/home.jpg';
+// import Carpenter from '../../images/HomePage/carpenter.jpg';
+// import HandyMan from '../../images/HomePage/handyman.jpg';
+// import PestControl from '../../images/HomePage/pest-control.jpg';
+// import AirConditioner from '../../images/HomePage/air-conditioner.jpg';
+//
+// import homeProject2 from '../../images/18505_Bedroom-.jpg';
+//
+// import Tammy from '../../images/Placeholder/profile.png';
 
-import homeProject2 from '../../images/18505_Bedroom-.jpg';
-
-import Tammy from '../../images/Placeholder/profile.png';
+const Home = getS3Image('/images/HomePage/home.jpg');
+const Carpenter = getS3Image('/images/HomePage/carpenter.jpg');
+const HandyMan = getS3Image('/images/HomePage/handyman.jpg');
+const PestControl = getS3Image('/images/HomePage/pest-control.jpg');
+const AirConditioner = getS3Image('/images/HomePage/air-conditioner.jpg');
+const homeProject2 = getS3Image('/images/18505_Bedroom-.jpg');
+const Tammy = getS3Image('/images/Placeholder/profile.png');
 
 export const categories = [
   {

@@ -1,0 +1,61 @@
+.service-category-wrapper {
+  background: url("https://s3-ap-southeast-1.amazonaws.com/sghomeneeds-gallery/images/DirectoryPage/orangeshades.png" ) repeat-y;
+  background-size: contain;
+}
+
+.service-category-wrapper .subsection {
+  padding-bottom: 15px;
+}
+.service-category-wrapper .banner-title {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.service-category-wrapper h3 {
+  margin: 18px auto 12px auto;
+}
+
+.service-category-wrapper .services-parent,
+.service-category-wrapper .services-child {
+  width: 80%;
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.service-category-wrapper .services-parent,
+.service-category-wrapper .services-parent .column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.service-category-wrapper .services-parent > * {
+  width: 100%;
+}
+
+.service-category-wrapper .services-parent .row {
+  padding: 6px auto;
+}
+
+.service-category-wrapper .subcategory-row {
+  padding: 12px 32px;
+  border-bottom: 1px solid #dddddd;
+  width: 100%;
+}
+
+.service-category-wrapper .row > .column > .column:last-child .subcategory-row {
+  border-bottom: 0;
+}
+
+.service-category-wrapper .subcategory-row a {
+  color: #888888;
+}
+
+.service-category-wrapper .subcategory-row a:hover {
+  color: orange;
+}

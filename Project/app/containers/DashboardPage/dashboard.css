@@ -1,3 +1,8 @@
 .dashboard-sub-page-title {
   text-align: left;
 }
+
+.dashboard > .subsection > div:not(:first-child) {
+  margin-top: 24px;
+}
+

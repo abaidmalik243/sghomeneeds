@@ -31,4 +31,22 @@ injectGlobal`
   a {
     color: rgb(0, 159, 217)
   }
+  
+  body ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  body ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 1px grey; 
+    background: white;
+    border-top: 0;
+    border-bottom: 0;
+  }
+  
+  body ::-webkit-scrollbar-thumb {
+    background-color: #bbbbbb;
+    border: 3px solid transparent;
+    border-radius: 9px;
+    background-clip: content-box;
+  }
 `;

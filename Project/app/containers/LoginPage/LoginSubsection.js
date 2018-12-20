@@ -60,16 +60,6 @@ function LoginSubsection(props) {
               </div>
             </OneColumn>
             <OneColumn>
-              <div
-                className="ui checkbox"
-                style={{ textAlign: 'left', float: 'left' }}
-              >
-                <input type="checkbox" name="keepSignedIn" />
-                {/* eslint-disable-next-line jsx-a11y/label-has-for */}
-                <label>Keep me signed in</label>
-              </div>
-            </OneColumn>
-            <OneColumn>
               <ButtonWrapper design="filled">Sign In</ButtonWrapper>
               <p style={{ marginTop: '8px', color: 'grey' }}>
                 Forgot Username and Password?

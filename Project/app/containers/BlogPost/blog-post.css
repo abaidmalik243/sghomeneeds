@@ -1,0 +1,103 @@
+.blog-post {
+  background: url('https://s3-ap-southeast-1.amazonaws.com/sghomeneeds-gallery/images/DirectoryPage/orangeshades.png') repeat-y;
+  text-align: left;
+  padding-top: 24px !important;
+  padding-bottom: 24px !important;
+}
+
+.blog-post a,
+.blog-post .blog-category-sidecard a:hover {
+  color: rgb(255, 176, 0);
+}
+
+.blog-post > .row {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.blog-post > .row > .column > * {
+  border-radius: 2px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.06);
+  margin-top: 24px;
+  margin-bottom: 0;
+}
+
+.blog-post .card .content {
+  border-top: 0;
+  padding: 24px;
+}
+
+.blog-post .blog-post-card .content .blog-post-header {
+  margin-bottom: 12px;
+}
+
+.blog-post .blog-post-card .content .blog-post-meta {
+  color: #888888;
+  margin-bottom: 12px;
+}
+
+.blog-post .blog-post-card .content .blog-post-meta span {
+  margin: 0;
+}
+
+.blog-post .blog-post-card .content .blog-post-meta span:not(:last-child):after,
+.blog-post .blog-post-card .blog-post-footer span:not(:last-child):after {
+  content: '|';
+  margin: 0 8px;
+  color: #dddddd;
+}
+
+.blog-post .blog-post-card .content img {
+  width: 100%;
+  height: unset;
+  object-fit: contain;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.blog-post .blog-post-card .content .blog-post-content p,
+.blog-post .blog-post-card .content .blog-post-content ul,
+.blog-post .blog-post-card .content .blog-post-content li,
+.blog-post .blog-author-card .content p,
+.blog-post .blog-category-sidecard a {
+  color: #888888;
+}
+
+.blog-post .blog-post-card .blog-post-footer span a:not(:last-child):after {
+  content: ", ";
+}
+
+.blog-post .blog-author-card .content > * {
+  display: inline-block;
+  margin-right: 12px;
+}
+
+.blog-post .blog-comments-card {
+  display: none;
+}
+
+.blog-post .blog-recent-card .header,
+.blog-post .blog-related-card .header {
+  margin-bottom: 12px;
+}
+
+.blog-post .blog-recent-card .blog-recent-single img,
+.blog-post .blog-related-card .blog-related-single img {
+  height: 150px;
+  width: 100%;
+  object-fit: cover;
+  margin-bottom: 8px;
+}
+
+.blog-post .blog-recent-card .blog-recent-single p,
+.blog-post .blog-related-card .blog-related-single p {
+  height: 4.5em;
+  overflow: hidden;
+  color: black;
+  font-weight: bold;
+}
+
+.blog-post .blog-category-sidecard a {
+  display: block;
+  margin: 4px 0;
+}

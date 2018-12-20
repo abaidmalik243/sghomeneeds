@@ -1,5 +1,5 @@
 #content > .row {
-  background: url("../../images/DirectoryPage/orangeshades.png") no-repeat;
+  background: url("https://s3-ap-southeast-1.amazonaws.com/sghomeneeds-gallery/images/DirectoryPage/orangeshades.png") no-repeat;
   background-size: contain;
   padding: 48px 24px;
 }
@@ -101,4 +101,14 @@
 
 a {
   color: rgb(255, 177, 0);
+}
+
+
+#register-section a.item {
+  width: 50%;
+  font-size: large;
+}
+
+#user-type-menu {
+  margin-bottom: 0px;
 }

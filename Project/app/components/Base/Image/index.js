@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { Image } from 'semantic-ui-react';
 
 function ImageWrapper(props) {
+  const { src, rounded, className, ...otherProps } = props;
   return (
     <Image
-      src={props.src}
-      {...props}
-      className={`${props.rounded ? 'circular' : ''} ${props.className || ''}`}
+      {...otherProps}
+      src={src}
+      className={`${rounded ? 'circular' : ''} ${className || ''}`}
     />
   );
 }

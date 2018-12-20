@@ -51,10 +51,12 @@
   padding: 5px 22px;
   font-size: 15px;
   position: absolute;
-  margin-left: -35px;
+  margin-left: 34%;
   margin-top: -15px;
   z-index: 99;
 }
+
+
 .New_tag {
   position: absolute;
   left: 0px;

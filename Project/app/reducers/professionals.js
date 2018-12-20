@@ -1,11 +1,13 @@
 import { fromJS } from 'immutable';
-import { getActionModel, LISTINGS, MODEL_MAP } from '../actions/restApi';
+import { LISTINGS, MODEL_MAP, FILES, GALLERIES } from '../actions/restApi';
+import { getActionModel } from '../actions/apiUtil';
+// import { WP_POSTS } from '../actions/wpApi';
 
 const initialState = fromJS({
   [LISTINGS.MODEL]: {
     LIST: { loading: true },
     GET: {
-      id: 456,
+      id: -1,
       url: 'http://localhost:8000/api/listings/1-asia-manpower-services-456/',
       merchant: 177,
       wp_post_id: 6894,
@@ -39,28 +41,47 @@ const initialState = fromJS({
     },
     POST: { loading: true },
   },
+  [FILES.MODEL]: {
+    LIST: {
+      count: 2112,
+      next: 'http://localhost:8000/api/listings/?limit=10&offset=10',
+      previous: null,
+      results: [],
+    },
+    GET: {},
+    POST: {},
+  },
+  [GALLERIES.MODEL]: {
+    LIST: {
+      count: 2112,
+      next: 'http://localhost:8000/api/listings/?limit=10&offset=10',
+      previous: null,
+      results: [],
+    },
+    GET: {},
+    POST: {},
+  },
+  // [WP_POSTS.MODEL]: {
+  //   LIST: [],
+  //   GET: {},
+  // },
 });
 
 export default function modelReducer(state = initialState, action) {
   const model = getActionModel(action.type);
-  if (model !== LISTINGS.MODEL) {
+  if ([LISTINGS.MODEL, FILES.MODEL, GALLERIES.MODEL].indexOf(model) === -1) {
     return state;
   }
+  const updated = state.toJS();
   switch (action.type) {
     case MODEL_MAP[model].LIST.SUCCESS:
-      return state.merge({
-        [model]: {
-          LIST: action.payload,
-        },
-      });
+      updated[model].LIST = action.payload;
+      return state.merge(updated);
     case MODEL_MAP[model].GET.SUCCESS:
     case MODEL_MAP[model].PUT.SUCCESS:
     case MODEL_MAP[model].PATCH.SUCCESS:
-      return state.merge({
-        [model]: {
-          GET: action.payload,
-        },
-      });
+      updated[model].GET = action.payload;
+      return state.merge(updated);
     case MODEL_MAP[model].POST.SUCCESS:
       return state.merge({
         [model]: {

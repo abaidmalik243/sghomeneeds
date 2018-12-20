@@ -1,5 +1,12 @@
 import { fromJS } from 'immutable';
-import { getActionModel, LISTINGS, MODEL_MAP } from '../actions/restApi';
+import {
+  CATEGORIES,
+  FILES,
+  GALLERIES,
+  LISTINGS,
+  MODEL_MAP,
+} from '../actions/restApi';
+import { getActionModel } from '../actions/apiUtil';
 
 export const DASHBOARD_VIEW = 'dashboard';
 
@@ -14,34 +21,70 @@ const initialState = fromJS({
     GET: {},
     POST: {},
   },
+  [CATEGORIES.MODEL]: {
+    LIST: {
+      count: 2112,
+      next: 'http://localhost:8000/api/listings/?limit=10&offset=10',
+      previous: null,
+      results: [],
+    },
+    GET: {},
+    POST: {},
+  },
+  [GALLERIES.MODEL]: {
+    LIST: {
+      count: 2112,
+      next: 'http://localhost:8000/api/listings/?limit=10&offset=10',
+      previous: null,
+      results: [],
+    },
+    GET: {},
+    POST: {},
+  },
+  [FILES.MODEL]: {
+    LIST: {
+      count: 2112,
+      next: 'http://localhost:8000/api/listings/?limit=10&offset=10',
+      previous: null,
+      results: [],
+    },
+    GET: {},
+    POST: {},
+  },
 });
 
 export default function modelReducer(state = initialState, action) {
   const model = getActionModel(action.type);
-  if (model !== LISTINGS.MODEL) {
+  if (
+    model !== LISTINGS.MODEL &&
+    model !== CATEGORIES.MODEL &&
+    model !== GALLERIES.MODEL &&
+    model !== FILES.MODEL
+  ) {
     return state;
   }
+  const updated = state.toJS();
   switch (action.type) {
     case MODEL_MAP[model].LIST.SUCCESS:
-      return state.merge({
-        [model]: {
-          LIST: action.payload,
-        },
-      });
+      updated[model].LIST = action.payload;
+      return state.merge(updated);
     case MODEL_MAP[model].GET.SUCCESS:
     case MODEL_MAP[model].PUT.SUCCESS:
     case MODEL_MAP[model].PATCH.SUCCESS:
-      return state.merge({
-        [model]: {
-          GET: action.payload,
-        },
+      updated[model].GET = action.payload;
+      updated[model].LIST.results = updated[model].LIST.results.map(m => {
+        if (m.id === action.payload.id) {
+          return action.payload;
+        }
+        return m;
       });
+      return state.merge(updated);
     case MODEL_MAP[model].POST.SUCCESS:
-      return state.merge({
-        [model]: {
-          POST: action.payload,
-        },
-      });
+      updated[model].POST = action.payload;
+      return state.merge(updated);
+    case MODEL_MAP[model].DELETE.SUCCESS:
+      updated[model].DELETE = action.payload;
+      return state.merge(updated);
     default:
       return state;
   }

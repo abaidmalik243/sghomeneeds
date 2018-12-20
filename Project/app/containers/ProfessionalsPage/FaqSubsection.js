@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Accordion } from 'semantic-ui-react';
-import { generateText } from '../../utils/loremIpsumGenerator';
+// import { generateText } from '../../utils/loremIpsumGenerator';
 import PaperWrapper from '../../components/Base/Paper';
 import Subsection from '../../components/Section/Subsection';
-import CustomPagination from '../../components/CustomPagination';
+// import CustomPagination from '../../components/CustomPagination';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class FaqSubsection extends React.PureComponent {
   static propTypes = {
-    // professional: PropTypes.object,
-    faqActivePage: PropTypes.number,
+    professional: PropTypes.object,
+    // faqActivePage: PropTypes.number,
   };
 
   state = { activeIndex: -1 };
@@ -24,38 +24,47 @@ export default class FaqSubsection extends React.PureComponent {
   };
 
   render() {
-    const { faqActivePage } = this.props;
+    // const { faqActivePage } = this.props;
     const { activeIndex } = this.state;
 
-    const stubData = [
-      {
-        title: `${generateText(50)}?`,
-        content: generateText(300),
-      },
-      {
-        title: `${generateText(30)}?`,
-        content: generateText(100),
-      },
-      {
-        title: `${generateText(40)}?`,
-        content: generateText(200),
-      },
-      {
-        title: `${generateText(50)}?`,
-        content: generateText(400),
-      },
-      {
-        title: `${generateText(10)}?`,
-        content: generateText(300),
-      },
-    ];
+    // const stubData = [
+    //   {
+    //     title: `${generateText(50)}?`,
+    //     content: generateText(300),
+    //   },
+    //   {
+    //     title: `${generateText(30)}?`,
+    //     content: generateText(100),
+    //   },
+    //   {
+    //     title: `${generateText(40)}?`,
+    //     content: generateText(200),
+    //   },
+    //   {
+    //     title: `${generateText(50)}?`,
+    //     content: generateText(400),
+    //   },
+    //   {
+    //     title: `${generateText(10)}?`,
+    //     content: generateText(300),
+    //   },
+    // ];
+    let faqData = [];
+    if (
+      this.props.professional.faq_data &&
+      this.props.professional.faq_data.items
+    ) {
+      if (this.props.professional.faq_data.items.length > 0) {
+        faqData = this.props.professional.faq_data.items;
+      }
+    }
 
-    const faqContent = stubData.map((data, index) => {
+    const faqContent = faqData.map((data, index) => {
       const iconStyle = activeIndex === index ? 'minus' : 'plus';
       const iconClass = `icon ${iconStyle} circle`;
       return (
         <div
-          key={data}
+          key={data.title + data.content}
           style={{
             borderTop: '1px rgb(225, 225, 225) solid',
             padding: '4px 0',
@@ -87,9 +96,9 @@ export default class FaqSubsection extends React.PureComponent {
           >
             {faqContent}
           </Accordion>
-          <div style={{ textAlign: 'center', margin: '20px' }}>
-            <CustomPagination activePage={faqActivePage} totalPages={5} />
-          </div>
+          {/* <div style={{ textAlign: 'center', margin: '20px' }}> */}
+          {/* <CustomPagination activePage={faqActivePage} totalPages={5} /> */}
+          {/* </div> */}
         </PaperWrapper>
       </Subsection>
     );

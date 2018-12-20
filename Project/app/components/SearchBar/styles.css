@@ -28,10 +28,10 @@
 } */
 /* .search_bar_btn{
   padding-right: 30px;
-  padding-left: 30px 
+  padding-left: 30px
 } */
 
-#banner-paper .search-form button:hover {
+#banner-paper .search-form button:hover, .search-form button:hover {
   background: #e8a205 !important;
   transition: all 0.3s ease-in-out !important;
 }

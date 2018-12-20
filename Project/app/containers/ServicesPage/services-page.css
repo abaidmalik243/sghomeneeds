@@ -1,14 +1,82 @@
-.banner-title {
+.service-page-wrapper .banner-title {
   color: white;
 }
 
-.popular.paper {
-  margin-bottom: 20px;
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
+.service-page-wrapper .popular-title {
+  margin: 20px auto 40px auto !important;
 }
 
-.popular.paper img {
+.service-page-wrapper .paper {
+  border-radius: 6px;
+  box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.08);
+}
+
+.service-page-wrapper .category-links.column {
+  padding: 0 14px;
+}
+
+.service-page-wrapper .category-popular.paper {
+  margin-bottom: 20px;
   width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.service-page-wrapper .category-popular.paper img {
+  width: 100%;
+  height: 80%;
+  object-fit: cover;
+}
+
+.service-page-wrapper .category-popular.paper > div {
+  margin: 0 16px;
+  padding: 16px 0;
+  text-align: left;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
+.service-page-wrapper .category-popular.paper > div > h3 {
+  font-weight: 400;
+}
+
+.service-page-wrapper a .category-popular.paper,
+.service-page-wrapper .category-links.paper a {
+  color: black;
+}
+
+.service-page-wrapper a .category-popular.paper:hover,
+.service-page-wrapper .category-links.paper a:hover {
+  color: orange !important;
+}
+
+.service-page-wrapper .category-links.paper {
+  text-align: left;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  border-radius: 2px;
+}
+
+.service-page-wrapper .category-links-title {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.service-page-wrapper .category-links-title,
+.service-page-wrapper .category-links-links {
+  padding: 16px;
+}
+
+.service-page-wrapper .category-links.paper .category-links-links a {
+  color: #888888;
+}
+
+.service-page-wrapper .category-links.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.service-page-wrapper .more-services {
+  padding-top: 20px;
+  background: rgba(0, 0, 0, 0.02) url("https://s3-ap-southeast-1.amazonaws.com/sghomeneeds-gallery/images/DirectoryPage/orangeshades.png");
 }

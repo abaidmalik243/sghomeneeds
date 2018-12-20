@@ -1,11 +1,13 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 // eslint-disable-next-line no-unused-vars
 function Divider(props) {
-  return <div className="ui divider" />;
+  return <div className={`ui divider ${props.className}`} />;
 }
 
-Divider.propTypes = {};
+Divider.propTypes = {
+  className: PropTypes.string,
+};
 
 export default Divider;

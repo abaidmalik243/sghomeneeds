@@ -2,19 +2,23 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
 import Subsection from '../../components/Section/Subsection';
-import ImageWrapper from '../../components/Base/Image';
+import ImageWrapper from '../../components/Base/Image/index';
 import Section from '../../components/Section/Section';
 import TwoColumn from '../../components/Section/TwoColumn';
 
-// import Step1 from '../../images/HomePage/step1.png';
-import Step1 from '../../images/new-images/section_three_img1.png';
-// import Step2 from '../../images/HomePage/step2.jpg'; 
-import Step2 from '../../images/new-images/section_three_img2.png'; 
-// import Step3 from '../../images/HomePage/step3.jpg';
-import Step3 from '../../images/new-images/section_three_img3.png';
-
+// // import Step1 from '../../images/HomePage/step1.png';
+// import Step1 from '../../images/new-images/section_three_img1.png';
+// // import Step2 from '../../images/HomePage/step2.jpg';
+// import Step2 from '../../images/new-images/section_three_img2.png';
+// // import Step3 from '../../images/HomePage/step3.jpg';
+// import Step3 from '../../images/new-images/section_three_img3.png';
 
 import './how-it-works.css';
+import { getS3Image } from '../../utils/images';
+
+const Step1 = getS3Image('/images/new-images/section_three_img1.png');
+const Step2 = getS3Image('/images/new-images/section_three_img2.png');
+const Step3 = getS3Image('/images/new-images/section_three_img3.png');
 
 /* eslint-disable react/prefer-stateless-function */
 export default class HowItWorksSection extends React.PureComponent {
@@ -41,13 +45,17 @@ export default class HowItWorksSection extends React.PureComponent {
                 </div>
               </Grid.Column>
               <Grid.Column>
-                <ImageWrapper src={Step1} width="100%" style={{marginTop : "50px"}} />
+                <ImageWrapper
+                  src={Step1}
+                  width="100%"
+                  style={{ marginTop: '50px' }}
+                />
               </Grid.Column>
             </TwoColumn>
             <div className="pad" />
             <TwoColumn reversed="computer vertically" id="step-2">
               <Grid.Column>
-                <ImageWrapper src={Step2} width="100%"  />
+                <ImageWrapper src={Step2} width="100%" />
               </Grid.Column>
               <Grid.Column>
                 <div className="step-desc">

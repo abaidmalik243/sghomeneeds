@@ -91,8 +91,24 @@ a.navigation-menu-item div {
   padding-top: 11px;
 }
 
-#navbar-wrapper .search-form {
+#navbar-wrapper .search-form, #navbar-wrapper .search-menu {
   padding-left: 10px;
+}
+
+.box-show .search-menu {
+  width: 100%;
+}
+
+@media only screen and (max-width: 1155px) {
+  .box-show .search-menu {
+    width: 45%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .box-show .search-menu {
+    width: 90%;
+  }
 }
 
 #login-button button {
@@ -117,12 +133,12 @@ a.navigation-menu-item div {
   border: 1px solid rgba(247, 177, 0, 1)
 }
 #register-button button:hover{
-  background: #fff;
   color:rgba(247, 177, 0, 1);
-  border: 1px solid rgba(247, 177, 0, 1)
+  border: 1px solid rgba(247, 177, 0, 1);
+  background: #e8a205 !important;
+  transition: all 0.3s ease-in-out !important;
 }
 #hoverable-item a{
-  /* color: black; */
   color: gray;
 }
 #hoverable-item a.item:hover,
@@ -145,15 +161,11 @@ a.navigation-menu-item div {
 .nav_link_first_item{
   margin-left: 50px !important;
 }
-/* @media only screen and (max-width: 768px){  
-  .nav_link_first_item{
-    margin-left: 0px !important;
-  }
-} */
+
 .nav_link_last_item{
   margin-right: 50px !important;
 }
-@media only screen and (max-width: 768px){  
+@media only screen and (max-width: 768px){
   .nav_link_first_item{
     margin-right: 0px !important;
   }
@@ -174,29 +186,33 @@ a.navigation-menu-item div {
 }
 
 #LR {
-padding-left:50px 
+padding-left:50px
 }
 
-@media only screen and (max-width: 1352px){  
+@media only screen and (max-width: 1352px){
   #LR{
    text-align: right;
- 
+
   }
- 
+
 }
 .box-show{
 box-shadow: 0px 12px 40px 0px rgba(0, 0, 0, 0.47);
 }
-/* @media only screen and (max-width: 1154px){  
-  .first{
-  width: 5000px !important;
- 
-  }
- 
-} */
 
 .seach_bar_btn:hover{
   background: #fff !important;
   color:rgba(247, 177, 0, 1) !important;
   border: 1px solid rgba(247, 177, 0, 1)
+}
+
+.navbar-name {
+  height: 40px;
+  vertical-align: middle;
+  padding: 0px 26px;
+}
+
+#user-menu {
+  border: none;
+  box-shadow: none;
 }

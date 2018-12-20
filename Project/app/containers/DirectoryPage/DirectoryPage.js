@@ -10,8 +10,8 @@ import Section from '../../components/Section/Section';
 import Subsection from '../../components/Section/Subsection';
 import TwoColumn from '../../components/Section/TwoColumn';
 import CompanyList from '../../components/CompanyList';
-import GetMatchedPaper from './GetMatchedPaper';
-import SubscribePaper from './SubscribePaper';
+import GetMatchedPaper from '../../components/GetMatchedPaper/GetMatchedPaper';
+import SubscribePaper from '../../components/SubscribePaper/SubscribePaper';
 import OneColumn from '../../components/Section/OneColumn';
 
 import { LISTINGS } from '../../actions/restApi';
@@ -26,6 +26,8 @@ import { desc, listings as defaultListings } from './content';
 import './styles.css';
 import PaperWrapper from '../../components/Base/Paper';
 import CustomPagination from '../../components/CustomPagination';
+
+// import Form from '../../components/Form/Form';
 
 export const DIRECTORY_VIEW = 'directory';
 
@@ -108,6 +110,7 @@ class DirectoryPage extends React.PureComponent {
                 */}
             </Subsection>
           </Section>
+          {/* <Form url="https://sghomeneeds-formio.herokuapp.com/test" /> */}
           <Section>
             <Subsection className="directory-content">
               <TwoColumn>
@@ -156,7 +159,8 @@ class DirectoryPage extends React.PureComponent {
       </TemplatePage>
     );
   }
-  componentWillMount() {
+
+  componentDidMount() {
     const query = this.props.location.search;
     this.props.dispatchAction({
       type: LISTINGS.LIST.REQUESTED,

@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Image } from 'semantic-ui-react';
 import ButtonWrapper from '../Base/Button';
-import Login from '../../images/login.png';
+// import Login from '../../images/login.png';
+import { getS3Image } from '../../utils/images';
+
+const Login = getS3Image('/images/login.png');
 
 function LoginButton(props) {
   return (

@@ -1,38 +1,15 @@
-import { Api } from '../utils/api';
+import { Api, API_URL, API_PREFIX } from '../utils/api';
 import { getOptions, getPath } from '../utils/actionsUtil';
-
-export function getActionModel(actionType) {
-  return actionType.split('/')[0];
-}
-
-export function getActionApi(actionType) {
-  return actionType.split('/')[1];
-}
-
-export function getActionStatus(actionType) {
-  return actionType.split('/')[2];
-}
-
-function generateApiActions(model, api) {
-  return {
-    REQUESTED: `${model}/${api}/REQUESTED`,
-    SUCCESS: `${model}/${api}/SUCCESS`,
-    FAILED: `${model}/${api}/FAILED`,
-  };
-}
-
-function generateRestActions(model) {
-  return {
-    GET: generateApiActions(model, 'GET'),
-    LIST: generateApiActions(model, 'LIST'),
-    POST: generateApiActions(model, 'POST'),
-    PATCH: generateApiActions(model, 'PATCH'),
-    PUT: generateApiActions(model, 'PUT'),
-  };
-}
+import {
+  generateApiActions,
+  generateRestActions,
+  generateModelMap,
+} from './apiUtil';
+import { getToken } from '../utils/localStorage';
 
 export const CATEGORIES = {
   MODEL: 'categories',
+  GET_WITH_CHILDREN: generateApiActions('categories', 'GET_WITH_CHILDREN'),
   ...generateRestActions('categories'),
 };
 
@@ -41,8 +18,14 @@ export const MERCHANTS = {
   ...generateRestActions('merchants'),
 };
 
+export const CONSUMERS = {
+  MODEL: 'consumers',
+  ...generateRestActions('consumers'),
+};
+
 export const USERS = {
   MODEL: 'users',
+  LOGOUT: generateApiActions('users', 'LOGOUT'),
   REGISTER: generateApiActions('users', 'REGISTER'),
   LOGIN: generateApiActions('users', 'LOGIN'),
   LOAD_AUTH: generateApiActions('users', 'LOAD_AUTH'),
@@ -54,42 +37,93 @@ export const GALLERIES = {
   ...generateRestActions('galleries'),
 };
 
+export const FILES = {
+  MODEL: 'files',
+  ...generateRestActions('files'),
+};
+
 export const LISTINGS = {
   MODEL: 'listings',
   ...generateRestActions('listings'),
 };
 
-export const MODELS_LIST = [CATEGORIES, USERS, MERCHANTS, GALLERIES, LISTINGS];
+export const PROJECTS = {
+  MODEL: 'projects',
+  ...generateRestActions('projects'),
+};
 
-export const MODEL_MAP = (() => {
-  const m = {};
-  // eslint-disable-next-line no-restricted-syntax
-  for (const model of MODELS_LIST) {
-    m[model.MODEL] = model;
-  }
-  return m;
-})();
+export const SEO = {
+  MODEL: 'seo',
+  ...generateRestActions('seo'),
+};
 
-export function get({ model, id, query, contentType }) {
-  const options = getOptions({ method: 'GET', contentType });
-  const path = getPath({ model, id, query });
+export const MODELS_LIST = [
+  CATEGORIES,
+  USERS,
+  MERCHANTS,
+  CONSUMERS,
+  GALLERIES,
+  LISTINGS,
+  FILES,
+  PROJECTS,
+  SEO,
+];
+
+export const MODEL_MAP = generateModelMap(MODELS_LIST);
+
+export function get({ model, id, url, query, contentType }) {
+  const options = getOptions({ method: 'GET', contentType, token: getToken() });
+  const path = getPath({
+    host: API_URL,
+    prefix: API_PREFIX,
+    model,
+    id,
+    url,
+    query,
+  });
   return Api(path, options);
 }
 
 export function post({ model, id, url, data, contentType }) {
-  const options = getOptions({ method: 'POST', data, contentType });
-  const path = getPath({ model, id, url });
+  const options = getOptions({
+    method: 'POST',
+    data,
+    contentType,
+    token: getToken(),
+  });
+  const path = getPath({ host: API_URL, prefix: API_PREFIX, model, id, url });
   return Api(path, options);
 }
 
 export function put({ model, id, url, data, contentType }) {
-  const options = getOptions({ method: 'PUT', data, contentType });
-  const path = getPath({ model, id, url });
+  const options = getOptions({
+    method: 'PUT',
+    data,
+    contentType,
+    token: getToken(),
+  });
+  const path = getPath({ host: API_URL, prefix: API_PREFIX, model, id, url });
   return Api(path, options);
 }
 
 export function patch({ model, id, url, data, contentType }) {
-  const options = getOptions({ method: 'PATCH', data, contentType });
-  const path = getPath({ model, id, url });
+  const options = getOptions({
+    method: 'PATCH',
+    data,
+    contentType,
+    token: getToken(),
+  });
+  const path = getPath({ host: API_URL, prefix: API_PREFIX, model, id, url });
+  return Api(path, options);
+}
+
+export function deleteModel({ model, id, url, data, contentType }) {
+  const options = getOptions({
+    method: 'DELETE',
+    data,
+    contentType,
+    token: getToken(),
+  });
+  const path = getPath({ host: API_URL, prefix: API_PREFIX, model, id, url });
   return Api(path, options);
 }

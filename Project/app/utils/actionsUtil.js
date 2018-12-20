@@ -1,38 +1,36 @@
-import { API_URL } from './api';
+import QueryString from 'query-string';
+// import { getToken } from './localStorage';
 
 export const APPLICATION_JSON = 'application/json';
 export const MULTIPART_FORM_DATA = 'multipart/form-data';
 
-export function getOptions({ method, data, contentType }) {
+export function getOptions({ method, data, contentType, token }) {
+  const authHeader = {};
+  if (token !== undefined && token !== null) {
+    authHeader['x-jwt-token'] = token;
+  }
   switch (contentType) {
     case MULTIPART_FORM_DATA:
       return {
         method,
-        contentType: MULTIPART_FORM_DATA,
+        headers: { 'content-type': MULTIPART_FORM_DATA, ...authHeader },
         data,
       };
     default:
       return {
         method,
-        contentType: APPLICATION_JSON,
+        headers: { 'content-type': APPLICATION_JSON, ...authHeader },
         data,
       };
   }
 }
 
-export function getPath({ model, id, url, query }) {
-  let path = `${API_URL}/api/${model}/${id}/${url}/`;
-  if (id === undefined) {
-    path =
-      url === undefined
-        ? `${API_URL}/api/${model}/`
-        : `${API_URL}/api/${model}/${url}/`;
-  } else {
-    path =
-      url === undefined
-        ? `${API_URL}/api/${model}/${id}/`
-        : `${API_URL}/api/${model}/${id}/${url}/`;
-  }
-  path = query === undefined ? path : `${path}${query}`;
+export function getPath({ host, prefix, model, id, url, query }) {
+  let path = `${host}`;
+  if (prefix) path += `/${prefix}`;
+  path += `/${model}`;
+  if (id) path += `/${id}`;
+  if (url) path += `/${url}`;
+  if (query) path += `?${QueryString.stringify(query)}`;
   return path;
 }

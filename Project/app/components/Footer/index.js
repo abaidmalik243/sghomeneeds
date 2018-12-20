@@ -1,27 +1,37 @@
 import React from 'react';
 import { Grid } from 'semantic-ui-react';
-import CompanyLogo from '../CompanyAsset/CompanyLogo';
 import FooterList from './FooterList';
 import Subscribe from './Subscribe';
 import { businessList, customerList, companyList } from './content';
-import facebook_icon from '../../images/new-images/facebook.png';
-import LogoImage from '../../images/SGHomeNeeds-Logo.png';
+import { getS3Image } from '../../utils/images';
+// import facebookIcon from '../../images/new-images/facebook.png';
+// import LogoImage from '../../images/SGHomeNeeds-Logo.png';
+
+const facebookIcon = getS3Image('/images/new-images/facebook.png');
+const LogoImage = getS3Image('/images/SGHomeNeeds-Logo.png');
 function Footer() {
   return (
     <div id="footer">
-      <footer style={{ padding: '50px 100px', backgroundColor: '#fff' }} className="footer_main_container">
+      <footer
+        style={{ padding: '50px 100px', backgroundColor: '#fff' }}
+        className="footer_main_container"
+      >
         <Grid stackable columns={5}>
           <Grid.Row>
             <Grid.Column>
-              <img src={LogoImage} className="footer_logo" />
+              <img src={LogoImage} className="footer_logo" alt="" />
               <div style={{ marginBottom: '8px' }}>
                 <a href="/#">Privacy Policy</a> | <a href="/#">Terms of Use</a>
               </div>
               <div style={{ marginBottom: '8px' }}>Follow Us:</div>
-              <button
-                className="ui circular basic icon button"
-              >
-                <img src={facebook_icon} height="25px" width="25px" className="footer_facebook_icon" /> 
+              <button className="ui circular basic icon button">
+                <img
+                  src={facebookIcon}
+                  height="25px"
+                  width="25px"
+                  className="footer_facebookIcon"
+                  alt=""
+                />
               </button>
             </Grid.Column>
             <Grid.Column>

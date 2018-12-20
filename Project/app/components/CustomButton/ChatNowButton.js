@@ -1,26 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Icon } from 'semantic-ui-react';
 import './custom-button.css';
 function ChatNowButton(props) {
+  const { buttonProps = {}, iconProps = {}, onClick } = props;
   return (
     <button
-      {...props.buttonProps}
-      className={`ui button filled chat-now ${props.buttonProps.className}`}
+      {...buttonProps}
+      className={`ui button filled chat-now ${buttonProps.className}`}
       style={{
-        ...props.buttonProps.style,
+        ...buttonProps.style,
       }}
+      onClick={onClick}
     >
-      <i
-        {...props.iconProps}
-        className={`comments outline icon ${props.iconProps.className}`}
-      />&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Chat Now
+      <Icon
+        {...iconProps}
+        className={`comments outline ${iconProps.className}`}
+      />|<span>Chat Now</span>
     </button>
   );
 }
 
 ChatNowButton.propTypes = {
-  buttonProps: PropTypes.object.isRequired,
-  iconProps: PropTypes.object.isRequired,
+  buttonProps: PropTypes.object,
+  iconProps: PropTypes.object,
+  onClick: PropTypes.func,
 };
 
 export default ChatNowButton;

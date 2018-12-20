@@ -1,15 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // import classNames from 'classnames';
-import PaperWrapper from '../../components/Base/Paper';
-import SearchBar from '../../components/SearchBar';
-import Banner from '../../images/HomePage/banner.jpg';
+import PaperWrapper from '../../components/Base/Paper/index';
+import SearchBar from '../../components/SearchBar/index';
+// import Banner from '../../images/HomePage/banner.jpg';
 
-import ImageBannerSection from '../../components/Section/ImageBannerSection';
+import HomePageImageBannerSection from '../../components/Section/HomePageImageBannerSection';
 import Subsection from '../../components/Section/Subsection';
 
 import '../../components/ButtonGroup/styles.css';
 import './styles.css';
+import { getS3Image } from '../../utils/images';
+
+const Banner = getS3Image('/images/HomePage/banner.jpg');
 
 /* eslint-disable react/prefer-stateless-function */
 export default class BannerSection extends React.PureComponent {
@@ -20,7 +23,7 @@ export default class BannerSection extends React.PureComponent {
   render() {
     const { isPhone, history } = this.props;
     return (
-      <ImageBannerSection
+      <HomePageImageBannerSection
         imageSource={Banner}
         style={{ marginBottom: isPhone ? '150px' : '100px' }}
       >
@@ -33,12 +36,9 @@ export default class BannerSection extends React.PureComponent {
             <div style={{ margin: '10px auto', width: '77%' }}>
               <SearchBar
                 placeholder="What service do you need?"
-                // width="300px"
                 fluid
                 history={history}
-                inputStyle={{ paddingLeft: "30px" }}
-                // buttonStyle={{ paddingRight: '30px', paddingLeft: '30px' }}
-                // style= {{paddingLeft50}}
+                inputStyle={{ paddingLeft: '30px' }}
               />
             </div>
             <div id="search-bottom-link">
@@ -48,7 +48,7 @@ export default class BannerSection extends React.PureComponent {
             </div>
           </Subsection>
         </PaperWrapper>
-      </ImageBannerSection>
+      </HomePageImageBannerSection>
     );
   }
 }

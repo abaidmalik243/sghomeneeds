@@ -1,25 +1,35 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { Grid, Image } from 'semantic-ui-react';
-import classNames from 'classnames';
-import PaperWrapper from '../../components/Base/Paper';
+// import classNames from 'classnames';
+import PaperWrapper from '../../components/Base/Paper/index';
 import Subsection from '../../components/Section/Subsection';
 import Section from '../../components/Section/Section';
-import { orange } from '../../components/Base/constants';
-import LinkWrapper from '../../components/Base/Link';
-import dots from '../../images/HomePage/dots.png';
+import LinkWrapper from '../../components/Base/Link/index';
+// import dots from '../../images/HomePage/dots.png';
 import './category.css';
-import house_image from '../../images/new-images/001-house.png';
-import carpenters_image from '../../images/new-images/002-wood.png';
-import handy_image from '../../images/new-images/003-tools.png';
-import pestcontrol_image from '../../images/new-images/004-bug.png';
-import airconditioner_image from '../../images/new-images/005-air-conditioner.png';
+// import houseImage from '../../images/new-images/001-house.png';
+// import carpentersImage from '../../images/new-images/002-wood.png';
+// import handyImage from '../../images/new-images/003-tools.png';
+// import pestcontrolImage from '../../images/new-images/004-bug.png';
+// import airconditionerImage from '../../images/new-images/005-air-conditioner.png';
+import { getS3Image } from '../../utils/images';
+
+const dots = getS3Image('/images/HomePage/dots.png');
+const houseImage = getS3Image('/images/new-images/001-house.png');
+const carpentersImage = getS3Image('/images/new-images/002-wood.png');
+const handyImage = getS3Image('/images/new-images/003-tools.png');
+const pestcontrolImage = getS3Image('/images/new-images/004-bug.png');
+const airconditionerImage = getS3Image(
+  '/images/new-images/005-air-conditioner.png',
+);
+
 /* eslint-disable react/prefer-stateless-function */
 
 export default class CategorySection extends React.PureComponent {
   static propTypes = {
-    categories: PropTypes.array,
-    search: PropTypes.func,
+    // categories: PropTypes.array,
+    // search: PropTypes.func,
   };
 
   renderImage(image) {
@@ -108,7 +118,6 @@ export default class CategorySection extends React.PureComponent {
   }
 
   render() {
-    const { categories, search } = this.props;
     return (
       <Section style={{ backgroundColor: 'white' }}>
         <div id="dotted-line">{this.renderShape()}</div>
@@ -116,77 +125,76 @@ export default class CategorySection extends React.PureComponent {
           <PaperWrapper id="category-paper">
             <Grid
               columns={6}
-              // stackable 
               doubling
-              // divided
-              
               style={{ marginRight: 0, marginLeft: 0 }}
             >
               <Grid.Row style={{ paddingTop: 0, paddingBottom: 0 }}>
-                
-                <Grid.Column >
-                <div class="column category-col right_border">
-                  <div class="left-border no-border"></div>
-                    <button class="category-button">
-                        {/* <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px"> */}
-                          <img src={house_image} width="40px" height="40px"/>
-                        {/* </svg> */}
-                        <h4>Home</h4>
+                <Grid.Column>
+                  <div className="column category-col right_border">
+                    <div className="left-border no-border" />
+                    <button className="category-button">
+                      <img src={houseImage} width="40px" height="40px" alt="" />
+                      <h4>Home</h4>
                     </button>
-                </div>
+                  </div>
                 </Grid.Column>
 
-                <Grid.Column >
-                <div class="column category-col right_border">
-                  <div class="left-border no-border"></div>
-                    <button class="category-button">
-                        {/* <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px"> */}
-                          <img src={carpenters_image} width="40px" height="40px"/>
-                        {/* </svg> */}
-                        <h4>Carpenters</h4>
+                <Grid.Column>
+                  <div className="column category-col right_border">
+                    <div className="left-border no-border" />
+                    <button className="category-button">
+                      <img
+                        src={carpentersImage}
+                        width="40px"
+                        height="40px"
+                        alt=""
+                      />
+                      <h4>Carpenters</h4>
                     </button>
-                </div>
+                  </div>
                 </Grid.Column>
 
-                <Grid.Column >
-                <div class="column category-col right_border">
-                  <div class="left-border no-border"></div>
-                    <button class="category-button">
-                        {/* <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px"> */}
-                          <img src={handy_image} width="40px" height="40px"/>
-                        {/* </svg> */}
-                        <h4>HandyMan</h4>
+                <Grid.Column>
+                  <div className="column category-col right_border">
+                    <div className="left-border no-border" />
+                    <button className="category-button">
+                      <img src={handyImage} width="40px" height="40px" alt="" />
+                      <h4>HandyMan</h4>
                     </button>
-                </div>
+                  </div>
                 </Grid.Column>
 
-                <Grid.Column >
-                <div class="column category-col right_border">
-                  <div class="left-border no-border"></div>
-                    <button class="category-button">
-                        {/* <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px"> */}
-                          <img src={pestcontrol_image} width="40px" height="40px"/>
-                        {/* </svg> */}
-                        <h4>Pest Control</h4>
+                <Grid.Column>
+                  <div className="column category-col right_border">
+                    <div className="left-border no-border" />
+                    <button className="category-button">
+                      <img
+                        src={pestcontrolImage}
+                        width="40px"
+                        height="40px"
+                        alt=""
+                      />
+                      <h4>Pest Control</h4>
                     </button>
-                </div>
+                  </div>
                 </Grid.Column>
 
-                <Grid.Column >
-                <div class="column category-col right_border">
-                  <div class="left-border no-border"></div>
-                    <button class="category-button">
-                        {/* <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px"> */}
-                          <img src={airconditioner_image} width="40px" height="40px"/>
-                        {/* </svg> */}
-                        <h4>Air Conditioner</h4>
+                <Grid.Column>
+                  <div className="column category-col right_border">
+                    <div className="left-border no-border" />
+                    <button className="category-button">
+                      <img
+                        src={airconditionerImage}
+                        width="40px"
+                        height="40px"
+                        alt=""
+                      />
+                      <h4>Air Conditioner</h4>
                     </button>
-                </div>
+                  </div>
                 </Grid.Column>
 
-                <Grid.Column 
-                  id="view-all"
-                >
+                <Grid.Column id="view-all">
                   <LinkWrapper className="category-button " href="/directory">
                     <div id="category-button-content">
                       <Image src={dots} />

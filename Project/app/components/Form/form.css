@@ -1,0 +1,208 @@
+.formio-form > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px
+}
+
+.formio-form > div > * {
+  width: 80%;
+}
+
+.formio-form fieldset {
+  border: 0;
+}
+
+ /* Form Nav */
+.formio-form nav {
+  display: none;
+}
+/* End form Nav */
+
+/* Form section */
+.formio-form .formio-component,
+.formio-form .formio-component .card-body {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formio-form .formio-component.form-group > .control-label {
+  font-size: 16px;
+  /*font-weight: bold;*/
+  font-family: inherit;
+  margin-bottom: 16px;
+}
+
+.formio-form .formio-component.form-group label~.form-group {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 36px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+  margin: 12px;
+}
+
+@media only screen and (max-width: 767px) {
+  .formio-form .formio-component.form-group label~.form-group {
+    padding: 8px;
+    width: 100%;
+  }
+}
+
+.formio-form .formio-component.form-group .form-group .form-check {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 0 8px;
+  width: 100%;
+}
+
+/* Form input */
+.formio-form .formio-component-day .input-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.formio-form .form-check .form-check-label {
+  padding: 16px;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+ /* Form checkbox */
+.formio-form .form-check .form-check-label input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.formio-form .form-check .form-check-label span {
+  display: flex;
+  align-items: center;
+}
+
+.formio-form .form-check .form-check-label input~span:before {
+  content: " ";
+  margin: 0 12px;
+  height: 17px;
+  width: 17px;
+  min-width: 17px;
+  border-radius: 0;
+  border: 1px solid grey;
+  background-color: white;
+  display: inline-block;
+  font-size: 12px;
+}
+
+.formio-form .form-check .form-check-label input:checked~span:before {
+  background-color: rgb(252, 176, 42);
+  content: "✓";
+  color: white;
+  border: 0;
+}
+/* End form checkbox */
+
+/* Form text input */
+.formio-form .formio-component input[type=text],
+.formio-form .formio-component textarea[type=text],
+.formio-form .formio-component input[type=email] {
+  padding: 16px;
+  border: 1px solid #bbbbbb;
+  width: 75%;
+}
+/* End form text input */
+
+.formio-form .formio-component.form-group .form-group .form-check .form-check-label span {
+  font-size: 16px;
+  font-weight: 200;
+  color: #888888;
+}
+/* End Form input */
+/* End Form section */
+
+/* File Selector */
+.formio-form .formio-component-file > div,
+.formio-form .formio-component-file > div > div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.formio-form .formio-component-file ul {
+  width: 75%;
+  padding: 0;
+  margin: 0;
+}
+
+.formio-form .fileSelector,
+.formio-form .file {
+  width: 75%;
+}
+/*!* End File selector *!*/
+
+/* Form buttons */
+.formio-form .list-inline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  width: 75%;
+}
+
+.formio-form .list-inline .list-inline-item {
+  padding: 0;
+}
+
+.formio-form .list-inline .list-inline-item:first-child {
+  display: none;
+}
+
+.formio-form .list-inline .list-inline-item:last-child {
+  margin-left: auto;
+}
+
+/* HACK: To change the content of the previous and next buttons */
+.formio-form .list-inline .list-inline-item button {
+  visibility: hidden;
+  width: 78px;
+  white-space: nowrap;
+  padding: 0;
+  margin: 0;
+}
+
+.formio-form .list-inline .list-inline-item button:before {
+  visibility: visible;
+  font-weight: 200;
+  padding: 8px 16px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.12);
+}
+.formio-form .list-inline .list-inline-item button.btn-wizard-nav-previous:before {
+  content: "← Back";
+  background: rgb(229, 229, 229);
+  color: grey;
+}
+
+.formio-form .list-inline .list-inline-item button.btn-wizard-nav-next:before {
+  content: "Next →";
+  background: rgb(252, 176, 42);
+  color: white;
+}
+
+.formio-form .list-inline .list-inline-item button.btn-wizard-nav-submit:before {
+  content: "Submit";
+  background: rgb(252, 176, 42);
+  color: white;
+}
+/* END HACK */
+/* End Form buttons */

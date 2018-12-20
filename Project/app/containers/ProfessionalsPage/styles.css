@@ -12,11 +12,12 @@
   padding: 0px
 }
 
-#professionals .paper {
+#professionals .paper,
+#professionals .card {
+  width: 100%;
   border-radius: 3px;
   background-color: rgb(255, 255, 255);
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.06);
-
 }
 
 #name .paper .subsection {
@@ -31,13 +32,12 @@
 
 }
 
-
 #video-paper {
   border-radius: 4px;
   box-shadow: 0px 11px 32px 0px rgba(0, 0, 0, 0.06);
 }
 
-#video-paper button {
+#video-paper .video-react-big-play-button {
   top: 50%;
   left: 50%;
   height: 1.5em;
@@ -140,7 +140,6 @@
   border-bottom: 1px solid #eeeeee;
 }
 
-
 #reviews .inline h2 {
   font-weight: lighter;
 }
@@ -167,25 +166,15 @@
 
 #reviews .single-review {
   border-bottom: solid 1px #eee;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  padding-left: 30px;
-  padding-right: 90px;
+  padding: 30px 90px 30px 30px;
 }
 
-#profesionals-info {
-  margin: 0px;
-  padding: 0px;
+#professionals-info {
+  margin-top: 0;
+  padding: 0;
 }
 
-#profesionals-info .card {
-  width: 100%;
-  border-radius: 3px;
-  background-color: rgb(255, 255, 255);
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.06);
-}
-
-#profesionals-info .icon.circle {
+#professionals-info .icon.circle {
   color: rgb(57, 181, 74);
   vertical-align: middle;
   /*font-size: 12px;*/
@@ -220,6 +209,12 @@
   }
 }
 
+#report-listing {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 15px;
+}
 
 .services-content {
   text-align: left;

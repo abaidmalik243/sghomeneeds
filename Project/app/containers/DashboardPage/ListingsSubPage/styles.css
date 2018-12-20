@@ -1,0 +1,34 @@
+.no-listing {
+  text-align: center;
+  width: 100%;
+}
+
+.listing-group {
+  text-align: left;
+  margin-bottom: 26px;
+}
+
+.listing-group .content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.listing-group .listing-logo {
+  max-width: 100px;
+}
+
+.listing-group .listing-text {
+  max-width: 70%;
+}
+
+.listing-group .listing-description {
+  max-height: 40px;
+  overflow: hidden;
+  color: #888;
+}
+
+.listing-group .listing-image {
+  margin-bottom: 14px !important;
+  cursor: pointer;
+}

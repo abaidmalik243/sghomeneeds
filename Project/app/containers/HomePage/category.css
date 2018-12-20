@@ -64,7 +64,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: orange;
+  background-color: rgb(255, 177, 0);
 }
 
 #view-all .category-button {
@@ -109,7 +109,7 @@
   top: -72px;
   left: 203px;
 }
-#view-all .category-button:hover{
+#view-all .category-button:hover, #view-all:hover {
   background: #e8a205 !important;
   transition: all 0.3s ease-in-out !important;
 }

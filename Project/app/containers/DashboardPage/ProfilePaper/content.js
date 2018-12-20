@@ -1,21 +1,15 @@
+import c from '../../Common/categories.json';
+export const categories = c;
+
 export const listingForm = {
   fields: [
     {
-      label: 'Name',
-      type: 'text',
+      label: 'Postal Code',
+      type: 'hidden',
       inputProps: {
-        placeholder: 'Name',
-        name: 'name',
-        defaultValue: 'Test Merchant',
-      },
-    },
-    {
-      label: 'Address',
-      type: 'text',
-      inputProps: {
-        placeholder: 'Address',
-        name: 'address',
-        defaultValue: '627 Yishun Street 61',
+        placeholder: 'Postal Code',
+        name: 'postal_code',
+        defaultValue: '760627',
       },
     },
     {
@@ -47,7 +41,7 @@ export const listingForm = {
     },
     {
       label: 'Latitude',
-      type: 'text',
+      type: 'hidden',
       inputProps: {
         placeholder: 'Latitude',
         name: 'latitude',
@@ -56,7 +50,7 @@ export const listingForm = {
     },
     {
       label: 'Longitude',
-      type: 'text',
+      type: 'hidden',
       inputProps: {
         placeholder: 'Longitude',
         name: 'longitude',
@@ -64,17 +58,8 @@ export const listingForm = {
       },
     },
     {
-      label: 'Postal Code',
-      type: 'text',
-      inputProps: {
-        placeholder: 'Postal Code',
-        name: 'postal_code',
-        defaultValue: '760627',
-      },
-    },
-    {
       label: 'Timing',
-      type: 'text',
+      type: 'hidden',
       inputProps: {
         placeholder: 'Timing',
         name: 'timing',
@@ -88,60 +73,6 @@ export const listingForm = {
         placeholder: 'Phone',
         name: 'phone',
         defaultValue: '+65 12345678',
-      },
-    },
-    {
-      label: 'Email',
-      type: 'text',
-      inputProps: {
-        placeholder: 'Email',
-        name: 'email',
-        defaultValue: 'sghomeneeds.dev@gmail.com',
-      },
-    },
-    {
-      label: 'Website',
-      type: 'text',
-      inputProps: {
-        placeholder: 'Website',
-        name: 'website',
-        defaultValue: 'sghomeneeds.com',
-      },
-    },
-    {
-      label: 'Facebook',
-      type: 'text',
-      inputProps: {
-        placeholder: 'Facebook',
-        name: 'facebook',
-        defaultValue: 'facebook.com',
-      },
-    },
-    {
-      label: 'Twitter',
-      type: 'text',
-      inputProps: {
-        placeholder: 'Twitter',
-        name: 'twitter',
-        defaultValue: 'twitter.com',
-      },
-    },
-    {
-      label: 'About',
-      type: 'text',
-      inputProps: {
-        placeholder: 'About Me',
-        name: 'about_rich_text',
-        defaultValue: 'Lorem Ipsum',
-      },
-    },
-    {
-      label: 'Description',
-      type: 'text',
-      inputProps: {
-        placeholder: 'Description',
-        name: 'description',
-        defaultValue: 'Description',
       },
     },
   ],

@@ -1,8 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, TransitionablePortal, Segment, Header } from 'semantic-ui-react';
+import queryString from 'query-string';
+import {
+  Grid,
+  TransitionablePortal,
+  Segment,
+  Header,
+  Menu,
+} from 'semantic-ui-react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import TemplatePage from '../Common/PageWrapper';
 import Subsection from '../../components/Section/Subsection';
 import TwoColumn from '../../components/Section/TwoColumn';
@@ -22,10 +30,13 @@ const mapDispatchToProps = dispatch => ({
   login: payload => {
     dispatch({ type: USERS.LOGIN.REQUESTED, payload });
   },
+  goTo: payload => {
+    dispatch(push(payload.path));
+  },
 });
 
 const mapStateToProps = state => ({
-  user: state.get(USERS.MODEL).toJS(),
+  users: state.get(USERS.MODEL).toJS(),
 });
 
 const withConnect = connect(
@@ -44,8 +55,11 @@ const withSaga = injectSaga({
 class LoginPage extends React.PureComponent {
   static propTypes = {
     login: PropTypes.func.isRequired,
-    user: PropTypes.object,
+    users: PropTypes.object,
+    location: PropTypes.object,
+    goTo: PropTypes.func,
   };
+  state = { userType: 'consumer' };
 
   loginWithEmail = event => {
     event.preventDefault();
@@ -53,21 +67,42 @@ class LoginPage extends React.PureComponent {
       method: 'email',
       username: event.target.username.value,
       password: event.target.password.value,
+      user_type: this.state.userType,
     });
   };
 
   render() {
-    const { user, login } = this.props;
+    const { users, login } = this.props;
     return (
       <TemplatePage {...this.props}>
         <TwoColumn id="content">
           <Grid.Column>
             <Subsection id="login-section">
               <PaperWrapper>
-                <TransitionablePortal open={!!user.loginError.message}>
+                <Menu pointing secondary fluid id="user-type-menu">
+                  <Menu.Item
+                    name="consumer"
+                    onClick={() => {
+                      this.setState({ userType: 'consumer' });
+                    }}
+                    active={this.state.userType === 'consumer'}
+                  >
+                    Looking for a Professional
+                  </Menu.Item>
+                  <Menu.Item
+                    name="merchant"
+                    onClick={() => {
+                      this.setState({ userType: 'merchant' });
+                    }}
+                    active={this.state.userType === 'merchant'}
+                  >
+                    I am a Professional
+                  </Menu.Item>
+                </Menu>
+                <TransitionablePortal open={!!users.loginError.message}>
                   <Segment id="login-fail">
                     <Header>Login Failed</Header>
-                    <p style={{ color: 'red' }}>{user.loginError.message}</p>
+                    <p style={{ color: 'red' }}>{users.loginError.message}</p>
                   </Segment>
                 </TransitionablePortal>
                 <LoginSubsection
@@ -80,12 +115,45 @@ class LoginPage extends React.PureComponent {
           </Grid.Column>
           <Grid.Column>
             <Subsection id="social-login-section">
-              <SocialLoginSubsection login={login} />
+              <SocialLoginSubsection
+                login={login}
+                user_type={this.state.userType}
+              />
             </Subsection>
           </Grid.Column>
         </TwoColumn>
       </TemplatePage>
     );
+  }
+  componentDidMount() {
+    // console.log(this.props);
+    const { goTo, users, location } = this.props;
+    if (users.isLoggedIn) {
+      if (
+        location.search &&
+        queryString.parse(location.search).redirect !== undefined
+      ) {
+        // console.log(queryString.parse(location.search));
+        goTo({ path: queryString.parse(location.search).redirect });
+      } else {
+        goTo({ path: '/dashboard' });
+      }
+    }
+  }
+  // eslint-disable-next-line no-unused-vars
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const { location, goTo, users } = this.props;
+    // console.log(prevProps, this.props);
+    if (!prevProps.users.isLoggedIn && users.isLoggedIn) {
+      if (
+        location.search &&
+        queryString.parse(location.search).redirect !== undefined
+      ) {
+        goTo({ path: queryString.parse(location.search).redirect });
+      } else {
+        goTo({ path: '/dashboard' });
+      }
+    }
   }
 }
 

@@ -15,7 +15,7 @@ export default class VideoSubsection extends React.PureComponent {
       <Subsection id="video-section">
         <PaperWrapper id="video-paper">
           <div>
-            <VideoPlayer videoSource={professional.videoSource} />
+            <VideoPlayer videoSource={professional.video} />
           </div>
         </PaperWrapper>
       </Subsection>

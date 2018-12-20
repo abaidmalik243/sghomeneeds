@@ -18,3 +18,9 @@
   transition: all 0.3s ease-in-out !important;
   text-decoration: underline;
 }
+#register-button button.button:hover{
+  background: #e8a205 !important;
+  transition: all 0.3s ease-in-out !important;
+  text-decoration: underline;
+  color: white;
+}

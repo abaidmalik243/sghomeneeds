@@ -13,6 +13,7 @@ function FavoriteButton(props) {
           props.iconProps.className ? props.iconProps.className : ''
         }`}
         style={{
+          color: 'red',
           position: 'relative',
           left: '-1px',
           top: '1px',

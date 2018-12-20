@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import PropTypes from 'prop-types';
 import GoogleLogin from 'react-google-login';
@@ -14,6 +15,7 @@ function SocialLoginSubsection(props) {
       method: 'google',
       username: resp.profileObj.email,
       token: resp.tokenId,
+      user_type: props.user_type,
     });
   };
 
@@ -22,6 +24,7 @@ function SocialLoginSubsection(props) {
       method: 'facebook',
       username: resp.email,
       token: resp.accessToken,
+      user_type: props.user_type,
     });
   };
 
@@ -31,7 +34,7 @@ function SocialLoginSubsection(props) {
         <h3>You can also continue with</h3>
         <OneColumn>
           <FacebookLogin
-            appId="174357820166618"
+            appId="942418015912160"
             fields="name,email,picture"
             callback={response => {
               loginWithFacebook(response);
@@ -76,6 +79,7 @@ function SocialLoginSubsection(props) {
 
 SocialLoginSubsection.propTypes = {
   login: PropTypes.func,
+  user_type: PropTypes.string,
 };
 
 export default SocialLoginSubsection;

@@ -1,5 +1,5 @@
 #content > .row {
-  background: url("../../images/DirectoryPage/orangeshades.png") no-repeat;
+  background: url("https://s3-ap-southeast-1.amazonaws.com/sghomeneeds-gallery/images/LoginPage/bg.png") no-repeat;
   background-size: contain;
   padding: 48px 24px;
 }
@@ -18,11 +18,11 @@
   width: 100%;
 }
 
-#login-wrapper {
+#login-section #login-wrapper {
   box-shadow: 0 0 13px 0 rgba(0, 0, 0, 0.07);
 }
 
-#login-wrapper .button {
+#login-section #login-wrapper .button {
   border-radius: 2px;
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.06);
   width: 120px;
@@ -32,7 +32,7 @@
   padding: 12px 32px;
 }
 
-#login-form .input {
+#login-section #login-form .input {
   border: 0;
   height: 48px;
   border-radius: 0;
@@ -40,32 +40,36 @@
   background-color: rgb(253, 253, 253);
 }
 
-#login-form .ui[class*="left icon"].input>input {
+#login-section #login-form .ui[class*="left icon"].input>input {
   padding-left: 4em !important;
   border-radius: 2px;
   border-color: #eee;
 }
 
-#login-form label {
+#login-section #login-form label {
   font-family: 'AtlasGrotesk', sans-serif;
   font-size: 12px;
 }
 
 /* overriding semantic checkbox styles */
-#login-form .ui.checkbox .box:before, .ui.checkbox label:before {
+#login-section #login-form .ui.checkbox .box:before,
+#login-section #login-form .ui.checkbox label:before {
   border-radius: 0 !important;
 }
 
-#login-form .ui.checkbox input:checked~.box:before, .ui.checkbox input:checked~label:before {
+#login-section #login-form .ui.checkbox input:checked~.box:before,
+#login-section #login-form .ui.checkbox input:checked~label:before {
   background: orange !important;
   border-color: orange !important;
 }
 
-#login-form .ui.checkbox input:checked~.box:after, .ui.checkbox input:checked~label:after {
+#login-section #login-form .ui.checkbox input:checked~.box:after,
+#login-section #login-form .ui.checkbox input:checked~label:after {
   color: white !important;
 }
 
-#login-form .ui.checkbox .box:after, .ui.checkbox label:after {
+#login-section #login-form .ui.checkbox .box:after,
+#login-section #login-form .ui.checkbox label:after {
   position: absolute !important;
   font-size: 10px !important;
 }
@@ -79,7 +83,7 @@
   color: grey;
 }
 
-#register div.horizontal.divider {
+#login-section #register div.horizontal.divider {
   color: grey;
   font-weight: 200;
   width: 90%;
@@ -87,20 +91,30 @@
   font-size: 14px;
 }
 
-#register #sign-up-tos {
+#login-section #register #sign-up-tos {
   font-size: 12px;
   font-weight: 200;
   padding-left: 12px;
   padding-right: 12px;
 }
 
-a {
+#login-section a {
   color: rgb(255, 177, 0);
 }
 
-#login-fail {
+#login-section #login-fail {
   left: 40%;
   position: fixed;
   top: 50%;
   z-index: 1000;
+}
+
+#login-section a.item {
+  width: 50%;
+  font-size: large;
+  color: black;
+}
+
+#user-type-menu {
+  margin-bottom: 0px;
 }

@@ -1,0 +1,43 @@
+.service-category-wrapper .pagination .item {
+  width: 20px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.btn-wizard-nav-submit {
+  display: none !important;
+}
+
+.hide-formio-email .formio-component-Email {
+  display: none !important;
+}
+
+#form-landing {
+  padding-bottom: 10px;
+  max-width: 1024px;
+}
+
+
+#form-landing .subsection {
+  padding-bottom: 10px;
+  width: 70%;
+}
+
+#form-landing h1 {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+
+#form-landing h1>strong {
+  color: rgba(247, 177, 0, 1);
+}
+
+#form-landing h2 {
+  font-weight: lighter;
+  padding-bottom: 60px;
+}
+
+#form-landing .ui.button {
+  margin-bottom: 60px;
+  font-size: large;
+}

@@ -1,3 +1,22 @@
+.profile-summary h4 {
+  font-weight: 200;
+  margin: 0;
+}
+
+.profile-summary > .row {
+
+}
+
+.profile-summary .subsection,
+.profile-summary-nav .subsection {
+  padding-bottom: 10px;
+}
+
+.profile-divider {
+  width: 95%;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
 
 .ui.secondary.menu a.item.active,
 .ui.secondary.menu a.item.active:hover {
@@ -21,4 +40,8 @@
   background:rgba(247, 177, 0, 1);;
   position:absolute;
   bottom:8px;
+}
+
+.formio-component-submit {
+  display: none !important;
 }

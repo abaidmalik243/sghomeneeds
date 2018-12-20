@@ -125,15 +125,27 @@ module.exports = options => ({
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        API_URL: JSON.stringify(process.env.API_URL),
+        SENDBIRD_APP_ID: JSON.stringify(process.env.SENDBIRD_APP_ID),
+        WP_URL: JSON.stringify(process.env.WP_URL),
+        FORMIO_URL: JSON.stringify(process.env.FORMIO_URL),
+        TEMP_PASSWORD: JSON.stringify(process.env.TEMP_PASSWORD),
+        TEMP_PASSWORD_KEY: JSON.stringify(process.env.TEMP_PASSWORD_KEY),
       },
     }),
   ]),
   resolve: {
     modules: ['node_modules', 'app'],
+    alias: {
+      moment$: 'moment/moment.js',
+    },
     extensions: ['.js', '.jsx', '.react.js'],
     mainFields: ['browser', 'jsnext:main', 'main'],
   },
   devtool: options.devtool,
   target: 'web', // Make web variables accessible to webpack, e.g. window
   performance: options.performance || {},
+  node: {
+    fs: 'empty',
+  },
 });

@@ -1,13 +1,13 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest, takeEvery } from 'redux-saga/effects';
 import {
   get,
   post,
   put as putApi,
   patch,
-  getActionModel,
-  getActionApi,
+  deleteModel,
   MODEL_MAP,
 } from '../actions/restApi';
+import { getActionModel, getActionApi } from '../actions/apiUtil';
 
 function* getModel(action) {
   const { payload, view } = action;
@@ -55,6 +55,8 @@ function* postModels(action) {
     const response = yield call(post, {
       model,
       data: payload.data,
+      id: payload.id,
+      url: payload.url,
       contentType,
     });
     yield put({
@@ -75,6 +77,7 @@ function* putModels(action) {
     const response = yield call(putApi, {
       model,
       data: payload.data,
+      id: payload.id,
       contentType,
     });
     yield put({
@@ -95,6 +98,7 @@ function* patchModels(action) {
     const response = yield call(patch, {
       model,
       data: payload.data,
+      id: payload.id,
       contentType,
     });
     yield put({
@@ -107,14 +111,36 @@ function* patchModels(action) {
   }
 }
 
+function* deleteModels(action) {
+  const { payload, view, contentType } = action;
+  const model = getActionModel(action.type);
+  const api = getActionApi(action.type);
+  try {
+    const response = yield call(deleteModel, {
+      model,
+      data: payload.data,
+      id: payload.id,
+      contentType,
+    });
+    yield put({
+      type: MODEL_MAP[model][api].SUCCESS,
+      payload: { data: response.data, id: payload.id },
+      view,
+    });
+  } catch (e) {
+    yield put({ type: MODEL_MAP[model][api].FAILED, payload: e.message, view });
+  }
+}
+
 function modelSaga(model) {
   function* mySaga() {
     yield [
       takeLatest(model.LIST.REQUESTED, listModels),
       takeLatest(model.GET.REQUESTED, getModel),
-      takeLatest(model.POST.REQUESTED, postModels),
-      takeLatest(model.PUT.REQUESTED, putModels),
-      takeLatest(model.PATCH.REQUESTED, patchModels),
+      takeEvery(model.POST.REQUESTED, postModels),
+      takeEvery(model.PUT.REQUESTED, putModels),
+      takeEvery(model.PATCH.REQUESTED, patchModels),
+      takeEvery(model.DELETE.REQUESTED, deleteModels),
     ];
   }
   return mySaga;

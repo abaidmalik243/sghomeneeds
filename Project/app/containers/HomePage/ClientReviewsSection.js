@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
 import Section from '../../components/Section/Section';
-import ImageWrapper from '../../components/Base/Image';
+import ImageWrapper from '../../components/Base/Image/index';
 import Subsection from '../../components/Section/Subsection';
 import ThreeColumn from '../../components/Section/ThreeColumn';
 import Card from '../../components/Base/Card/Card';
 import CardContent from '../../components/Base/Card/CardContent';
 import CardHeader from '../../components/Base/Card/CardHeader';
-import ButtonWrapper from '../../components/Base/Button';
-import Label from '../../components/Base/Label';
+import ButtonWrapper from '../../components/Base/Button/index';
+import Label from '../../components/Base/Label/index';
 import { orange } from '../../components/Base/constants';
 
 import './client-review.css';

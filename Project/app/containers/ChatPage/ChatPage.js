@@ -1,62 +1,92 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
-import { Grid, Segment } from 'semantic-ui-react';
-// import { connect } from 'react-redux';
-// import { compose } from 'redux';
-// import { push } from 'react-router-redux';
+import { Grid, Icon, Modal } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import MediaQuery from 'react-responsive';
+import { push } from 'react-router-redux';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
+
 import Section from '../../components/Section/Section';
 import TemplatePage from '../Common/PageWrapper';
-// import { LISTINGS, USERS } from '../../actions/restApi';
-// import injectReducer from '../../utils/injectReducer';
-// import injectSaga from '../../utils/injectSaga';
-// import dashboardReducer, { DASHBOARD_VIEW } from '../../reducers/dashboard';
-// import saga from '../../sagas';
-// import userReducer from '../../reducers/user';
-// import userSaga from '../../sagas/user';
-// import { DAEMON, RESTART_ON_REMOUNT } from '../../utils/constants';
+import { USERS, PROJECTS, LISTINGS } from '../../actions/restApi';
+
+import injectReducer from '../../utils/injectReducer';
+import injectSaga from '../../utils/injectSaga';
+
+import chatReducer, { CHAT_VIEW } from '../../reducers/chat';
+import userReducer from '../../reducers/user';
+import userSaga from '../../sagas/user';
+import chatSaga from '../../sagas/chat';
+import formioSaga from '../../sagas/formio';
+import saga from '../../sagas';
+import { DAEMON } from '../../utils/constants';
+import Card from '../../components/Base/Card/Card';
 import Subsection from '../../components/Section/Subsection';
+import ChatPageChannels from './ChatPageChannels';
+import ConversationWindow from './ConversationWindow';
+import ConversationProfile from './ConversationProfile';
 
 import './chat-page.css';
-import PaperWrapper from '../../components/Base/Paper';
-// import TwoColumn from '../../components/Section/TwoColumn';
-//
-// const mapDispatchToProps = dispatch => ({
-//   dispatchAction: ({ type, payload }) => {
-//     dispatch({ type, payload, view: DASHBOARD_VIEW });
-//   },
-//   goTo: payload => {
-//     dispatch(push(payload.path));
-//   },
-// });
-//
-// const mapStateToProps = state => ({
-//   [DASHBOARD_VIEW]: state.get(DASHBOARD_VIEW).toJS(),
-//   user: state.get(USERS.MODEL).toJS(),
-// });
-//
-// const withConnect = connect(
-//   mapStateToProps,
-//   mapDispatchToProps,
-// );
-//
-// const withDashboardReducer = injectReducer({
-//   key: DASHBOARD_VIEW,
-//   reducer: dashboardReducer,
-// });
-// const withListingSaga = injectSaga({
-//   key: LISTINGS.MODEL,
-//   saga: saga(LISTINGS),
-//   mode: DAEMON,
-// });
-// const withUserReducer = injectReducer({
-//   key: USERS.MODEL,
-//   reducer: userReducer,
-// });
-// const withUserSaga = injectSaga({
-//   key: USERS.MODEL,
-//   saga: userSaga,
-//   mode: RESTART_ON_REMOUNT,
-// });
+
+import { stubState } from './content';
+import { CHANNELS, CHAT_USER, HANDLER, MESSAGES } from '../../actions/chatApi';
+import { FORMIO_FORM } from '../../actions/formioApi';
+
+const mapDispatchToProps = dispatch => ({
+  dispatchAction: ({ type, payload }) => {
+    dispatch({ type, payload, view: CHAT_VIEW });
+  },
+  goTo: payload => {
+    dispatch(push(payload.path));
+  },
+});
+
+const mapStateToProps = state => ({
+  [CHAT_VIEW]: state.get(CHAT_VIEW).toJS(),
+  user: state.get(USERS.MODEL).toJS(),
+});
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+const withChatReducer = injectReducer({
+  key: CHAT_VIEW,
+  reducer: chatReducer,
+});
+
+const withUserReducer = injectReducer({
+  key: USERS.MODEL,
+  reducer: userReducer,
+});
+const withUserSaga = injectSaga({
+  key: USERS.MODEL,
+  saga: userSaga,
+  mode: DAEMON,
+});
+const withProjectSaga = injectSaga({
+  key: PROJECTS.MODEL,
+  saga: saga(PROJECTS),
+  mode: DAEMON,
+});
+const withListingSaga = injectSaga({
+  key: LISTINGS.MODEL,
+  saga: saga(LISTINGS),
+  mode: DAEMON,
+});
+const withChatSaga = injectSaga({
+  key: CHAT_VIEW,
+  saga: chatSaga,
+  mode: DAEMON,
+});
+const withFormioSaga = injectSaga({
+  key: FORMIO_FORM.MODEL,
+  saga: formioSaga,
+  mode: DAEMON,
+});
 
 /* eslint-disable react/prefer-stateless-function */
 class ChatPage extends React.PureComponent {
@@ -64,55 +94,265 @@ class ChatPage extends React.PureComponent {
     location: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
-    currentTab: PropTypes.string,
-    // [DASHBOARD_VIEW]: PropTypes.object,
+    // currentTab: PropTypes.string,
+    [CHAT_VIEW]: PropTypes.object,
     dispatchAction: PropTypes.func.isRequired,
   };
+  // state = {
+  //   channels: [],
+  //   messages: {},
+  //   sendBirdUser: null,
+  //   selectedChannel: { url: 'test' },
+  //   connected: false,
+  //   channelHandler: null,
+  //   channelFilter: '',
+  // };
+  constructor() {
+    super();
+    this.state = stubState;
+    this.state.channelFilter = '';
+  }
+
   render() {
+    const { selectedChannel, channelFilter } = this.state;
+    const { user } = this.props;
+    const channels =
+      this.props[CHAT_VIEW][CHANNELS.MODEL].LIST.channels !== undefined
+        ? this.props[CHAT_VIEW][CHANNELS.MODEL].LIST.channels
+        : stubState.channels;
+    const messages =
+      this.props[CHAT_VIEW][MESSAGES.MODEL].LIST !== undefined
+        ? this.props[CHAT_VIEW][MESSAGES.MODEL].LIST
+        : stubState.messages;
     return (
       <TemplatePage {...this.props}>
-        <Section>
-          <Subsection>
-            <h1>Messages</h1>
-          </Subsection>
-          <Subsection className="chat-main">
-            <PaperWrapper className="paper">
-              <Grid celled style={{ height: '100%' }}>
-                <Grid.Row>
-                  <Grid.Column width={4}>
-                    <h2>All Conversation</h2>
-                  </Grid.Column>
-                  <Grid.Column width={12}>
-                    <Grid.Row>
-                      <Grid.Column>
-                        <h2>Company Name</h2>
+        <MediaQuery query="(max-width: 991px)">
+          {isNotComputer => (
+            <Section>
+              <Subsection style={{ padding: 0 }}>
+                <h2 style={{ fontSize: '24px', marginBottom: '10px' }}>
+                  <Icon className="conversation" />
+                  Messages
+                </h2>
+              </Subsection>
+              <Subsection>
+                <Card className="chat-main">
+                  <Grid celled="internally">
+                    <Grid.Row className="chat-body">
+                      <Grid.Column width={isNotComputer ? 16 : 4}>
+                        <ChatPageChannels
+                          channels={channels}
+                          channelFilter={channelFilter}
+                          user={user}
+                          messages={messages}
+                          selectedChannel={selectedChannel}
+                          setSelectedChannel={this.setSelectedChannel}
+                          getChannelInfo={this.getChannelInfo}
+                          setChannelFilter={this.setChannelFilter}
+                        />
+                      </Grid.Column>
+                      {isNotComputer ? (
+                        <Modal
+                          open={!!this.state.selectedChannel.url}
+                          onClose={() => {
+                            this.setState({ selectedChannel: { url: null } });
+                          }}
+                          closeIcon
+                        >
+                          <Grid.Column style={{ height: '90vh' }} width={16}>
+                            <ConversationWindow
+                              user={user}
+                              selectedChannel={selectedChannel}
+                              messages={messages}
+                              onSubmitChat={this.onSubmitChat}
+                              onSubmitFile={this.onSubmitFile}
+                              chatTarget={
+                                this.getChannelInfo(
+                                  selectedChannel,
+                                  user.user.username,
+                                ).other
+                              }
+                            />
+                          </Grid.Column>
+                        </Modal>
+                      ) : (
+                        <Grid.Column width={8}>
+                          <ConversationWindow
+                            user={user}
+                            selectedChannel={selectedChannel}
+                            messages={messages}
+                            onSubmitChat={this.onSubmitChat}
+                            onSubmitFile={this.onSubmitFile}
+                            chatTarget={
+                              this.getChannelInfo(
+                                selectedChannel,
+                                user.user.username,
+                              ).other
+                            }
+                          />
+                        </Grid.Column>
+                      )}
+                      <Grid.Column
+                        className="convo-profile-container"
+                        only="computer"
+                        width={4}
+                      >
+                        <ConversationProfile />
                       </Grid.Column>
                     </Grid.Row>
-                    <Grid.Row>
-                      <Grid.Column>
-                        <Segment>Chat</Segment>
-                      </Grid.Column>
-                      <Grid.Column>
-                        <h3>Name</h3>
-                      </Grid.Column>
-                    </Grid.Row>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-            </PaperWrapper>
-          </Subsection>
-        </Section>
+                  </Grid>
+                </Card>
+              </Subsection>
+            </Section>
+          )}
+        </MediaQuery>
       </TemplatePage>
     );
   }
+
+  componentDidMount() {
+    const query = queryString.parse(this.props.location.search);
+    if (query.project !== undefined) {
+      this.props.dispatchAction({
+        type: PROJECTS.POST.REQUESTED,
+        payload: {
+          id: query.project,
+          url: 'create_chat',
+          // data: {},
+        },
+      });
+    }
+    if (query.listing !== undefined) {
+      this.props.dispatchAction({
+        type: LISTINGS.POST.REQUESTED,
+        payload: {
+          id: query.listing,
+          data: {
+            user_email: this.props.user.user.username,
+          },
+          url: 'create_chat',
+        },
+      });
+    }
+    // eslint-disable-next-line react/no-did-mount-set-state
+    // this.setState({ query });
+  }
+  // eslint-disable-next-line no-unused-vars
+  componentWillUpdate(nextProps, nextState, ss) {
+    if (nextProps.user.user.username !== this.props.user.user.username) {
+      this.props.dispatchAction({
+        type: CHAT_USER.CONNECT.REQUESTED,
+        payload: {
+          userId: nextProps.user.user.username,
+          accessToken: nextProps.user.user.send_bird_access_token,
+        },
+      });
+    }
+    if (
+      nextProps[CHAT_VIEW][CHAT_USER.MODEL].CONNECT.chatUser !==
+      this.props[CHAT_VIEW][CHAT_USER.MODEL].CONNECT.chatUser
+    ) {
+      this.props.dispatchAction({
+        type: CHANNELS.LIST.REQUESTED,
+        payload: {},
+      });
+      this.props.dispatchAction({
+        type: HANDLER.REGISTER.REQUESTED,
+        payload: {
+          handler: (channel, message) => {
+            this.props.dispatchAction({
+              type: MESSAGES.RECEIVE.REQUESTED,
+              payload: { channel, message },
+            });
+          },
+        },
+      });
+    }
+    if (
+      nextState.selectedChannel !== this.state.selectedChannel &&
+      nextState.selectedChannel.url !== null
+    ) {
+      this.props.dispatchAction({
+        type: MESSAGES.LIST.REQUESTED,
+        payload: { channel: nextState.selectedChannel },
+      });
+    }
+  }
+  getChannelInfo = (channel, userId) => {
+    let other = '';
+    if (channel && channel.members && channel.members.length === 2) {
+      other =
+        channel.members[0].userId === userId
+          ? channel.members[1].nickname
+          : channel.members[0].nickname;
+    }
+    return {
+      other,
+    };
+  };
+  setSelectedChannel = channel => {
+    this.setState({ selectedChannel: channel });
+  };
+  onSubmitChat = event => {
+    if (this.state.selectedChannel.url === null) {
+      // alert('No Active Channel');
+      return;
+    }
+    const message = event.target.chatInput.value;
+    // eslint-disable-next-line no-param-reassign
+    event.target.chatInput.value = '';
+    this.props.dispatchAction({
+      type: MESSAGES.SEND.REQUESTED,
+      payload: {
+        channel: this.state.selectedChannel,
+        messageType: 'user',
+        messageParams: {
+          message,
+          data: null,
+          customType: null,
+        },
+      },
+    });
+  };
+  onSubmitFile = ({ file, name, type, size, data, customType }) => {
+    if (this.state.selectedChannel.url === null) {
+      // alert('No Active Channel');
+      return;
+    }
+    this.props.dispatchAction({
+      type: MESSAGES.SEND.REQUESTED,
+      payload: {
+        channel: this.state.selectedChannel,
+        messageType: 'file',
+        messageParams: {
+          file,
+          name,
+          type,
+          size,
+          data,
+          customType,
+        },
+      },
+    });
+  };
+  setChannelFilter = e => {
+    if (e && e.target && typeof e.target.value === 'string') {
+      this.setState({
+        channelFilter: e.target.value,
+      });
+    }
+  };
 }
 
-// export default compose(
-//   // Put `withReducer` before `withConnect`
-//   withUserReducer,
-//   withDashboardReducer,
-//   withUserSaga,
-//   withListingSaga,
-//   withConnect,
-// )(ChatPage);
-export default ChatPage;
+export default compose(
+  // Put `withReducer` before `withConnect`
+  withUserReducer,
+  withChatReducer,
+  withUserSaga,
+  withListingSaga,
+  withProjectSaga,
+  withChatSaga,
+  withFormioSaga,
+  withConnect,
+)(ChatPage);
+// export default ChatPage;

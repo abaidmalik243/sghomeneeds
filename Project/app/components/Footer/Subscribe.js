@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Input } from 'semantic-ui-react';
 import Button from '../Base/Button';
-import "./styles.css"
+import './styles.css';
 function Subscribe(props) {
   return (
     <div
@@ -29,7 +29,11 @@ function Subscribe(props) {
       />
       <br />
       <br />
-      <Button type={props.buttonType} onClick={props.onSubmit} className="subscriber_footer_btn">
+      <Button
+        design={props.buttonType}
+        onClick={props.onSubmit}
+        className="subscriber_footer_btn"
+      >
         {[props.buttonText]}
       </Button>
     </div>

@@ -1,16 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'semantic-ui-react';
-import Subsection from '../../../components/Section/Subsection';
+import v4 from 'uuid/v4';
+import { Checkbox } from 'semantic-ui-react';
+import Card from '../../../components/Base/Card/Card';
+import CardContent from '../../../components/Base/Card/CardContent';
 import { generateText } from '../../../utils/loremIpsumGenerator';
-import TwoColumn from '../../../components/Section/TwoColumn';
 import {
   PushNotificationSettings,
   TextSettings,
   EmailSettings,
 } from './content';
 // import { DASHBOARD_VIEW } from '../../../reducers/dashboard';
-import PaperWrapper from '../../../components/Base/Paper';
+import SubPageWrapper from '../SubpageWrapper';
+import SubPageDescription from '../SubpageWrapper/SubPageDescription';
+import SubPageContent from '../SubpageWrapper/SubPageContent';
+import './styles.css';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class NotificationSettingSubPage extends React.PureComponent {
@@ -20,86 +24,69 @@ export default class NotificationSettingSubPage extends React.PureComponent {
     // [DASHBOARD_VIEW]: PropTypes.object,
     // user: PropTypes.object.isRequired,
   };
+
+  constructor() {
+    super();
+    this.state = {};
+    // TODO: Remove stubbed state
+    PushNotificationSettings.forEach(item => {
+      this.state[item.settingName] = item.defaultBool;
+    });
+    TextSettings.forEach(item => {
+      this.state[item.settingName] = item.defaultBool;
+    });
+    EmailSettings.forEach(item => {
+      this.state[item.settingName] = item.defaultBool;
+    });
+  }
+
+  renderSettings(title, settingsList) {
+    const settingsListJsx = settingsList.map(item => (
+      <CardContent className="setting-box" key={v4()}>
+        <div className="setting-text">
+          <h5>{item.settingName}</h5>
+          {item.settingDesc ? <p>{item.settingDesc}</p> : null}
+        </div>
+        <div className="setting-toggle">
+          <Checkbox
+            toggle
+            checked={this.state[item.settingName]}
+            onChange={(e, data) => {
+              const newState = { ...this.state };
+              newState[item.settingName] = data.checked;
+              this.setState(newState);
+            }}
+          />
+        </div>
+      </CardContent>
+    ));
+
+    return (
+      <div className="setting-group">
+        <h4>{title}:</h4>
+        <Card>{settingsListJsx}</Card>
+      </div>
+    );
+  }
+
   render() {
     const { currentTab } = this.props;
     return (
-      <div style={{ display: currentTab === 'comments' ? 'inherit' : 'none' }}>
-        <TwoColumn>
-          <Grid.Column>
-            <Subsection className="dashboard-sub-page-title">
-              <h3>Notification Setting:</h3>
-              <p>{generateText(200)}</p>
-            </Subsection>
-          </Grid.Column>
-          <Grid.Column>
-            <h3>Get Push Notification When:</h3>
-            <PaperWrapper className="paper">
-              {PushNotificationSettings.map(item => (
-                <Subsection className="setting-box">
-                  <TwoColumn>
-                    <Grid.Column>
-                      <h2>{item.settingName}</h2>
-                      <p>{item.settingDesc}</p>
-                    </Grid.Column>
-                    <Grid.Column>
-                      <div className="ui toggle checkbox">
-                        <input
-                          type="checkbox"
-                          name="public"
-                          value={item.defaultBool}
-                        />
-                      </div>
-                    </Grid.Column>
-                  </TwoColumn>
-                </Subsection>
-              ))}
-            </PaperWrapper>
-            <h3>Text Me About:</h3>
-            <PaperWrapper className="paper">
-              {TextSettings.map(item => (
-                <Subsection className="setting-box">
-                  <TwoColumn>
-                    <Grid.Column>
-                      <h2>{item.settingName}</h2>
-                    </Grid.Column>
-                    <Grid.Column>
-                      <div className="ui toggle checkbox">
-                        <input
-                          type="checkbox"
-                          name="public"
-                          value={item.defaultBool}
-                        />
-                      </div>
-                    </Grid.Column>
-                  </TwoColumn>
-                </Subsection>
-              ))}
-            </PaperWrapper>
-            <h3>Get Push Notification When:</h3>
-            <PaperWrapper className="paper">
-              {EmailSettings.map(item => (
-                <Subsection className="setting-box">
-                  <TwoColumn>
-                    <Grid.Column>
-                      <h2>{item.settingName}</h2>
-                      <p>{item.settingDesc}</p>
-                    </Grid.Column>
-                    <Grid.Column>
-                      <div className="ui toggle checkbox">
-                        <input
-                          type="checkbox"
-                          name="public"
-                          value={item.defaultBool}
-                        />
-                      </div>
-                    </Grid.Column>
-                  </TwoColumn>
-                </Subsection>
-              ))}
-            </PaperWrapper>
-          </Grid.Column>
-        </TwoColumn>
-      </div>
+      <SubPageWrapper
+        currentTab={currentTab}
+        tabTitle="Notification Settings"
+        tabLink="notifications"
+      >
+        <SubPageDescription>{generateText(200)}</SubPageDescription>
+        <SubPageContent>
+          {this.renderSettings(
+            'Get push notifications when',
+            PushNotificationSettings,
+          )}
+          {this.renderSettings('Text me about', TextSettings)}
+          {this.renderSettings('Get email notifications when', EmailSettings)}
+        </SubPageContent>
+      </SubPageWrapper>
     );
   }
 }

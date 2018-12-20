@@ -1,11 +1,16 @@
 import React from 'react';
 import { Image } from 'semantic-ui-react';
-import LogoImage from '../../images/SGHomeNeeds-Logo.png';
-
 import './styles.css';
+import { getS3Image } from '../../utils/images';
 
 function CompanyLogo(props) {
-  return <Image id="company-logo" src={LogoImage} {...props} />;
+  return (
+    <Image
+      id="company-logo"
+      src={getS3Image('/images/SGHomeNeeds-Logo.png')}
+      {...props}
+    />
+  );
 }
 
 export default CompanyLogo;

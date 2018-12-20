@@ -10,7 +10,6 @@ import {
   homeProjects,
   differenceList,
   clientReviews,
-  articles,
 } from './content';
 import BannerSection from './BannerSection';
 import CategorySection from './CategorySection';
@@ -53,10 +52,7 @@ class HomePage extends React.PureComponent {
                 {...this.props}
               />
               <Section id="home-articles">
-                <ArticlesThreeColumnSubsection
-                  articles={articles}
-                  {...this.props}
-                />
+                <ArticlesThreeColumnSubsection {...this.props} />
               </Section>
             </TemplatePage>
           </div>

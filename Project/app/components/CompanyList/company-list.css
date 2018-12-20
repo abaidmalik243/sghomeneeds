@@ -1,10 +1,19 @@
 .company-card {
-  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.07);
   background-color: rgb(255, 255, 255);
   border-radius: 3px;
   width: 100%;
+  margin-left: auto !important;
+  margin-right: auto !important;
   margin-bottom: 8px;
-  padding: 30px;
+  padding: 16px;
+  max-width: 1024px !important;
+}
+
+.company-card > .content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .company-card p {
@@ -16,7 +25,7 @@
 .company-card .logo-wrapper {
   border-radius: 3px;
   background-color: rgb(255, 255, 255);
-  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.07);
 }
 
 .company-card .logo-wrapper img {
@@ -25,10 +34,10 @@
 
 #company-list a h3 {
   color: black;
-  font-weight: 600;
+  font-weight: normal;
   text-decoration: none;
-  font-size: 24px;
-  padding-bottom: 22px;
+  font-size: 20px;
+  margin: 0;
 }
 
 #company-list a h3:hover {
@@ -38,4 +47,16 @@
 
 #company-list .chat-now {
 
+}
+
+.company-card.selected {
+  background-color: #4cae4c;
+}
+
+.company-card .orange-circle {
+  background-color: rgb(247, 177, 0);
+  padding: 33px;
+  border-radius: 62px;
+  width: 124px;
+  display: inline-block;
 }

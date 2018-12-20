@@ -1,5 +1,6 @@
 import { fromJS } from 'immutable';
-import { getActionModel, LISTINGS, MODEL_MAP } from '../actions/restApi';
+import { LISTINGS, MODEL_MAP } from '../actions/restApi';
+import { getActionModel } from '../actions/apiUtil';
 
 const initialState = fromJS({
   [LISTINGS.MODEL]: {

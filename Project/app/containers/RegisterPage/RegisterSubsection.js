@@ -47,6 +47,12 @@ function RegisterSubsection(props) {
             </OneColumn>
             <OneColumn>
               <div className="ui left icon input fluid">
+                <input name="name" type="text" placeholder="Name" required />
+                {loginInputIcon('user circle outline')}
+              </div>
+            </OneColumn>
+            <OneColumn>
+              <div className="ui left icon input fluid">
                 <input
                   name="password"
                   type="password"

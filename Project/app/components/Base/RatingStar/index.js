@@ -11,6 +11,7 @@ function RatingStar(props) {
 RatingStar.propTypes = {
   defaultRating: PropTypes.number,
   maxRating: PropTypes.number,
+  disabled: PropTypes.bool,
 };
 
 export default RatingStar;

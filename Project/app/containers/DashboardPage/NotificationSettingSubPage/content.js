@@ -9,7 +9,7 @@ export const PushNotificationSettings = [
   {
     settingName: 'Project Reminders & Updates',
     settingDesc: generateText(50),
-    defaultBool: true,
+    defaultBool: false,
   },
   {
     settingName: 'Promotion & Tips',

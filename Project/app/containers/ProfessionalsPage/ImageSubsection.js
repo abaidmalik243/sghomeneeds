@@ -10,13 +10,17 @@ import NavButton from '../../components/CustomButton/NavButton';
 /* eslint-disable react/prefer-stateless-function */
 export default class ImageSubsection extends React.PureComponent {
   static propTypes = {
-    professional: PropTypes.object,
+    images: PropTypes.object,
+  };
+  state = {
+    imageIndex: 0,
   };
   render() {
-    const { professional } = this.props;
+    const { images } = this.props;
+    const { imageIndex } = this.state;
     return (
       <div>
-        {professional.images.length > 0 && (
+        {images.results.length > 0 && (
           <Subsection id="images-section">
             <PaperWrapper className="paper">
               <Subsection>
@@ -29,6 +33,15 @@ export default class ImageSubsection extends React.PureComponent {
                           margin: '0px 10px',
                           boxShadow: '0px 0px 9px 0px rgba(0, 0, 0, 0.09)',
                         },
+                        onClick: () => {
+                          this.setState({
+                            imageIndex:
+                              (this.state.imageIndex -
+                                1 +
+                                images.results.length) %
+                              images.results.length,
+                          });
+                        },
                       }}
                       iconProps={{ className: 'right' }}
                     />
@@ -39,28 +52,39 @@ export default class ImageSubsection extends React.PureComponent {
                           margin: '0px 10px',
                           boxShadow: '0px 0px 9px 0px rgba(0, 0, 0, 0.09)',
                         },
+                        onClick: () => {
+                          this.setState({
+                            imageIndex:
+                              (this.state.imageIndex + 1) %
+                              images.results.length,
+                          });
+                        },
                       }}
                       iconProps={{ className: 'left' }}
                     />
                     <h1 style={{ marginBottom: '40px' }}>Images:</h1>
                   </div>
                   <ImageWrapper
-                    src={professional.images[0].imageSource}
-                    alt={professional.images[0].alt}
+                    src={images.results[imageIndex].file_field}
+                    alt={images.results[imageIndex].name}
                   />
                 </div>
                 <Subsection>
                   {Array.from(
-                    Array(Math.ceil(professional.images.length / 5)).keys(),
+                    Array(Math.ceil(images.results.length / 5)).keys(),
                   ).map(row => (
                     <FiveColumn stackable key={row}>
-                      {professional.images
+                      {images.results
                         .slice(row * 5, row * 5 + 5)
-                        .map(item => (
+                        .map((item, index) => (
                           <Grid.Column key={item.key}>
                             <ImageWrapper
-                              src={item.imageSource}
-                              alt={item.alt}
+                              src={item.file_field}
+                              alt={item.name}
+                              style={{ cursor: 'pointer' }}
+                              onClick={() => {
+                                this.setState({ imageIndex: index });
+                              }}
                             />
                           </Grid.Column>
                         ))}

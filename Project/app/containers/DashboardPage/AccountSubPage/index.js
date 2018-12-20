@@ -1,13 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Modal, Form, Message } from 'semantic-ui-react';
+import { Modal, Form, Message, Icon } from 'semantic-ui-react';
 import Subsection from '../../../components/Section/Subsection';
 import { generateText } from '../../../utils/loremIpsumGenerator';
 import Card from '../../../components/Base/Card/Card';
 import CardContent from '../../../components/Base/Card/CardContent';
-import TwoColumn from '../../../components/Section/TwoColumn';
 import { USERS } from '../../../actions/restApi';
 import { APPLICATION_JSON } from '../../../utils/actionsUtil';
+import './styles.css';
+import SubPageWrapper from '../SubpageWrapper';
+import SubPageDescription from '../SubpageWrapper/SubPageDescription';
+import SubPageContent from '../SubpageWrapper/SubPageContent';
+import { AccountOptions } from './content';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class AccountSubPage extends React.PureComponent {
@@ -17,12 +21,31 @@ export default class AccountSubPage extends React.PureComponent {
     user: PropTypes.object,
     dispatchAction: PropTypes.func.isRequired,
   };
+  state = {
+    open: '',
+  };
 
-  renderModal({ requestKey, formFieldProps }) {
+  updateUser = payload => {
+    this.props.dispatchAction({ type: USERS.PATCH.REQUESTED, payload });
+  };
+
+  renderModal({ requestKey, formFieldProps, customTrigger }) {
+    const trigger = customTrigger || (
+      <button
+        className="ui button"
+        onClick={() => {
+          this.setState({ open: requestKey });
+        }}
+      >
+        Edit
+      </button>
+    );
     return (
       <Modal
         size="mini"
-        trigger={<button className="ui right floated button">Edit</button>}
+        trigger={trigger}
+        open={this.state.open === requestKey}
+        onClose={() => this.setState({ open: '' })}
       >
         <Subsection>
           <Form
@@ -34,6 +57,7 @@ export default class AccountSubPage extends React.PureComponent {
                 },
                 contentType: APPLICATION_JSON,
               });
+              this.setState({ open: '' });
             }}
           >
             <Form.Field name={requestKey} {...formFieldProps} />
@@ -47,90 +71,65 @@ export default class AccountSubPage extends React.PureComponent {
     );
   }
 
-  render() {
-    const { currentTab } = this.props;
+  renderSettingsCardContent({ title, value, modalOptions }) {
     return (
-      <div style={{ display: currentTab === 'account' ? 'inherit' : 'none' }}>
-        <TwoColumn>
-          <Grid.Column>
-            <Subsection style={{ textAlign: 'left' }}>
-              <h3>Account Settings</h3>
-              <p>{generateText(200)}</p>
-            </Subsection>
-          </Grid.Column>
-          <Grid.Column>
-            <Subsection style={{ textAlign: 'left' }}>
-              <Card>
-                <CardContent>
-                  <TwoColumn>
-                    <Grid.Column width={12}>
-                      <h3>Name: {this.props.user.user.first_name}</h3>
-                    </Grid.Column>
-                    <Grid.Column width={4}>
-                      {this.renderModal({
-                        requestKey: 'first_name',
-                        formFieldProps: {
-                          label: 'Name',
-                          control: 'input',
-                          placeholder: 'Name',
-                        },
-                      })}
-                    </Grid.Column>
-                  </TwoColumn>
-                </CardContent>
-                <CardContent>
-                  <TwoColumn>
-                    <Grid.Column width={12}>
-                      <h3>Email: {this.props.user.user.email}</h3>
-                    </Grid.Column>
-                    <Grid.Column width={4}>
-                      {this.renderModal({
-                        requestKey: 'username',
-                        formFieldProps: {
-                          label: 'Email',
-                          control: 'input',
-                          placeholder: 'Email',
-                        },
-                      })}
-                    </Grid.Column>
-                  </TwoColumn>
-                </CardContent>
-                <CardContent>
-                  <TwoColumn>
-                    <Grid.Column width={12}>
-                      <h3>Phone Number: {this.props.user.user.phone_number}</h3>
-                    </Grid.Column>
-                    <Grid.Column width={4}>
-                      {this.renderModal({
-                        requestKey: 'phone_number',
-                        formFieldProps: {
-                          label: 'Phone Number',
-                          control: 'input',
-                          placeholder: 'Phone Number',
-                        },
-                      })}
-                    </Grid.Column>
-                  </TwoColumn>
-                </CardContent>
-                <CardContent>
-                  <TwoColumn>
-                    <Grid.Column width={12}>
-                      <h3>Password:</h3>
-                    </Grid.Column>
-                    <Grid.Column width={4}>
-                      <button className="ui right floated button">Edit</button>
-                    </Grid.Column>
-                  </TwoColumn>
-                </CardContent>
-              </Card>
-            </Subsection>
-          </Grid.Column>
-        </TwoColumn>
-      </div>
+      <CardContent key={title}>
+        <div className="account-settings-row">
+          <div className="settings-title">
+            <h4>
+              {title}
+              <span>{value}</span>
+            </h4>
+          </div>
+          {modalOptions ? (
+            <div className="settings-edit">
+              {this.renderModal({
+                ...modalOptions,
+              })}
+            </div>
+          ) : null}
+        </div>
+      </CardContent>
     );
   }
 
-  updateUser = payload => {
-    this.props.dispatchAction({ type: USERS.PATCH.REQUESTED, payload });
-  };
+  render() {
+    const { currentTab, user } = this.props;
+    const accountOptionsJsx = AccountOptions.map(option => {
+      const title = `${option.formFieldProps.label}: `;
+      const value = user.user[option.fieldName];
+      const modalOptions = {
+        requestKey: option.requestKey,
+        formFieldProps: option.formFieldProps,
+      };
+      return this.renderSettingsCardContent({ title, value, modalOptions });
+    });
+
+    return (
+      <SubPageWrapper
+        tabLink="account"
+        tabTitle="Account Settings"
+        currentTab={currentTab}
+      >
+        <SubPageDescription>{generateText(200)}</SubPageDescription>
+        <SubPageContent>
+          <Card className="account-settings-options">{accountOptionsJsx}</Card>
+          <h3>Account Deletion:</h3>
+          <Card>
+            {this.renderSettingsCardContent({
+              title: '',
+              value: 'Deactivate Account',
+              modalOptions: {
+                customTrigger: (
+                  <button className="ui button">
+                    <Icon className="right angle" />
+                  </button>
+                ),
+              },
+            })}
+          </Card>
+        </SubPageContent>
+      </SubPageWrapper>
+    );
+  }
 }

@@ -1,6 +1,12 @@
 import { generateText } from '../../utils/loremIpsumGenerator';
-import homeProject2 from '../../images/alberto-castillo-q-346020-unsplash.jpg';
-import Tammy from '../../images/Placeholder/profile.png';
+
+// import Tammy from '../../images/Placeholder/profile.png';
+import { getS3Image } from '../../utils/images';
+
+const homeProject2 = getS3Image(
+  '/images/alberto-castillo-q-346020-unsplash.jpg',
+);
+const Tammy = getS3Image('/images/Placeholder/profile.png');
 
 export const items = [
   {
