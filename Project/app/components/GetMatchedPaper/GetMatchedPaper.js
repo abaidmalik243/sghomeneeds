@@ -8,11 +8,14 @@ import ImageWrapper from '../Base/Image/index';
 import Subsection from '../Section/Subsection';
 
 import './get-matched-paper.css';
-import { getS3Image } from '../../utils/images';
+// import { getS3Image } from '../../utils/images';
 
-const Step1 = getS3Image('/images/DirectoryPage/step1.jpg');
-const Step2 = getS3Image('/images/DirectoryPage/step2.jpg');
-const Step3 = getS3Image('/images/DirectoryPage/step3.jpg');
+// const Step1 = getS3Image('/images/DirectoryPage/step1.jpg');
+// const Step2 = getS3Image('/images/DirectoryPage/step2.jpg');
+// const Step3 = getS3Image('/images/DirectoryPage/step3.jpg');
+import Step1 from './icon/1.png';
+import Step2 from './icon/2.png';
+import Step3 from './icon/3.png';
 
 function GetMatchedPaper(props) {
   return (

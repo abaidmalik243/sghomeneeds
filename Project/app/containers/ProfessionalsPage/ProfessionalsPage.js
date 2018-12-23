@@ -106,7 +106,7 @@ class ProfessionalsPage extends React.PureComponent {
           <TemplatePage {...this.props}>
             <Subsection id="professionals">
               <TwoColumn>
-                <Grid.Column width={9}>
+                <Grid.Column width={10} style={{paddingRight: '0px'}}>
                   <Subsection id="name">
                     <PaperWrapper className="paper">
                       <Subsection>
@@ -132,9 +132,9 @@ class ProfessionalsPage extends React.PureComponent {
                       isPhone={isPhone}
                     />
                   )}
-                  <hr
+                  {/* <hr
                     style={{ background: '#ddd', height: '1px', border: 0 }}
-                  />
+                  /> */}
                   {/* <ArticlesTwoColumnSubsection /> */}
                   {listing &&
                     listing.faq_data &&
@@ -147,7 +147,7 @@ class ProfessionalsPage extends React.PureComponent {
                     reviewsActivePage={1}
                   />
                 </Grid.Column>
-                <Grid.Column width={7}>
+                <Grid.Column width={6} style={{paddingLeft: '0px'}}>
                   <Subsection id="professionals-info">
                     <ProfessionalsInfoCard professional={listing} />
                     <div id="report-listing">

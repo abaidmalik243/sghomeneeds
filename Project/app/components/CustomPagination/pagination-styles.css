@@ -8,8 +8,8 @@
   background-color: rgba(247, 177, 0, 1) !important;
   color: white !important;
   /* background: #e8a205 !important; */
-  text-decoration: underline;
-  transition: all 0.3s ease-in-out !important;
+  /* text-decoration: underline;
+  transition: all 0.3s ease-in-out !important; */
 }
 
 .custom-pagination .active:hover {
@@ -32,7 +32,7 @@
 
 .custom-pagination .item:hover:not(.active) {
   color: orange !important;
-  text-decoration: underline;
+  /* text-decoration: underline; */
   transition: all 0.3s ease-in-out !important;
 }
 
