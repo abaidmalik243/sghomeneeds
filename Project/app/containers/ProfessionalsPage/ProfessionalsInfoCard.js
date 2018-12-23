@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Icon } from 'semantic-ui-react';
 import renderHTML from 'react-render-html';
 import CardContent from '../../components/Base/Card/CardContent';
 import IconWrapper from '../../components/Base/Icon';
@@ -64,35 +64,40 @@ export default class ProfessionalsInfoCard extends React.PureComponent {
       <Card>
         <CardContent>
           <TwoColumn stackable={false}>
-            <Grid.Column>
+            <Grid.Column width={10}>
               <button
                 className="ui circular facebook icon button"
                 style={{ float: 'left' }}
               >
-                <i className="facebook icon" />
+                {/* <i className="facebook icon" /> */}
+                <Icon name="facebook f" style={{ fontSize: '17px' }} />
               </button>
               <button
                 className="ui circular linkedin icon button"
                 style={{ float: 'left' }}
               >
-                <i className="linkedin icon" />
+                {/* <i className="linkedin icon" /> */}
+                {/* <Icon name="linkedin" /> */}
+                <span style={{ fontSize: '18px' }}>in</span>
               </button>
               <button
                 className="ui circular instagram icon button"
-                style={{ float: 'left' }}
+                style={{ float: 'left', backgroundColor: "saddlebrown" }}
               >
-                <i className="instagram icon" />
+                {/* <i className="instagram icon" /> */}
+                <Icon name="instagram" style={{ fontSize: '18px' }} />
               </button>
             </Grid.Column>
-            <Grid.Column>
+            <Grid.Column width={6}>
               <div className="favourite-wrapper">
-                <FavoriteButton
+                {/*   <FavoriteButton
                   buttonProps={{
                     className: 'favourite',
                     style: { float: 'right' },
                   }}
                   iconProps={{}}
-                />
+                />*/}
+                <Icon name="heart outline" className="heart" style={{ float: 'right', fontSize: '20px', marginRight: '25px' }} />
               </div>
             </Grid.Column>
           </TwoColumn>
@@ -119,7 +124,7 @@ export default class ProfessionalsInfoCard extends React.PureComponent {
               </h3>
             </div>
             <div className="inline">
-              <RatingStar defaultRating={4} maxRating={5} />
+              <RatingStar defaultRating={5} maxRating={5} />
             </div>
             <div className="inline">
               <h3

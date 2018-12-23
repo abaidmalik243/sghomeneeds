@@ -14,6 +14,19 @@ import CustomPagination from '../../components/CustomPagination';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class ReviewsSubsection extends React.PureComponent {
+  state = {
+    totalPages: 5,
+  }
+  
+  componentDidMount() {
+    const isMobile = window.innerWidth <= 500;
+    if (isMobile) {
+      this.setState({
+        totalPages: 3,
+      })
+    }
+  }
+
   static propTypes = {
     professional: PropTypes.object,
     reviewsActivePage: PropTypes.number,
@@ -62,8 +75,8 @@ export default class ReviewsSubsection extends React.PureComponent {
                 <Grid.Column width={3}>
                   <ImageWrapper
                     src={item.imageSource}
-                    rounded
-                    style={{ width: '70px', margin: 'auto' }}
+                    // rounded
+                    style={{ width: '100%', margin: 'auto' }}
                   />
                 </Grid.Column>
                 <Grid.Column width={13}>
@@ -108,7 +121,7 @@ export default class ReviewsSubsection extends React.PureComponent {
             </Subsection>
           ))}
           <Subsection style={{ padding: '30px' }}>
-            <CustomPagination activePage={reviewsActivePage} totalPages={5} />
+            <CustomPagination activePage={reviewsActivePage} totalPages={this.state.totalPages} />
           </Subsection>
         </PaperWrapper>
       </Subsection>

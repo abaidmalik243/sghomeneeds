@@ -237,7 +237,7 @@
 /* Heart */
 
 
-.favourite-wrapper>button.ui.basic.button.favourite {
+/* .favourite-wrapper>button.ui.basic.button.favourite {
   background-color: white !important;
 }
 .favourite-wrapper>button.ui.basic.button.favourite:hover {
@@ -248,6 +248,16 @@
   color:#fff !important;
 }
 .heart{
+  color: rgb(250, 242, 242);
+} */
+
+.heart:hover{
+  color: red;
+}
+
+/* reviews */
+
+.inline:hover{
   color: red;
 }
 
