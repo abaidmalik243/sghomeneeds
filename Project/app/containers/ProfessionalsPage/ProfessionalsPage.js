@@ -58,7 +58,7 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
 );
- 
+
 const withReducer = injectReducer({
   key: PROFESSIONALS_VIEW,
   reducer: professionalsReducer,
