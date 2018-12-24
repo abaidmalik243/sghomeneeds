@@ -237,7 +237,7 @@
 /* Heart */
 
 .favourite {
-  box-shadow: rgba(0, 0, 0, 0.09) 0px 0px 9px 0px;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 0px 9px 0px !important;
 }
 
 .favourite-wrapper>button.ui.basic.button.favourite {
@@ -260,9 +260,9 @@
 
 /* reviews */
 
-.inline:hover{
+/* .inline:hover{
   color: red;
-}
+} */
 
 /* Chat now */
 
