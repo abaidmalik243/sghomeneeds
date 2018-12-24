@@ -85,7 +85,7 @@ export default class ReviewsSubsection extends React.PureComponent {
                       <TwoColumn stackable={false}>
                         <Grid.Column width={13}>
                           <div style={{ textAlign: 'left' }}>
-                            <div className="inline">
+                            <div className="inline_name">
                               <h3>{item.name}</h3>
                             </div>
                             <div className="inline">|</div>
