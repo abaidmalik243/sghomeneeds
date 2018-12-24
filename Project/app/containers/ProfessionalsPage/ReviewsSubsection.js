@@ -17,7 +17,7 @@ export default class ReviewsSubsection extends React.PureComponent {
   state = {
     totalPages: 5,
   }
-  
+
   componentDidMount() {
     const isMobile = window.innerWidth <= 500;
     if (isMobile) {
@@ -75,8 +75,8 @@ export default class ReviewsSubsection extends React.PureComponent {
                 <Grid.Column width={3}>
                   <ImageWrapper
                     src={item.imageSource}
-                    // rounded
-                    style={{ width: '100%', margin: 'auto' }}
+                    rounded
+                    style={{ width: '70px', margin: 'auto' }}
                   />
                 </Grid.Column>
                 <Grid.Column width={13}>

@@ -90,14 +90,14 @@ export default class ProfessionalsInfoCard extends React.PureComponent {
             </Grid.Column>
             <Grid.Column width={6}>
               <div className="favourite-wrapper">
-                {/*   <FavoriteButton
+                  <FavoriteButton
                   buttonProps={{
                     className: 'favourite',
                     style: { float: 'right' },
                   }}
                   iconProps={{}}
-                />*/}
-                <Icon name="heart outline" className="heart" style={{ float: 'right', fontSize: '20px', marginRight: '25px' }} />
+                />
+                {/* <Icon name="heart outline" className="heart" style={{ float: 'right', fontSize: '20px', marginRight: '25px' }} /> */}
               </div>
             </Grid.Column>
           </TwoColumn>
