@@ -67,30 +67,30 @@ export default class ProfessionalsInfoCard extends React.PureComponent {
             <Grid.Column width={10}>
               <button
                 className="ui circular facebook icon button"
-                style={{ float: 'left' }}
+                style={{ float: 'left', textAlign: 'center', padding: "12px 7px 5px 7px", borderRadius: "50%" }}
               >
                 {/* <i className="facebook icon" /> */}
-                <Icon name="facebook f" style={{ fontSize: '17px' }} />
+                <Icon name="facebook f" style={{ fontSize: '22px', padding: 0, margin: 0, color: 'white' }} />
               </button>
               <button
                 className="ui circular linkedin icon button"
-                style={{ float: 'left' }}
+                style={{ float: 'left', padding: "10px 7px 6px 7px", borderRadius: "50%" }}
               >
                 {/* <i className="linkedin icon" /> */}
-                {/* <Icon name="linkedin" /> */}
-                <span style={{ fontSize: '18px' }}>in</span>
+                <Icon name="linkedin in" style={{ fontSize: '22px', padding: 0, margin: 0, color: 'white' }} />
+                {/* <span style={{ fontSize: '18px' }}>in</span> */}
               </button>
               <button
                 className="ui circular instagram icon button"
-                style={{ float: 'left', backgroundColor: "saddlebrown" }}
+                style={{ float: 'left', backgroundColor: "saddlebrown", padding: "10px 7px 5px 7px", borderRadius: "50%" }}
               >
                 {/* <i className="instagram icon" /> */}
-                <Icon name="instagram" style={{ fontSize: '18px' }} />
+                <Icon name="instagram" style={{ fontSize: '22px', padding: 0, margin: 0, color: 'white' }} />
               </button>
             </Grid.Column>
             <Grid.Column width={6}>
               <div className="favourite-wrapper">
-                  <FavoriteButton
+                <FavoriteButton
                   buttonProps={{
                     className: 'favourite',
                     style: { float: 'right' },
