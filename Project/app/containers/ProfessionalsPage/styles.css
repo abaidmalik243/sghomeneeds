@@ -1,7 +1,11 @@
-.inline {
+.inline , .inline_name {
   display: inline-block;
   margin-right: 5px;
   margin-left: 5px;
+}
+
+.inline_name{
+  margin-left: 0px !important;
 }
 
 #professionals {
@@ -270,4 +274,12 @@
   background: #e8a205 !important;
   text-decoration: underline;
   transition: all 0.3s ease-in-out !important;
+}
+
+
+
+/*  */
+
+#professionals .textClr{
+  color: rgb(110, 110, 110);
 }
