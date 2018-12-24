@@ -236,8 +236,11 @@
 
 /* Heart */
 
+.favourite {
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 0px 9px 0px;
+}
 
-/* .favourite-wrapper>button.ui.basic.button.favourite {
+.favourite-wrapper>button.ui.basic.button.favourite {
   background-color: white !important;
 }
 .favourite-wrapper>button.ui.basic.button.favourite:hover {
@@ -249,11 +252,11 @@
 }
 .heart{
   color: rgb(250, 242, 242);
-} */
-
-.heart:hover{
-  color: red;
 }
+
+/* .heart:hover{
+  color: red;
+} */
 
 /* reviews */
 
