@@ -106,7 +106,7 @@ class ProfessionalsPage extends React.PureComponent {
           <TemplatePage {...this.props}>
             <Subsection id="professionals">
               <TwoColumn>
-                <Grid.Column width={10} style={{paddingRight: '0px'}}>
+                <Grid.Column width={10} style={{ paddingRight: '0px' }}>
                   <Subsection id="name">
                     <PaperWrapper className="paper">
                       <Subsection>
@@ -122,16 +122,16 @@ class ProfessionalsPage extends React.PureComponent {
                   {images &&
                     images.results &&
                     images.results.length > 0 && (
-                    <ImageSubsection images={images} />
-                  )}
+                      <ImageSubsection images={images} />
+                    )}
                   {galleries &&
                     galleries.results &&
                     galleries.results.length > 0 && (
-                    <GalleriesSubsection
-                      galleries={galleries}
-                      isPhone={isPhone}
-                    />
-                  )}
+                      <GalleriesSubsection
+                        galleries={galleries}
+                        isPhone={isPhone}
+                      />
+                    )}
                   {/* <hr
                     style={{ background: '#ddd', height: '1px', border: 0 }}
                   /> */}
@@ -140,14 +140,14 @@ class ProfessionalsPage extends React.PureComponent {
                     listing.faq_data &&
                     listing.faq_data.items &&
                     listing.faq_data.items.length > 0 && (
-                    <FaqSubsection professional={listing} />
-                  )}
+                      <FaqSubsection professional={listing} />
+                    )}
                   <ReviewsSubsection
                     professional={professional}
                     reviewsActivePage={1}
                   />
                 </Grid.Column>
-                <Grid.Column width={6} style={{paddingLeft: '0px'}}>
+                <Grid.Column width={6} style={{ paddingLeft: '0px' }}>
                   <Subsection id="professionals-info">
                     <ProfessionalsInfoCard professional={listing} />
                     <div id="report-listing">
@@ -192,13 +192,13 @@ class ProfessionalsPage extends React.PureComponent {
                         </Subsection>
                         <div
                           style={{
-                            backgroundColor: '#eee',
+                            backgroundColor: '#fafafa',
                             textAlign: 'left',
                             margin: '10px',
                             padding: '20px',
                           }}
                         >
-                          <p>{generateText(200)}</p>
+                          <p className="textClr">{generateText(200)}</p>
                         </div>
                       </Subsection>
                     </PaperWrapper>
@@ -227,13 +227,13 @@ class ProfessionalsPage extends React.PureComponent {
                         </Subsection>
                         <div
                           style={{
-                            backgroundColor: '#eee',
+                            backgroundColor: '#fafafa',
                             textAlign: 'left',
                             margin: '10px',
                             padding: '20px',
                           }}
                         >
-                          <p>{generateText(200)}</p>
+                          <p className="textClr">{generateText(200)}</p>
                         </div>
                       </Subsection>
                     </PaperWrapper>
