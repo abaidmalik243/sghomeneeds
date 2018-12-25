@@ -117,7 +117,8 @@ class ProfessionalsPage extends React.PureComponent {
                     </PaperWrapper>
                   </Subsection>
                   {listing &&
-                    listing.video && <VideoSubsection professional={listing} />}
+                    // listing.video && 
+                    <VideoSubsection professional={listing} />}
                   <AboutSubsection professional={listing} />
                   {images &&
                     images.results &&
