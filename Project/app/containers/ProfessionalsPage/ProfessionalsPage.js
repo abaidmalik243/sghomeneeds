@@ -198,7 +198,7 @@ class ProfessionalsPage extends React.PureComponent {
                             padding: '20px',
                           }}
                         >
-                          <p className="textClr">{generateText(200)}</p>
+                          <p className="textClr select-all">{generateText(200)}</p>
                         </div>
                       </Subsection>
                     </PaperWrapper>
@@ -233,7 +233,7 @@ class ProfessionalsPage extends React.PureComponent {
                             padding: '20px',
                           }}
                         >
-                          <p className="textClr">{generateText(200)}</p>
+                          <p className="textClr select-all">{generateText(200)}</p>
                         </div>
                       </Subsection>
                     </PaperWrapper>
