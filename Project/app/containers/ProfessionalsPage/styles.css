@@ -162,6 +162,12 @@
   padding-left: 15px;
 }
 
+@media only screen and (max-width: 500px) {
+  #reviews h2.factor-label .rating {
+    padding-left: 0px;
+  }
+}
+
 #reviews .review-text {
   padding-top: 10px;
   line-height: 1.8em;
@@ -289,4 +295,10 @@
   -moz-user-select: all;
   -ms-user-select: all;
   user-select: all;
+}
+
+
+.mobileViewImages{
+  width: 10px,
+  
 }

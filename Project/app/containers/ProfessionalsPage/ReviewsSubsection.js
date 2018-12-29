@@ -14,15 +14,18 @@ import CustomPagination from '../../components/CustomPagination';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class ReviewsSubsection extends React.PureComponent {
-  state = {
-    totalPages: 5,
+  constructor(props) {
+    super(props);
+    this.state = {
+      totalPage: 5,
+    }
   }
 
   componentDidMount() {
     const isMobile = window.innerWidth <= 500;
     if (isMobile) {
       this.setState({
-        totalPages: 3,
+        totalPage: 3,
       })
     }
   }
@@ -58,7 +61,7 @@ export default class ReviewsSubsection extends React.PureComponent {
                   <Grid.Column key={i}>
                     <div style={{ margin: '10px 25px' }}>
                       <h2 className="factor-label">
-                        {professional.reviews.factors[i].label }
+                        {professional.reviews.factors[i].label}
                         <RatingStar
                           maxRating={5}
                           defaultRating={professional.reviews.factors[i].rating}
@@ -73,7 +76,7 @@ export default class ReviewsSubsection extends React.PureComponent {
             {professional.reviews.list.map(item => (
               <Subsection key={item.key} className="single-review">
                 <TwoColumn stackable={false}>
-                  <Grid.Column width={3}>
+                  <Grid.Column width={3} style={{ padding: 3, }}>
                     <ImageWrapper
                       src={item.imageSource}
                       rounded
@@ -122,7 +125,7 @@ export default class ReviewsSubsection extends React.PureComponent {
               </Subsection>
             ))}
             <Subsection style={{ padding: '30px' }}>
-              <CustomPagination activePage={reviewsActivePage} totalPages={this.state.totalPages} />
+              <CustomPagination activePage={reviewsActivePage} totalPages={this.state.totalPage} />
             </Subsection>
           </PaperWrapper>
         </Subsection>

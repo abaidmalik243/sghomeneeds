@@ -6,7 +6,7 @@ import Subsection from '../../components/Section/Subsection';
 import ImageWrapper from '../../components/Base/Image';
 import FiveColumn from '../../components/Section/FiveColumn';
 import NavButton from '../../components/CustomButton/NavButton';
-
+import './styles.css';
 /* eslint-disable react/prefer-stateless-function */
 export default class ImageSubsection extends React.PureComponent {
   static propTypes = {
@@ -69,19 +69,20 @@ export default class ImageSubsection extends React.PureComponent {
                     alt={images.results[imageIndex].name}
                   />
                 </div>
-                <Subsection>
+                <Subsection style={{paddingLeft: '5px'}}>
                   {Array.from(
                     Array(Math.ceil(images.results.length / 5)).keys(),
                   ).map(row => (
-                    <FiveColumn stackable key={row}>
+                    <FiveColumn stackable key={row} >
                       {images.results
                         .slice(row * 5, row * 5 + 5)
                         .map((item, index) => (
                           <Grid.Column key={item.key}>
-                            <ImageWrapper
+                            <ImageWrapper 
+                              className="mobileViewImages"
                               src={item.file_field}
                               alt={item.name}
-                              style={{ cursor: 'pointer' }}
+                              style={{ cursor: 'pointer', }}
                               onClick={() => {
                                 this.setState({ imageIndex: index });
                               }}
