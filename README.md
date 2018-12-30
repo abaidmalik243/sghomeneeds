@@ -18,6 +18,8 @@ SGHomeNeeds123!
 
 1: Professionals:
 https://sghomeneeds-react.herokuapp.com/professionals/0932-design-consultants-pte-ltd
+Path: http://localhost:3000/professionals/test-listing-1-1871
+
 
 2: directory:
 https://sghomeneeds-react.herokuapp.com/directory
