@@ -5,7 +5,15 @@ import CompanyCard from './CompanyCard';
 import './company-list.css';
 
 function CompanyList(props) {
-  const { selectable, onSelect, selected, goTo, companies } = props;
+  const {
+    selectable,
+    onSelect,
+    selected,
+    goTo,
+    companies,
+    user,
+    dispatchAction,
+  } = props;
   return (
     <div id="company-list">
       {companies.results &&
@@ -13,7 +21,7 @@ function CompanyList(props) {
           <CompanyCard
             company={item}
             key={v4()}
-            {...{ selectable, onSelect, selected, goTo }}
+            {...{ selectable, onSelect, selected, goTo, user, dispatchAction }}
           />
         ))}
     </div>
@@ -26,6 +34,8 @@ CompanyList.propTypes = {
   onSelect: PropTypes.func,
   selected: PropTypes.array,
   goTo: PropTypes.func,
+  user: PropTypes.object,
+  dispatchAction: PropTypes.func,
 };
 
 export default CompanyList;

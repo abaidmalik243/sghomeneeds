@@ -7,24 +7,33 @@ import Subsection from '../Section/Subsection';
 import './formio-bootstrap.css';
 import './formio.css';
 import './form.css';
+import ButtonWrapper from '../Base/Button';
 
 class Form extends React.PureComponent {
   static propTypes = {
     url: PropTypes.string,
     onSubmit: PropTypes.func,
     submission: PropTypes.object,
+    showForm: PropTypes.bool,
   };
   state = {
     formPage: 0,
   };
 
   render() {
+    const { showForm } = this.props;
     const showSubmit =
       this.form &&
       this.form.formio &&
       this.state.formPage === this.form.formio.pages.length - 1;
     return (
-      <Subsection style={{ paddingBottom: '10px', maxWidth: '1024px' }}>
+      <Subsection
+        style={{
+          paddingBottom: '10px',
+          maxWidth: '1024px',
+          display: showForm ? '' : 'none',
+        }}
+      >
         <PaperWrapper>
           <Subsection style={{ paddingBottom: '10px' }}>
             <Formio
@@ -37,7 +46,9 @@ class Form extends React.PureComponent {
               }}
             />
             {showSubmit && (
-              <button onClick={this.props.onSubmit}>Submit</button>
+              <ButtonWrapper design="filled" onClick={this.props.onSubmit}>
+                Submit
+              </ButtonWrapper>
             )}
           </Subsection>
         </PaperWrapper>

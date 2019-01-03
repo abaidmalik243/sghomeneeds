@@ -18,6 +18,8 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import SimpleCrypto from 'simple-crypto-js';
 
 import HomePage from 'containers/HomePage/Loadable';
+import EmailPage from 'containers/EmailPage/Loadable';
+import PasswordResetPage from 'containers/PasswordResetPage/Loadable';
 import LoginPage from 'containers/LoginPage/Loadable';
 import RegisterPage from 'containers/RegisterPage/Loadable';
 import RegisterMerchantPage from 'containers/RegisterMerchantPage/Loadable';
@@ -28,10 +30,16 @@ import ProfessionalsPage from 'containers/ProfessionalsPage/Loadable';
 import BlogPost from 'containers/BlogPost/Loadable';
 import BlogPage from 'containers/BlogPage/Loadable';
 import GalleryPage from 'containers/GalleryPage/Loadable';
+import GalleryDetailPage from 'containers/GalleryDetailPage/Loadable';
 import DashboardPage from 'containers/DashboardPage/Loadable';
 import ChatPage from 'containers/ChatPage/Loadable';
 import ProjectsCreatePage from 'containers/ProjectsCreatePage/Loadable';
 import ProjectsSelect from 'containers/ProjectsSelectPage/Loadable';
+import ProjectsListPage from 'containers/ProjectsListPage/Loadable';
+import ContactPage from 'containers/ContactPage/Loadable';
+import GettingStartedPage from 'containers/GettingStartedPage/Loadable';
+import BusinessProfilePage from 'containers/BusinessProfilePage/Loadable';
+import HomeMatchPage from 'containers/HomeMatchPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import './app.css';
@@ -62,6 +70,27 @@ export default function App() {
     <div>
       <Switch>
         <AuthRoute exact path="/" render={props => <HomePage {...props} />} />
+        <AuthRoute path="/emails" render={props => <EmailPage {...props} />} />
+        <AuthRoute
+          path="/contact"
+          render={props => <ContactPage {...props} />}
+        />
+        <AuthRoute
+          path="/getting-started"
+          render={props => <GettingStartedPage {...props} />}
+        />
+        <AuthRoute
+          path="/business-profile"
+          render={props => <BusinessProfilePage {...props} />}
+        />
+        <AuthRoute
+          path="/home-match"
+          render={props => <HomeMatchPage {...props} />}
+        />
+        <AuthRoute
+          path="/password_reset"
+          render={props => <PasswordResetPage {...props} />}
+        />
         <AuthRoute path="/login" render={props => <LoginPage {...props} />} />
         <AuthRoute
           path="/register"
@@ -92,6 +121,11 @@ export default function App() {
           render={props => <BlogPost {...props} />}
         />
         <AuthRoute path="/articles" render={props => <BlogPage {...props} />} />
+
+        <AuthRoute
+          path="/gallery/:slug"
+          render={props => <GalleryDetailPage {...props} />}
+        />
         <AuthRoute
           path="/gallery"
           render={props => <GalleryPage {...props} />}
@@ -142,6 +176,11 @@ export default function App() {
           mustLogIn
           path="/dashboard/projects/select"
           render={props => <ProjectsSelect {...props} />}
+        />
+        <AuthRoute
+          mustLogIn
+          path="/dashboard/projects"
+          render={props => <ProjectsListPage {...props} />}
         />
         <Redirect from="/dashboard" to="/dashboard/account" />
         <Route component={NotFoundPage} />

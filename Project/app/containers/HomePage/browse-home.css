@@ -77,11 +77,16 @@ h3.project-subtitle {
   margin-bottom: -10px;
 }
 
-.favourite-wrapper {
+.gallery-card .favourite-wrapper {
   position: absolute;
   right: 15px;
   top: 10px;
   z-index: 99;
+  display: none;
+}
+
+.gallery-card:hover .favourite-wrapper {
+  display: block;
 }
 
 .favourite-wrapper>button.ui.basic.button.favourite {
@@ -147,7 +152,7 @@ h3.project-subtitle {
   left: -203px;
   padding-top: 209px;
 }
-@media only screen and (max-width: 768px){  
+@media only screen and (max-width: 768px){
 #browse-home>.subsection>.subsection {
   width: 85% !important;
 }

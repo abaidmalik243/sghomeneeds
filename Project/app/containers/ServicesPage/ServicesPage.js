@@ -179,7 +179,7 @@ class ServicesPage extends React.PureComponent {
       <TemplatePage {...this.props}>
         <MediaQuery query="(max-width: 767px)">
           {isPhone => (
-            <div className="service-page-wrapper">
+            <div className="service-page-wrapper" id="services-page">
               <ImageBannerSection
                 imageSource={banner}
                 style={{

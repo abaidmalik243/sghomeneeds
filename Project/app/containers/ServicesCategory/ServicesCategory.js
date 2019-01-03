@@ -89,9 +89,18 @@ class ServicesCategory extends React.Component {
         <MediaQuery query="(max-width: 767px)">
           {isPhone => (
             <div className="service-category-wrapper">
-              <ImageBannerSection imageSource={banner}>
+              <ImageBannerSection
+                imageSource={banner}
+                style={{ height: '200px' }}
+              >
                 <Subsection className="banner-title">
-                  <h1>{main && main.name && renderHTML(main.name)}</h1>
+                  <h1>
+                    {main &&
+                      main.name &&
+                      `What ${renderHTML(
+                        main.name,
+                      )} service are you searching for?`}
+                  </h1>
                 </Subsection>
               </ImageBannerSection>
               {children && children.length > 0 ? (
@@ -108,6 +117,7 @@ class ServicesCategory extends React.Component {
                   name={main && main.name && renderHTML(main.name)}
                   goTo={this.props.goTo}
                   users={this.props.users}
+                  dispatchAction={this.props.dispatchAction}
                   {...{ isPhone }}
                 />
               )}

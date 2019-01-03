@@ -14,6 +14,7 @@ function ButtonWrapper(props) {
         props.className,
       )}
       onClick={props.onClick}
+      ref={props.inputRef}
     >
       {props.children}
     </button>
@@ -28,6 +29,7 @@ ButtonWrapper.propTypes = {
   ]),
   design: PropTypes.oneOf(['filled', 'outline']),
   onClick: PropTypes.func,
+  inputRef: PropTypes.func,
 };
 
 export default ButtonWrapper;

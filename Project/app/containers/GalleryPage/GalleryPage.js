@@ -10,9 +10,8 @@ import TemplatePage from '../Common/PageWrapper';
 import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
 import { CATEGORIES, GALLERIES } from '../../actions/restApi';
-import categorySaga from '../../sagas/category';
-import gallerySaga from '../../sagas/gallery';
-import { RESTART_ON_REMOUNT } from '../../utils/constants';
+import saga from '../../sagas';
+import { DAEMON } from '../../utils/constants';
 import './gallery-page.css';
 // import LinkWrapper from '../../components/Base/Link';
 import galleryReducer, { GALLERY_VIEW } from '../../reducers/gallery';
@@ -43,15 +42,15 @@ const withReducer = injectReducer({
 });
 
 const withCategorySaga = injectSaga({
-  key: `${GALLERY_VIEW}`,
-  saga: categorySaga,
-  mode: RESTART_ON_REMOUNT,
+  key: CATEGORIES.MODEL,
+  saga: saga(CATEGORIES),
+  mode: DAEMON,
 });
 
 const withGallerySaga = injectSaga({
-  key: `${GALLERY_VIEW}`,
-  saga: gallerySaga,
-  mode: RESTART_ON_REMOUNT,
+  key: GALLERIES.MODEL,
+  saga: saga(GALLERIES),
+  mode: DAEMON,
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -60,6 +59,7 @@ class GalleryPage extends React.PureComponent {
     // eslint-disable-next-line react/no-unused-prop-types
     [GALLERY_VIEW]: PropTypes.object,
     dispatchAction: PropTypes.func,
+    goTo: PropTypes.func,
     galleries: PropTypes.array,
   };
 
@@ -103,22 +103,25 @@ class GalleryPage extends React.PureComponent {
 
     const renderGallery = gallery => {
       const imagesData = gallery.files.map(file => ({
-        src: file.file_field.substring(0, file.file_field.indexOf('?')),
+        src: file.file_field,
         alt: file.name,
       }));
       return (
         <Grid.Column key={v4()} computer={5} tablet={8} mobile={16}>
           <div className="gallery-single">
             <GalleryCarousel width={277} images={imagesData} />
-            <div
+            <button
               className="gallery-single-text"
-              style={{ width: '277px', margin: '8px auto' }}
+              style={{ width: '277px', margin: '8px auto', cursor: 'pointer' }}
+              onClick={() => {
+                this.props.goTo({ path: `/gallery/${gallery.slug}` });
+              }}
             >
               <h4>{gallery.wp_post_title}</h4>
               <p>
                 {gallery.property_type} - {gallery.estimated_project_cost}
               </p>
-            </div>
+            </button>
           </div>
         </Grid.Column>
       );

@@ -17,8 +17,8 @@ const initialState = fromJS({
   },
   [PROJECTS.MODEL]: {
     LIST: {
-      count: 2112,
-      next: 'http://localhost:8000/api/listings/?limit=10&offset=10',
+      count: 0,
+      next: null,
       previous: null,
       results: [],
     },

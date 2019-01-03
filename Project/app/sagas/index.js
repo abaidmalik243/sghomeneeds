@@ -18,6 +18,13 @@ function* getModel(action) {
       model,
       id: payload.id,
     });
+    if (response.error) {
+      yield put({
+        type: MODEL_MAP[model][api].FAILED,
+        payload: response.error.response.data.msg,
+      });
+      return;
+    }
     yield put({
       type: MODEL_MAP[model][api].SUCCESS,
       payload: response.data,
@@ -37,6 +44,13 @@ function* listModels(action) {
       model,
       query: payload.query,
     });
+    if (response.error) {
+      yield put({
+        type: MODEL_MAP[model][api].FAILED,
+        payload: response.error.response.data.msg,
+      });
+      return;
+    }
     yield put({
       type: MODEL_MAP[model][api].SUCCESS,
       payload: response.data,
@@ -59,6 +73,16 @@ function* postModels(action) {
       url: payload.url,
       contentType,
     });
+    if (response.error) {
+      yield put({
+        type: MODEL_MAP[model][api].FAILED,
+        payload: Object.keys(response.error.response.data)
+          .map(k => `${k}: ${response.error.response.data[k]}`)
+          .join(' '),
+        view,
+      });
+      return;
+    }
     yield put({
       type: MODEL_MAP[model][api].SUCCESS,
       payload: response.data,
@@ -80,6 +104,13 @@ function* putModels(action) {
       id: payload.id,
       contentType,
     });
+    if (response.error) {
+      yield put({
+        type: MODEL_MAP[model][api].FAILED,
+        payload: response.error.response.data.msg,
+      });
+      return;
+    }
     yield put({
       type: MODEL_MAP[model][api].SUCCESS,
       payload: response.data,
@@ -101,6 +132,16 @@ function* patchModels(action) {
       id: payload.id,
       contentType,
     });
+    if (response.error) {
+      yield put({
+        type: MODEL_MAP[model][api].FAILED,
+        payload: Object.keys(response.error.response.data)
+          .map(k => `${k}: ${response.error.response.data[k]}`)
+          .join(' '),
+        view,
+      });
+      return;
+    }
     yield put({
       type: MODEL_MAP[model][api].SUCCESS,
       payload: response.data,
@@ -122,6 +163,13 @@ function* deleteModels(action) {
       id: payload.id,
       contentType,
     });
+    if (response.error) {
+      yield put({
+        type: MODEL_MAP[model][api].FAILED,
+        payload: response.error.response.data.msg,
+      });
+      return;
+    }
     yield put({
       type: MODEL_MAP[model][api].SUCCESS,
       payload: { data: response.data, id: payload.id },

@@ -7,5 +7,6 @@ export const links = [
 ];
 
 export const dashboardLinks = [
+  { text: 'Projects', url: '/dashboard/projects', key: 'Projects' },
   { text: 'Messages', url: '/dashboard/chat', key: 'Messages' },
 ];

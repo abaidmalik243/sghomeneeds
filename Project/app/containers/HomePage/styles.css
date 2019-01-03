@@ -7,7 +7,7 @@
   width: 57vw;
   position: relative;
   top: 10vh;
-  height: 338px;
+  height: 300px;
   border-radius: 0;
   border-width: 0;
   box-shadow: 0px 8px 32px 0px rgba(0, 0, 0, 0.06);
@@ -19,16 +19,16 @@
   }
 } */
 
-.Rectangle_20 {
-  background-color: rgb(255, 255, 255);
-  box-shadow: 0px 8px 32px 0px rgba(0, 0, 0, 0.06);
-  position: absolute;
-  left: 384px;
-  top: 255px;
-  width: 1034px;
-  height: 476px;
-  z-index: 329;
-}
+/*.Rectangle_20 {*/
+  /*background-color: rgb(255, 255, 255);*/
+  /*box-shadow: 0px 8px 32px 0px rgba(0, 0, 0, 0.06);*/
+  /*position: absolute;*/
+  /*left: 384px;*/
+  /*top: 255px;*/
+  /*width: 1034px;*/
+  /*height: 476px;*/
+  /*z-index: 329;*/
+/*}*/
 
 
 .mobile #banner-paper {

@@ -11,6 +11,13 @@ function* fetchPosts(action) {
         contentType: APPLICATION_JSON,
         query: action.payload.query,
       });
+      if (response.error) {
+        yield put({
+          type: WP_POSTS.LIST.FAILED,
+          payload: response.error.response.data.msg,
+        });
+        return;
+      }
       yield put({
         type: WP_POSTS.LIST.SUCCESS,
         payload: {
@@ -32,6 +39,13 @@ function* fetchPosts(action) {
         contentType: APPLICATION_JSON,
         query: action.payload.query,
       });
+      if (response.error) {
+        yield put({
+          type: WP_POSTS.GET.FAILED,
+          payload: response.error.response.data.msg,
+        });
+        return;
+      }
       yield put({
         type: WP_POSTS.GET.SUCCESS,
         payload: {
@@ -53,6 +67,13 @@ function* fetchRelatedPosts(action) {
       contentType: APPLICATION_JSON,
       query: action.payload.query,
     });
+    if (response.error) {
+      yield put({
+        type: WP_POSTS[actionApi].FAILED,
+        payload: response.error.response.data.msg,
+      });
+      return;
+    }
     yield put({
       type: WP_POSTS[actionApi].SUCCESS,
       payload: {
@@ -73,6 +94,13 @@ function* fetchCategories(action) {
         contentType: APPLICATION_JSON,
         query: action.payload.query,
       });
+      if (response.error) {
+        yield put({
+          type: WP_CATEGORIES.LIST.FAILED,
+          payload: response.error.response.data.msg,
+        });
+        return;
+      }
       yield put({
         type: WP_CATEGORIES.LIST.SUCCESS,
         payload: {

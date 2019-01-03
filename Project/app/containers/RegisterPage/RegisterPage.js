@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Menu } from 'semantic-ui-react';
+import { Grid, Header, Menu, Modal, Segment } from 'semantic-ui-react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
@@ -16,7 +16,7 @@ import injectSaga from '../../utils/injectSaga';
 import reducer from '../../reducers/user';
 import saga from '../../sagas/user';
 
-import { RESTART_ON_REMOUNT } from '../../utils/constants';
+import { DAEMON } from '../../utils/constants';
 
 import './styles.css';
 
@@ -45,7 +45,7 @@ const withReducer = injectReducer({ key: USERS.MODEL, reducer });
 const withSaga = injectSaga({
   key: USERS.MODEL,
   saga,
-  mode: RESTART_ON_REMOUNT,
+  mode: DAEMON,
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -57,8 +57,10 @@ class RegisterPage extends React.PureComponent {
     goTo: PropTypes.func,
     location: PropTypes.object,
   };
+  state = { openError: false, errorMessage: '', openActivation: false };
   render() {
-    const { register, login, goTo } = this.props;
+    const { register, goTo } = this.props;
+    const { openError, errorMessage, openActivation } = this.state;
     return (
       <TemplatePage {...this.props}>
         <TwoColumn id="content">
@@ -78,6 +80,28 @@ class RegisterPage extends React.PureComponent {
                     I am a Professional
                   </Menu.Item>
                 </Menu>
+                <Modal
+                  onClose={() => {
+                    this.setState({ openError: false });
+                  }}
+                  open={openError}
+                >
+                  <Segment id="login-fail">
+                    <Header>Register Failed</Header>
+                    <p style={{ color: 'red' }}>{errorMessage}</p>
+                  </Segment>
+                </Modal>
+                <Modal
+                  onClose={() => {
+                    this.setState({ openActivation: false });
+                  }}
+                  open={openActivation}
+                >
+                  <Segment id="login-fail">
+                    <Header>Register Success</Header>
+                    <p>Activation Email has been sent to your email</p>
+                  </Segment>
+                </Modal>
                 <RegisterSubsection
                   form={{
                     onSubmit: event => {
@@ -85,6 +109,7 @@ class RegisterPage extends React.PureComponent {
                       register({
                         email: event.target.username.value,
                         password: event.target.password.value,
+                        name: event.target.name.value,
                         method: 'email',
                         user_type: 'consumer',
                       });
@@ -96,7 +121,7 @@ class RegisterPage extends React.PureComponent {
           </Grid.Column>
           <Grid.Column>
             <Subsection id="social-login-section">
-              <SocialLoginSubsection login={login} user_type="consumer" />
+              <SocialLoginSubsection login={register} user_type="consumer" />
             </Subsection>
           </Grid.Column>
         </TwoColumn>
@@ -105,6 +130,26 @@ class RegisterPage extends React.PureComponent {
   }
   // eslint-disable-next-line no-unused-vars
   componentDidUpdate(prevProps, prevState, snapshot) {
+    const { users } = this.props;
+    if (
+      prevProps.users.loginError.message !== users.loginError.message &&
+      users.loginError.message
+    ) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({
+        openError: true,
+        errorMessage: users.loginError.message,
+      });
+    }
+    if (
+      prevProps.users.REGISTER.id !== users.REGISTER.id &&
+      users.REGISTER.method === 'email'
+    ) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({
+        openActivation: true,
+      });
+    }
     if (!prevProps.users.isLoggedIn && this.props.users.isLoggedIn) {
       if (
         this.props.location.query &&
@@ -112,7 +157,7 @@ class RegisterPage extends React.PureComponent {
       ) {
         this.props.goTo(this.props.location.query.redirect);
       } else {
-        this.props.goTo('/dashboard');
+        this.props.goTo({ path: '/dashboard' });
       }
     }
   }

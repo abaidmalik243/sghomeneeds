@@ -1,64 +1,85 @@
-import { generateText } from '../../../utils/loremIpsumGenerator';
-
-export const PushNotificationSettings = [
+export const ConsumersEmailSettings = [
   {
-    settingName: 'Message',
-    settingDesc: generateText(50),
-    defaultBool: true,
+    settingName: 'Articles and News',
+    id: 'emailArticlesAndNews',
+    settingDesc: '',
+    defaultBool: false,
   },
   {
-    settingName: 'Project Reminders & Updates',
-    settingDesc: generateText(50),
+    settingName: 'Special Promotions',
+    id: 'emailSpecialPromotions',
+    settingDesc: '',
     defaultBool: false,
   },
   {
     settingName: 'Promotion & Tips',
-    settingDesc: generateText(50),
+    id: 'emailPromotions&Tips',
+    settingDesc: '',
     defaultBool: true,
   },
   {
-    settingName: 'Account Support',
-    settingDesc: generateText(50),
+    settingName: 'Project Reminders',
+    id: 'emailProjectReminders',
+    settingDesc: '',
+    defaultBool: true,
+  },
+  {
+    settingName: 'Chat Notifications',
+    id: 'emailChatNotifications',
+    settingDesc: '',
     defaultBool: true,
   },
 ];
 
-export const TextSettings = [
+export const ConsumersTextSettings = [
   {
-    settingName: 'All Text Notification',
+    settingName: 'Chat Notifications',
+    id: 'textChatNotifications',
+    defaultBool: true,
+  },
+  {
+    settingName: 'Project Reminders',
+    id: 'textProjectReminders',
     defaultBool: true,
   },
 ];
 
-export const EmailSettings = [
+export const ProfessionalsEmailSettings = [
   {
-    settingName: 'Help tips & inspiration',
-    settingDesc: generateText(50),
+    settingName: 'Articles and News',
+    id: 'emailArticlesAndNews',
+    settingDesc: '',
     defaultBool: true,
   },
   {
-    settingName: 'Recommendation',
-    settingDesc: generateText(50),
+    settingName: 'New Project Reviews',
+    id: 'emailNewProjectReviews',
+    settingDesc: '',
     defaultBool: true,
   },
   {
-    settingName: 'Special Offer',
-    settingDesc: generateText(50),
+    settingName: 'Project Reminders',
+    id: 'emailProjectReminders',
+    settingDesc: '',
     defaultBool: true,
   },
   {
-    settingName: 'Invitation To give feedback',
-    settingDesc: generateText(50),
+    settingName: 'Chat Notifications',
+    id: 'emailChatNotifications',
+    settingDesc: '',
+    defaultBool: true,
+  },
+];
+
+export const ProfessionalsTextSettings = [
+  {
+    settingName: 'Chat Notifications',
+    id: 'textChatNotifications',
     defaultBool: true,
   },
   {
-    settingName: 'Reminders',
-    settingDesc: generateText(50),
-    defaultBool: true,
-  },
-  {
-    settingName: 'Others',
-    settingDesc: generateText(50),
+    settingName: 'Project Reminders',
+    id: 'textProjectReminders',
     defaultBool: true,
   },
 ];

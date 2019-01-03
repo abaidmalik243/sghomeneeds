@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Modal } from 'semantic-ui-react';
 import TwoColumn from '../../../components/Section/TwoColumn';
 import Subsection from '../../../components/Section/Subsection';
 import OneColumn from '../../../components/Section/OneColumn';
@@ -20,6 +20,7 @@ import { MULTIPART_FORM_DATA } from '../../../utils/actionsUtil';
 import { DASHBOARD_VIEW } from '../../../reducers/dashboard';
 import GalleryModal from './GalleryModal';
 import FilesModal from './FilesModal';
+import PlaceholderProfileImage from '../../../images/avatar-placeholder.png';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class ProfilePaper extends React.PureComponent {
@@ -28,12 +29,23 @@ export default class ProfilePaper extends React.PureComponent {
     currentTab: PropTypes.string,
     history: PropTypes.object,
     user: PropTypes.object,
+    // [DASHBOARD_VIEW]: PropTypes.object,
     dispatchAction: PropTypes.func.isRequired,
   };
-
+  state = {
+    openListingModal: false,
+    openGalleryModal: false,
+    openSuccessModal: false,
+    successModalText: '',
+  };
   render() {
     const { profile, currentTab, user } = this.props;
-
+    const {
+      openListingModal,
+      openGalleryModal,
+      openSuccessModal,
+      successModalText,
+    } = this.state;
     const dashboardTabs = [
       {
         name: 'Account Settings',
@@ -83,7 +95,6 @@ export default class ProfilePaper extends React.PureComponent {
           <div className="menu-item">{item.name}</div>
         </a>
       ));
-
     return (
       <PaperWrapper>
         <TwoColumn className="profile-summary">
@@ -98,12 +109,11 @@ export default class ProfilePaper extends React.PureComponent {
                         src={
                           this.props.user.user.profile_image
                             ? this.props.user.user.profile_image
-                            : profile.imageSource
+                            : PlaceholderProfileImage
                         }
                         size={150}
                         borderWidth={5}
                         style={{
-                          margin: '40px auto 40px 80px',
                           display: 'block',
                         }}
                       />
@@ -120,12 +130,11 @@ export default class ProfilePaper extends React.PureComponent {
                     });
                   },
                 }}
-                file={
-                  this.props.user.user.profile_image
-                    ? this.props.user.user.profile_image
-                    : profile.imageSource
-                }
+                file={{
+                  file_field: this.props.user.user.profile_image,
+                }}
                 fieldName="profile_image"
+                isCreated={false}
               />
             </Subsection>
           </Grid.Column>
@@ -147,17 +156,31 @@ export default class ProfilePaper extends React.PureComponent {
               <Grid.Column width={6}>
                 <Subsection
                   style={{
-                    display: currentTab === 'listings' ? 'inherit' : 'none',
+                    display:
+                      user.LOAD_AUTH.data.merchantId !== -1 &&
+                      user.LOAD_AUTH.data.merchantId !== null
+                        ? 'inherit'
+                        : 'none',
                   }}
                 >
                   <ListingModal
                     modalProps={{
                       dimmer: 'inverted',
                       trigger: (
-                        <ButtonWrapper design="outline">
+                        <ButtonWrapper
+                          design="outline"
+                          style={{ margin: '10px' }}
+                          onClick={() => {
+                            this.setState({ openListingModal: true });
+                          }}
+                        >
                           Add Listing
                         </ButtonWrapper>
                       ),
+                      open: openListingModal,
+                      onClose: () => {
+                        this.setState({ openListingModal: false });
+                      },
                     }}
                     formProps={{
                       onSubmit: formData => {
@@ -175,15 +198,41 @@ export default class ProfilePaper extends React.PureComponent {
                     }
                     listing={null}
                     isCreate
+                    error={
+                      this.props[DASHBOARD_VIEW][LISTINGS.MODEL].POST.error
+                    }
                   />
+                  <Modal
+                    open={openSuccessModal}
+                    onClose={() =>
+                      this.setState({
+                        openSuccessModal: false,
+                        successModalText: '',
+                      })
+                    }
+                  >
+                    <Subsection>
+                      <h3>{successModalText}</h3>
+                    </Subsection>
+                  </Modal>
                   <GalleryModal
                     modalProps={{
                       dimmer: 'inverted',
                       trigger: (
-                        <ButtonWrapper design="outline">
+                        <ButtonWrapper
+                          design="outline"
+                          style={{ margin: '10px' }}
+                          onClick={() => {
+                            this.setState({ openGalleryModal: true });
+                          }}
+                        >
                           Add Gallery
                         </ButtonWrapper>
                       ),
+                      open: openGalleryModal,
+                      onClose: () => {
+                        this.setState({ openGalleryModal: false });
+                      },
                     }}
                     formProps={{
                       onSubmit: formData => {
@@ -198,6 +247,9 @@ export default class ProfilePaper extends React.PureComponent {
                     }}
                     listings={this.props[DASHBOARD_VIEW][LISTINGS.MODEL].LIST}
                     isCreate
+                    error={
+                      this.props[DASHBOARD_VIEW][GALLERIES.MODEL].POST.error
+                    }
                   />
                 </Subsection>
               </Grid.Column>
@@ -212,6 +264,49 @@ export default class ProfilePaper extends React.PureComponent {
         </OneColumn>
       </PaperWrapper>
     );
+  }
+  componentDidMount() {
+    this.props.dispatchAction({
+      type: CATEGORIES.LIST.REQUESTED,
+      payload: {
+        query: {
+          limit: 300,
+        },
+      },
+    });
+  }
+  // eslint-disable-next-line no-unused-vars
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (
+      prevProps[DASHBOARD_VIEW][LISTINGS.MODEL].POST.id !==
+      this.props[DASHBOARD_VIEW][LISTINGS.MODEL].POST.id
+    ) {
+      if (this.props[DASHBOARD_VIEW][LISTINGS.MODEL].POST.id !== undefined) {
+        // SUCCESS
+        // eslint-disable-next-line react/no-did-update-set-state
+        this.setState({
+          openListingModal: false,
+          openSuccessModal: true,
+          successModalText:
+            'Your Listing is successfully created, You may now edit your listing options and add images',
+        });
+      }
+    }
+    if (
+      prevProps[DASHBOARD_VIEW][GALLERIES.MODEL].POST.id !==
+      this.props[DASHBOARD_VIEW][GALLERIES.MODEL].POST.id
+    ) {
+      if (this.props[DASHBOARD_VIEW][GALLERIES.MODEL].POST.id !== undefined) {
+        // SUCCESS
+        // eslint-disable-next-line react/no-did-update-set-state
+        this.setState({
+          openGalleryModal: false,
+          openSuccessModal: true,
+          successModalText:
+            'Your Gallery is successfully created, You may now add images',
+        });
+      }
+    }
   }
 
   createListing = payload => {

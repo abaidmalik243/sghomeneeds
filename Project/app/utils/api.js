@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 export function Api(path, options = { method: 'POST', data: {} }) {
-  return axios({ url: path, ...options });
+  return axios({ url: path, ...options })
+    .then(response => response)
+    .catch(error => ({ error }));
 }
 
 // export const API_URL = 'https://sghomeneeds-web.herokuapp.com';

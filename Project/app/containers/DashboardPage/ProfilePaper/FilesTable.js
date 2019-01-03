@@ -31,53 +31,69 @@ export default class FilesTable extends React.PureComponent {
     galleryId: PropTypes.number,
     isBefore: PropTypes.bool,
   };
+  state = {
+    openDeleteModal: '',
+  };
 
   render() {
     const data = this.props.files;
+    const { openDeleteModal } = this.state;
     const columns = [
       {
         Header: 'Image',
         accessor: 'file_field',
         Cell: props => <img src={props.value} alt={props.value} width="100%" />,
       },
-      {
-        Header: 'Edit',
-        accessor: 'id',
-        Cell: props => (
-          <FilesModal
-            modalProps={{
-              dimmer: 'inverted',
-              trigger: (
-                <ButtonWrapper type="button" design="outline">
-                  EDIT
-                </ButtonWrapper>
-              ),
-            }}
-            formProps={{
-              onSubmit: formData => {
-                this.props.dispatchAction({
-                  type: FILES.PATCH.REQUESTED,
-                  payload: { data: formData, id: props.value },
-                  contentType: MULTIPART_FORM_DATA,
-                });
-              },
-            }}
-            file={props.original}
-          />
-        ),
-      },
+      // {
+      //   Header: 'Edit',
+      //   accessor: 'id',
+      //   Cell: props => (
+      //     <FilesModal
+      //       modalProps={{
+      //         dimmer: 'inverted',
+      //         trigger: (
+      //           <ButtonWrapper type="button" design="outline">
+      //             EDIT
+      //           </ButtonWrapper>
+      //         ),
+      //       }}
+      //       formProps={{
+      //         onSubmit: formData => {
+      //           this.props.dispatchAction({
+      //             type: FILES.PATCH.REQUESTED,
+      //             payload: { data: formData, id: props.value },
+      //             contentType: MULTIPART_FORM_DATA,
+      //           });
+      //         },
+      //       }}
+      //       file={props.original}
+      //     />
+      //   ),
+      // },
       {
         Header: 'Delete',
         accessor: 'id',
+        minWidth: 80,
+        maxWidth: 100,
         Cell: props => (
           <Modal
             {...{
               dimmer: 'inverted',
               trigger: (
-                <ButtonWrapper type="button" design="outline">
+                <ButtonWrapper
+                  type="button"
+                  design="outline"
+                  onClick={() => {
+                    this.setState({ openDeleteModal: props.value });
+                  }}
+                >
                   DELETE
                 </ButtonWrapper>
               ),
+              open: openDeleteModal === props.value,
+              onClose: () => {
+                this.setState({ openDeleteModal: '' });
+              },
             }}
           >
             <Subsection>
@@ -100,12 +116,16 @@ export default class FilesTable extends React.PureComponent {
       },
     ];
     return (
-      <div>
+      <div className="file-table">
         <FilesModal
           modalProps={{
             dimmer: 'inverted',
             trigger: (
-              <ButtonWrapper type="button" design="outline">
+              <ButtonWrapper
+                type="button"
+                design="outline"
+                style={{ marginBottom: '10px' }}
+              >
                 Add Images
               </ButtonWrapper>
             ),

@@ -26,11 +26,11 @@ export default class HowItWorksSection extends React.PureComponent {
   render() {
     return (
       <Section id="how-it-works">
-        <Section style={{ backgroundColor: 'white', padding: '30px' }}>
-          <Subsection>
-            <h1>How it Works</h1>
-          </Subsection>
-        </Section>
+        {/* <Section style={{ backgroundColor: 'white', padding: '30px' }}> */}
+        {/* <Subsection> */}
+        {/* <h1>How it Works</h1> */}
+        {/* </Subsection> */}
+        {/* </Section> */}
         <Section>
           <Subsection>
             <TwoColumn id="step-1">

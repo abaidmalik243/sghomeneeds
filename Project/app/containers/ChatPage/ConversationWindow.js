@@ -13,6 +13,7 @@ import Subsection from '../../components/Section/Subsection';
 import PaperWrapper from '../../components/Base/Paper';
 import TwoColumn from '../../components/Section/TwoColumn';
 import FormResult from '../../components/Form/FormResult';
+import { FORMIO_URL } from '../../utils/api';
 
 export default class ConversationWindow extends React.Component {
   static propTypes = {
@@ -65,7 +66,7 @@ export default class ConversationWindow extends React.Component {
       {message.customType === 'project' && (
         <div>
           <FormResult
-            url={`https://sghomeneeds-formio.herokuapp.com/${
+            url={`${FORMIO_URL}/${
               JSON.parse(JSON.parse(message.data).form_data).category
             }`}
             submission={

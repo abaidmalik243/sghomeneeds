@@ -18,8 +18,8 @@ export const items = [
 export const profile = {
   imageSource: 'http://via.placeholder.com/100x100',
   fullName: 'Amir Ali',
-  numReviews: 4,
-  numProjects: 5,
+  numReviews: 0,
+  numProjects: 0,
   email: 'info@gmail.com',
   phoneNumber: '+123-456-7890',
 };

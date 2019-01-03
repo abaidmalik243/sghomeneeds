@@ -26,11 +26,11 @@ export const AccountOptions = [
       placeholder: 'Phone Number',
     },
   },
-  {
-    formFieldProps: {
-      label: 'Password',
-      control: 'password',
-      placeholder: 'Password',
-    },
-  },
+  // {
+  //   formFieldProps: {
+  //     label: 'Password',
+  //     control: 'password',
+  //     placeholder: 'Password',
+  //   },
+  // },
 ];

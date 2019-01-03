@@ -14,7 +14,7 @@ import GetMatchedPaper from '../../components/GetMatchedPaper/GetMatchedPaper';
 import SubscribePaper from '../../components/SubscribePaper/SubscribePaper';
 import OneColumn from '../../components/Section/OneColumn';
 
-import { LISTINGS } from '../../actions/restApi';
+import { LISTINGS, USERS } from '../../actions/restApi';
 
 import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
@@ -42,6 +42,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   [DIRECTORY_VIEW]: state.get(DIRECTORY_VIEW).toJS(),
+  user: state.get(USERS.MODEL).toJS(),
 });
 
 const withConnect = connect(
@@ -66,6 +67,7 @@ class DirectoryPage extends React.PureComponent {
     [DIRECTORY_VIEW]: PropTypes.object,
     dispatchAction: PropTypes.func.isRequired,
     goTo: PropTypes.func,
+    user: PropTypes.object,
   };
 
   render() {
@@ -116,7 +118,11 @@ class DirectoryPage extends React.PureComponent {
               <TwoColumn>
                 <Grid.Column width={10}>
                   <Subsection style={{ width: '95%' }}>
-                    <CompanyList companies={listings} />
+                    <CompanyList
+                      companies={listings}
+                      dispatchAction={this.props.dispatchAction}
+                      user={this.props.user}
+                    />
                     <Subsection>
                       <CustomPagination
                         onPageChange={(e, data) => {

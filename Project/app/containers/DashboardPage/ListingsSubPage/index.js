@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
+import renderHTML from 'react-render-html';
 import v4 from 'uuid/v4';
 import { isEqual } from 'lodash';
 import { generateText } from '../../../utils/loremIpsumGenerator';
@@ -24,16 +25,21 @@ import Divider from '../../../components/Base/Divider';
 import ListingModal from '../ProfilePaper/ListingModal';
 import { MULTIPART_FORM_DATA } from '../../../utils/actionsUtil';
 import GalleryModal from '../ProfilePaper/GalleryModal';
+import ButtonWrapper from '../../../components/Base/Button';
+import ThreeColumn from '../../../components/Section/ThreeColumn';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class ListingsSubPage extends React.PureComponent {
   static propTypes = {
     currentTab: PropTypes.string,
     dispatchAction: PropTypes.func.isRequired,
+    goTo: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
   };
+  state = { openListingModal: false, openGalleryModal: false };
   render() {
     const { currentTab } = this.props;
+    const { openListingModal, openGalleryModal } = this.state;
     // TODO: uncomment when api is working
     const listings = this.props[DASHBOARD_VIEW][LISTINGS.MODEL].LIST;
     // TODO: remove when api is working
@@ -53,30 +59,62 @@ export default class ListingsSubPage extends React.PureComponent {
                   modalProps={{
                     dimmer: 'inverted',
                     trigger: (
-                      <Card style={{ cursor: 'pointer' }}>
+                      <Card>
                         <CardContent>
-                          <div className="listing-logo">
-                            <ImageWrapper
-                              width="100px"
-                              height="100px"
-                              src={
-                                listing.logo ||
-                                'http://via.placeholder.com/100x100'
-                              }
-                            />
-                          </div>
-                          <div className="listing-text">
-                            <h3>{listing.name}</h3>
-                            <div className="listing-description">
-                              <p>
-                                {/* TODO: Set description character limit on backend */}
-                                {listing.description || generateText(200)}
-                              </p>
-                            </div>
-                          </div>
+                          <ThreeColumn style={{ width: '100%' }}>
+                            <Grid.Column width={listing.logo ? 4 : 0}>
+                              {listing.logo && (
+                                <div className="listing-logo">
+                                  <ImageWrapper
+                                    width="100px"
+                                    height="100px"
+                                    src={listing.logo}
+                                  />
+                                </div>
+                              )}
+                            </Grid.Column>
+                            <Grid.Column width={listing.logo ? 8 : 12}>
+                              <div className="listing-text">
+                                <h3>{listing.name}</h3>
+                                <div className="listing-description">
+                                  <p>{renderHTML(listing.about_rich_text)}</p>
+                                </div>
+                              </div>
+                            </Grid.Column>
+                            <Grid.Column width={4}>
+                              <div className="listing-buttons">
+                                <ButtonWrapper
+                                  design="outline"
+                                  onClick={() => {
+                                    this.setState({
+                                      openListingModal: listing.id,
+                                    });
+                                  }}
+                                  className="edit-button"
+                                >
+                                  EDIT
+                                </ButtonWrapper>
+                                <ButtonWrapper
+                                  design="filled"
+                                  onClick={() => {
+                                    this.props.goTo({
+                                      path: `/professionals/${listing.slug}`,
+                                    });
+                                  }}
+                                  className="view-button"
+                                >
+                                  VIEW
+                                </ButtonWrapper>
+                              </div>
+                            </Grid.Column>
+                          </ThreeColumn>
                         </CardContent>
                       </Card>
                     ),
+                    open: openListingModal === listing.id,
+                    onClose: () => {
+                      this.setState({ openListingModal: null });
+                    },
                   }}
                   formProps={{
                     onSubmit: formData => {
@@ -89,6 +127,7 @@ export default class ListingsSubPage extends React.PureComponent {
                   isCreate={false}
                   dispatchAction={this.props.dispatchAction}
                   refreshListings={this.refreshListings}
+                  error={this.props[DASHBOARD_VIEW][LISTINGS.MODEL].GET.error}
                 />
                 <TwoColumn>
                   {listing.galleries.map(gallery => (
@@ -97,7 +136,12 @@ export default class ListingsSubPage extends React.PureComponent {
                         modalProps={{
                           dimmer: 'inverted',
                           trigger: (
-                            <Card className="listing-image">
+                            <Card
+                              className="listing-image"
+                              onClick={() => {
+                                this.setState({ openGalleryModal: gallery.id });
+                              }}
+                            >
                               {gallery.files.length > 0 && (
                                 <CardImage
                                   source={gallery.files[0].file_field}
@@ -108,6 +152,10 @@ export default class ListingsSubPage extends React.PureComponent {
                               </CardContent>
                             </Card>
                           ),
+                          open: openGalleryModal === gallery.id,
+                          onClose: () => {
+                            this.setState({ openGalleryModal: null });
+                          },
                         }}
                         formProps={{
                           onSubmit: formData => {
@@ -151,6 +199,7 @@ export default class ListingsSubPage extends React.PureComponent {
         let curr = this.props[DASHBOARD_VIEW][model].GET;
         if (!isEqual(prev, curr)) {
           needRefresh = true;
+          this.setState({ openListingModal: null });
         }
         prev = prevProps[DASHBOARD_VIEW][model].POST;
         curr = this.props[DASHBOARD_VIEW][model].POST;

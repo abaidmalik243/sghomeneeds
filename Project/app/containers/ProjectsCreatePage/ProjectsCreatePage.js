@@ -12,7 +12,7 @@ import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
 
 import saga from '../../sagas';
-import { RESTART_ON_REMOUNT } from '../../utils/constants';
+import { DAEMON } from '../../utils/constants';
 import Subsection from '../../components/Section/Subsection';
 import projectReducer, { PROJECT_VIEW } from '../../reducers/projects';
 import { PROJECTS, USERS } from '../../actions/restApi';
@@ -43,7 +43,7 @@ const withProjectReducer = injectReducer({
 const withProjectSaga = injectSaga({
   key: PROJECTS.MODEL,
   saga: saga(PROJECTS),
-  mode: RESTART_ON_REMOUNT,
+  mode: DAEMON,
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -74,6 +74,7 @@ class ProjectsCreatePage extends React.PureComponent {
   componentDidMount() {
     if (this.props.user.LOAD_AUTH.data.consumerId !== -1) {
       const formData = localStorage.getItem('form');
+      // console.log(this.props.user.LOAD_AUTH.data.consumerId)
       this.props.dispatchAction({
         type: PROJECTS.POST.REQUESTED,
         payload: {
@@ -93,6 +94,7 @@ class ProjectsCreatePage extends React.PureComponent {
       this.props.user.LOAD_AUTH.data.consumerId
     ) {
       const formData = localStorage.getItem('form');
+      // console.log(this.props.user.LOAD_AUTH.data.consumerId)
       this.props.dispatchAction({
         type: PROJECTS.POST.REQUESTED,
         payload: {
@@ -108,7 +110,7 @@ class ProjectsCreatePage extends React.PureComponent {
       this.props[PROJECT_VIEW][PROJECTS.MODEL].POST.id
     ) {
       this.props.goTo({
-        path: `/dashboard/projects/select?limit=5&project=${
+        path: `/dashboard/projects/select?project=${
           this.props[PROJECT_VIEW][PROJECTS.MODEL].POST.id
         }`,
       });

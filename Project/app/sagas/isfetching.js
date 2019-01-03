@@ -1,4 +1,11 @@
-import { put, takeLatest, call, fork, cancel } from 'redux-saga/effects';
+import {
+  put,
+  takeLatest,
+  call,
+  fork,
+  cancel,
+  takeEvery,
+} from 'redux-saga/effects';
 import { delay } from 'redux-saga';
 import { MODELS_LIST as restModels } from '../actions/restApi';
 import { MODELS_LIST as wpModels } from '../actions/wpApi';
@@ -19,7 +26,7 @@ export function* addSpinner(action) {
 }
 
 export function* spinnerTimeout() {
-  yield call(delay, 30000);
+  yield call(delay, 2000);
   yield call(removeSpinner);
 }
 
@@ -41,10 +48,10 @@ export default function* spinnerSaga() {
       genericWatcher(takeLatest, actionModel.REQUESTED, addSpinner),
     );
     watchList.push(
-      genericWatcher(takeLatest, actionModel.SUCCESS, removeSpinner),
+      genericWatcher(takeEvery, actionModel.SUCCESS, removeSpinner),
     );
     watchList.push(
-      genericWatcher(takeLatest, actionModel.FAILED, removeSpinner),
+      genericWatcher(takeEvery, actionModel.FAILED, removeSpinner),
     );
   };
   restModels.forEach(model => {

@@ -3,37 +3,45 @@ import { push } from 'react-router-redux';
 import {
   get,
   post,
-  put as putApi,
   USERS,
   MERCHANTS,
   CONSUMERS,
+  patch,
 } from '../actions/restApi';
 import { APPLICATION_JSON } from '../utils/actionsUtil';
 import { getToken, removeToken, storeToken } from '../utils/localStorage';
 
 function* registerUser(action) {
-  try {
-    const response = yield call(post, {
-      model: USERS.MODEL,
-      url: 'register',
-      data: action.payload,
-    });
-    yield put({ type: USERS.REGISTER.SUCCESS, payload: response.data });
-    yield put({
-      type: USERS.LOGIN.REQUESTED,
-      payload: {
-        username: action.payload.email,
-        password: action.payload.password,
-      },
-    });
-  } catch (e) {
-    yield put({
-      type: USERS.REGISTER.FAILED,
-      payload: {
-        message: e.message,
-        timestamp: Date.now().valueOf(),
-      },
-    });
+  if (action.type === USERS.REGISTER.REQUESTED) {
+    try {
+      const response = yield call(post, {
+        model: USERS.MODEL,
+        url: 'register',
+        data: action.payload,
+      });
+      if (response.error) {
+        yield put({
+          type: USERS.REGISTER.FAILED,
+          payload: { message: response.error.response.data.msg },
+        });
+        return;
+      }
+      yield put({ type: USERS.REGISTER.SUCCESS, payload: response.data });
+      if (action.payload.method !== 'email') {
+        yield put({
+          type: USERS.LOGIN.REQUESTED,
+          payload: { ...action.payload, username: action.payload.email },
+        });
+      }
+    } catch (e) {
+      yield put({
+        type: USERS.REGISTER.FAILED,
+        payload: {
+          message: e.message,
+          timestamp: Date.now().valueOf(),
+        },
+      });
+    }
   }
 }
 function* loginUser(action) {
@@ -44,8 +52,16 @@ function* loginUser(action) {
         url: 'login',
         data: action.payload,
       });
+      if (response.error) {
+        yield put({
+          type: USERS.LOGIN.FAILED,
+          payload: { message: response.error.response.data.msg },
+        });
+        return;
+      }
       yield put({ type: USERS.LOGIN.SUCCESS, payload: response.data });
       storeToken(response.data.token);
+      yield put({ type: USERS.LOAD_AUTH.REQUESTED });
     } catch (e) {
       yield put({
         type: USERS.LOGIN.FAILED,
@@ -69,6 +85,13 @@ function* loadAuth(action) {
         url: 'load_auth',
         data: { token },
       });
+      if (response.error) {
+        yield put({
+          type: USERS.LOAD_AUTH.FAILED,
+          payload: { message: response.error.response.data.msg },
+        });
+        return;
+      }
       if (response.data.data) {
         if (response.data.data.userId) {
           yield put({
@@ -104,6 +127,13 @@ function* fetchUser(action) {
         model: USERS.MODEL,
         id: action.payload.id,
       });
+      if (response.error) {
+        yield put({
+          type: USERS.GET.FAILED,
+          payload: { message: response.error.response.data.msg },
+        });
+        return;
+      }
       yield put({ type: USERS.GET.SUCCESS, payload: response.data });
     } catch (e) {
       yield put({ type: USERS.GET.FAILED, payload: e.message });
@@ -111,18 +141,128 @@ function* fetchUser(action) {
   }
 }
 
+function* postUser(action) {
+  if (action.type === USERS.POST.REQUESTED) {
+    try {
+      const response = yield call(post, {
+        model: USERS.MODEL,
+        id: action.payload.id,
+        url: action.payload.url,
+        data: action.payload.data,
+        contentType: APPLICATION_JSON,
+      });
+      if (response.error) {
+        yield put({
+          type: USERS.POST.FAILED,
+          payload: { message: response.error.response.data.msg },
+        });
+        return;
+      }
+      yield put({ type: USERS.POST.SUCCESS, payload: response.data });
+    } catch (e) {
+      yield put({ type: USERS.POST.FAILED, payload: e.message });
+    }
+  }
+}
+
 function* updateUser(action) {
   if (action.type === USERS.PATCH.REQUESTED) {
     try {
-      const response = yield call(putApi, {
+      const response = yield call(patch, {
         model: USERS.MODEL,
         id: action.payload.id,
         data: action.payload.data,
         contentType: APPLICATION_JSON,
       });
+      if (response.error) {
+        yield put({
+          type: USERS.PATCH.FAILED,
+          payload: { message: response.error.response.data.msg },
+        });
+        return;
+      }
       yield put({ type: USERS.PATCH.SUCCESS, payload: response.data });
     } catch (e) {
       yield put({ type: USERS.PATCH.FAILED, payload: e.message });
+    }
+  }
+}
+
+function* activateUser(action) {
+  if (action.type === USERS.ACTIVATE.REQUESTED) {
+    try {
+      const response = yield call(post, {
+        model: USERS.MODEL,
+        data: action.payload.data,
+        url: action.payload.url,
+        contentType: APPLICATION_JSON,
+      });
+      if (response.error) {
+        yield put({
+          type: USERS.ACTIVATE.FAILED,
+          payload: { message: response.error.response.data.msg },
+        });
+        return;
+      }
+      yield put({ type: USERS.ACTIVATE.SUCCESS, payload: response.data });
+      storeToken(response.data.token);
+      yield put({ type: USERS.LOAD_AUTH.REQUESTED });
+    } catch (e) {
+      yield put({ type: USERS.ACTIVATE.FAILED, payload: e.message });
+    }
+  }
+}
+
+function* passwordReset(action) {
+  if (action.type === USERS.PASSWORD_RESET_EMAIL.REQUESTED) {
+    try {
+      const response = yield call(post, {
+        model: USERS.MODEL,
+        data: action.payload.data,
+        url: 'reset_password',
+        contentType: APPLICATION_JSON,
+      });
+      if (response.error) {
+        yield put({
+          type: USERS.PASSWORD_RESET_EMAIL.FAILED,
+          payload: { message: response.error.response.data.msg },
+        });
+        return;
+      }
+      yield put({
+        type: USERS.PASSWORD_RESET_EMAIL.SUCCESS,
+        payload: response.data,
+      });
+    } catch (e) {
+      yield put({
+        type: USERS.PASSWORD_RESET_EMAIL.FAILED,
+        payload: e.message,
+      });
+    }
+  } else if (action.type === USERS.PASSWORD_RESET_SUBMIT.REQUESTED) {
+    try {
+      const response = yield call(post, {
+        model: USERS.MODEL,
+        data: action.payload.data,
+        url: 'reset_password_submit',
+        contentType: APPLICATION_JSON,
+      });
+      if (response.error) {
+        yield put({
+          type: USERS.PASSWORD_RESET_SUBMIT.FAILED,
+          payload: { message: response.error.response.data.msg },
+        });
+        return;
+      }
+      yield put({
+        type: USERS.PASSWORD_RESET_SUBMIT.SUCCESS,
+        payload: response.data,
+      });
+    } catch (e) {
+      yield put({
+        type: USERS.PASSWORD_RESET_SUBMIT.FAILED,
+        payload: e.message,
+      });
     }
   }
 }
@@ -144,8 +284,12 @@ function* mySaga() {
     takeLatest(USERS.REGISTER.REQUESTED, registerUser),
     takeLatest(USERS.LOGIN.REQUESTED, loginUser),
     takeLatest(USERS.GET.REQUESTED, fetchUser),
+    takeLatest(USERS.POST.REQUESTED, postUser),
     takeLatest(USERS.PATCH.REQUESTED, updateUser),
     takeLatest(USERS.LOAD_AUTH.REQUESTED, loadAuth),
+    takeLatest(USERS.ACTIVATE.REQUESTED, activateUser),
+    takeLatest(USERS.PASSWORD_RESET_EMAIL.REQUESTED, passwordReset),
+    takeLatest(USERS.PASSWORD_RESET_SUBMIT.REQUESTED, passwordReset),
     takeLatest(USERS.LOGOUT.REQUESTED, logoutUser),
   ];
 }

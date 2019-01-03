@@ -11,7 +11,7 @@ import NavBar from '../../components/NavigationBar';
 import Footer from '../../components/Footer';
 import './styles.css';
 import LoadingSpinner from './LoadingSpinner';
-import { SEO, USERS } from '../../actions/restApi';
+import { CONSUMERS, SEO, USERS } from '../../actions/restApi';
 
 import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
@@ -51,6 +51,12 @@ const withSeoSaga = injectSaga({
   mode: DAEMON,
 });
 
+const withConsumerSaga = injectSaga({
+  key: CONSUMERS.MODEL,
+  saga: saga(CONSUMERS),
+  mode: DAEMON,
+});
+
 const withUserReducer = injectReducer({
   key: USERS.MODEL,
   reducer: userReducer,
@@ -70,6 +76,7 @@ class TemplatePage extends React.PureComponent {
     dispatchAction: PropTypes.func,
     location: PropTypes.object,
     history: PropTypes.object,
+    user: PropTypes.object,
   };
   state = {
     showMenu: false,
@@ -88,7 +95,7 @@ class TemplatePage extends React.PureComponent {
             />
             <Helmet>{renderHTML(this.state.helmetContent)}</Helmet>
             {this.props.children}
-            <Footer />
+            <Footer {...this.props} />
           </LoadingSpinner>
         )}
       </MediaQuery>
@@ -107,8 +114,29 @@ class TemplatePage extends React.PureComponent {
       },
       view: SEO_VIEW,
     });
+    const { data } = this.props.user.LOAD_AUTH;
+    if (data && data.consumerId && data.consumerId !== -1) {
+      this.props.dispatchAction({
+        type: CONSUMERS.GET.REQUESTED,
+        payload: {
+          id: data.consumerId,
+        },
+      });
+    }
   }
   componentDidUpdate(prevProps) {
+    if (
+      this.props.user.LOAD_AUTH.data.consumerId !==
+        prevProps.user.LOAD_AUTH.data.consumerId &&
+      this.props.user.LOAD_AUTH.data.consumerId !== -1
+    ) {
+      this.props.dispatchAction({
+        type: CONSUMERS.GET.REQUESTED,
+        payload: {
+          id: this.props.user.LOAD_AUTH.data.consumerId,
+        },
+      });
+    }
     if (
       this.props[SEO_VIEW][SEO.MODEL].LIST.results !==
       prevProps[SEO_VIEW][SEO.MODEL].LIST.results
@@ -140,6 +168,7 @@ export default compose(
   withUserReducer,
   withSeoReducer,
   withUserSaga,
+  withConsumerSaga,
   withSeoSaga,
   withConnect,
 )(TemplatePage);

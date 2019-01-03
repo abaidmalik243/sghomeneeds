@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import PropTypes from 'prop-types';
 import v4 from 'uuid/v4';
@@ -7,13 +8,15 @@ import CompanyLogo from '../CompanyAsset/CompanyLogo';
 import { links, phoneNumber, dashboardLinks } from './content';
 import SearchBar from '../SearchBar';
 import LoginButton from './LoginButton';
-import LogoutButton from './LogoutButton';
+// import LogoutButton from './LogoutButton';
 import RegisterButton from './RegisterButton';
 import LinkWrapper from '../Base/Link';
 
 import './styles.css';
 import NavigationMenuItem from './NavigationMenuItem';
 import ImageWrapper from '../Base/Image';
+import PlaceholderProfileImage from '../../images/avatar-placeholder.png';
+// import ButtonWrapper from '../Base/Button';
 
 class NavigationBar extends React.Component {
   state = { visible: false, height: 0, first: 5, second: 4, three: 3, four: 4 };
@@ -34,7 +37,7 @@ class NavigationBar extends React.Component {
           <Grid.Column
             width={8}
             id="hoverable-item"
-            style={{ textAlign: 'right', paddingTop: 10 }}
+            style={{ textAlign: 'left', paddingTop: 10 }}
           >
             {links.map(item => (
               <NavigationMenuItem
@@ -54,7 +57,7 @@ class NavigationBar extends React.Component {
             id="hoverable-item"
             className="second"
             width={this.state.second}
-            style={{ marginTop: 10, textAlign: 'right', paddingTop: 10 }}
+            style={{ marginTop: 10, textAlign: 'left', paddingTop: 10 }}
           >
             {links.map(item => (
               <NavigationMenuItem
@@ -77,7 +80,7 @@ class NavigationBar extends React.Component {
           <Grid.Column
             width={8}
             id="hoverable-item"
-            style={{ textAlign: 'right', paddingTop: 10 }}
+            style={{ textAlign: 'left', paddingTop: 10 }}
           >
             {dashboardLinks.map(item => (
               <NavigationMenuItem
@@ -97,7 +100,7 @@ class NavigationBar extends React.Component {
             id="hoverable-item"
             className="second"
             width={this.state.second}
-            style={{ marginTop: 10, textAlign: 'right', paddingTop: 10 }}
+            style={{ marginTop: 10, textAlign: 'left', paddingTop: 10 }}
           >
             {dashboardLinks.map(item => (
               <NavigationMenuItem
@@ -174,6 +177,7 @@ class NavigationBar extends React.Component {
               inputStyle={{
                 borderRadius: '0px',
               }}
+              size="small"
               buttonStyle={{}}
             />
           </Grid.Column>
@@ -188,6 +192,7 @@ class NavigationBar extends React.Component {
               inputStyle={{
                 borderRadius: '0px',
               }}
+              size="small"
               buttonStyle={{}}
             />
           </Grid.Column>
@@ -206,6 +211,7 @@ class NavigationBar extends React.Component {
               inputStyle={{
                 borderRadius: '0px',
               }}
+              size="small"
               buttonStyle={{}}
             />
           </Grid.Column>
@@ -237,11 +243,12 @@ class NavigationBar extends React.Component {
           {user &&
             user.isLoggedIn &&
             dashboardLinks.map(link => (
-              <Menu.Item>
+              <Menu.Item key={v4()}>
                 <a href={link.url}>{link.text}</a>
               </Menu.Item>
             ))}
-          {user && user.isLoggedIn ? (
+          {user &&
+            user.isLoggedIn && (
             <Menu.Item>
               <div>
                 <div style={{ display: 'inline-block' }}>
@@ -249,7 +256,11 @@ class NavigationBar extends React.Component {
                     height="40px"
                     width="40px"
                     rounded
-                    src={user.user.profile_image}
+                    src={
+                      user.user.profile_image
+                        ? user.user.profile_image
+                        : PlaceholderProfileImage
+                    }
                   />
                 </div>
                 <div
@@ -259,13 +270,23 @@ class NavigationBar extends React.Component {
                   {user.user.long_first_name}
                 </div>
               </div>
-              <LogoutButton
-                onClick={() => {
-                  logout();
-                }}
-              />
             </Menu.Item>
-          ) : (
+          )}
+          {user &&
+            user.isLoggedIn && (
+            <Menu.Item>
+              <div className="text-link">
+                <LinkWrapper href="/dashboard">Dashboard</LinkWrapper>
+              </div>
+            </Menu.Item>
+          )}
+          {user &&
+            user.isLoggedIn && (
+            <Menu.Item>
+              <button className="text-link" onClick={() => {logout()}}>Logout</button>
+            </Menu.Item>
+          )}
+          {!(user && user.isLoggedIn) && (
             <Menu.Item>
               <LoginButton
                 onClick={() => {
@@ -296,7 +317,6 @@ class NavigationBar extends React.Component {
           <Menu.Menu position="right">
             <Dropdown
               style={{ height: '40px' }}
-              icon="none"
               trigger={
                 <div>
                   <div style={{ display: 'inline-block' }}>
@@ -304,7 +324,11 @@ class NavigationBar extends React.Component {
                       height="40px"
                       width="40px"
                       rounded
-                      src={user.user.profile_image}
+                      src={
+                        user.user.profile_image
+                          ? user.user.profile_image
+                          : PlaceholderProfileImage
+                      }
                     />
                   </div>
                   <div
@@ -317,12 +341,11 @@ class NavigationBar extends React.Component {
               }
             >
               <Dropdown.Menu>
+                <a className="item" href="/dashboard">
+                  <div className="text-link">Dashboard</div>
+                </a>
                 <Dropdown.Item>
-                  <LogoutButton
-                    onClick={() => {
-                      logout();
-                    }}
-                  />
+                  <button className="text-link" onClick={() => {logout()}}>Logout</button>
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
@@ -348,7 +371,7 @@ class NavigationBar extends React.Component {
           /* position: 'fixed', */ width: '100%',
           zIndex: 200,
           background: 'white',
-          padding: '28px 40px',
+          padding: '15px 40px',
         }}
       >
         <Grid>

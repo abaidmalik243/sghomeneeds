@@ -18,7 +18,7 @@ import Subsection from '../../components/Section/Subsection';
 import projectReducer, { PROJECT_VIEW } from '../../reducers/projects';
 import { PROJECTS, USERS, LISTINGS } from '../../actions/restApi';
 import ButtonWrapper from '../../components/Base/Button';
-import CustomPagination from '../../components/CustomPagination';
+// import CustomPagination from '../../components/CustomPagination';
 import PaperWrapper from '../../components/Base/Paper';
 import './styles.css';
 import OneColumn from '../../components/Section/OneColumn';
@@ -71,13 +71,13 @@ class ProjectsSelectPage extends React.PureComponent {
     selected: [],
   };
   render() {
-    const listings = this.props[PROJECT_VIEW][LISTINGS.MODEL].LIST;
-    const query = queryString.parse(this.props.location.search);
-    const pageNumber =
-      query.offset && query.limit ? query.offset / query.limit + 1 : 1;
-    const totalPages = listings.count
-      ? Math.ceil(listings.count / (query.limit || 10))
-      : 1;
+    // const listings = this.props[PROJECT_VIEW][LISTINGS.MODEL].LIST;
+    // const query = queryString.parse(this.props.location.search);
+    // const pageNumber =
+    //   query.offset && query.limit ? query.offset / query.limit + 1 : 1;
+    // const totalPages = listings.count
+    //   ? Math.ceil(listings.count / (query.limit || 10))
+    //   : 1;
     return (
       <TemplatePage {...this.props}>
         <MediaQuery query="(max-width: 991px)">
@@ -95,17 +95,9 @@ class ProjectsSelectPage extends React.PureComponent {
                       selectable
                       onSelect={this.handleSelect}
                       selected={this.state.selected}
+                      dispatchAction={this.props.dispatchAction}
+                      user={this.props.user}
                     />
-                    <OneColumn id="pagination-container">
-                      <CustomPagination
-                        onPageChange={(e, data) => {
-                          this.goToPage(data.activePage);
-                        }}
-                        activePage={pageNumber}
-                        totalPages={totalPages}
-                        siblingRange={isNotComputer ? 0 : 1}
-                      />
-                    </OneColumn>
                     <OneColumn id="send-container">
                       <ButtonWrapper
                         design="filled"
@@ -175,15 +167,21 @@ class ProjectsSelectPage extends React.PureComponent {
   handleSubmit = () => {
     const prev =
       this.props[PROJECT_VIEW][PROJECTS.MODEL].GET.listings.slice() || [];
-    this.props.dispatchAction({
-      type: PROJECTS.PATCH.REQUESTED,
-      payload: {
-        data: {
-          listings: prev.concat(this.state.selected),
+    const listings = prev.concat(this.state.selected);
+    if (listings && listings.length > 0) {
+      this.props.dispatchAction({
+        type: PROJECTS.PATCH.REQUESTED,
+        payload: {
+          data: {
+            listings,
+          },
+          id: this.state.query.project,
         },
-        id: this.state.query.project,
-      },
-    });
+      });
+    } else if (listings && listings.length === 0) {
+      // eslint-disable-next-line no-alert
+      window.alert('No listings selected');
+    }
   };
   goToPage(pageNumber) {
     const currentQuery = queryString.parse(this.props.location.search);

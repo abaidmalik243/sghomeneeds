@@ -1,18 +1,11 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Grid, Image } from 'semantic-ui-react';
-// import classNames from 'classnames';
 import PaperWrapper from '../../components/Base/Paper/index';
 import Subsection from '../../components/Section/Subsection';
 import Section from '../../components/Section/Section';
 import LinkWrapper from '../../components/Base/Link/index';
-// import dots from '../../images/HomePage/dots.png';
 import './category.css';
-// import houseImage from '../../images/new-images/001-house.png';
-// import carpentersImage from '../../images/new-images/002-wood.png';
-// import handyImage from '../../images/new-images/003-tools.png';
-// import pestcontrolImage from '../../images/new-images/004-bug.png';
-// import airconditionerImage from '../../images/new-images/005-air-conditioner.png';
 import { getS3Image } from '../../utils/images';
 
 const dots = getS3Image('/images/HomePage/dots.png');
@@ -30,6 +23,7 @@ export default class CategorySection extends React.PureComponent {
   static propTypes = {
     // categories: PropTypes.array,
     // search: PropTypes.func,
+    goTo: PropTypes.func,
   };
 
   renderImage(image) {
@@ -119,7 +113,7 @@ export default class CategorySection extends React.PureComponent {
 
   render() {
     return (
-      <Section style={{ backgroundColor: 'white' }}>
+      <Section style={{ backgroundColor: 'white', marginTop: '0px' }}>
         <div id="dotted-line">{this.renderShape()}</div>
         <Subsection style={{ width: '77%' }}>
           <PaperWrapper id="category-paper">
@@ -132,7 +126,12 @@ export default class CategorySection extends React.PureComponent {
                 <Grid.Column>
                   <div className="column category-col right_border">
                     <div className="left-border no-border" />
-                    <button className="category-button">
+                    <button
+                      className="category-button"
+                      onClick={() => {
+                        this.props.goTo({ path: '/services/home-designing' });
+                      }}
+                    >
                       <img src={houseImage} width="40px" height="40px" alt="" />
                       <h4>Home</h4>
                     </button>
@@ -142,7 +141,12 @@ export default class CategorySection extends React.PureComponent {
                 <Grid.Column>
                   <div className="column category-col right_border">
                     <div className="left-border no-border" />
-                    <button className="category-button">
+                    <button
+                      className="category-button"
+                      onClick={() => {
+                        this.props.goTo({ path: '/services/carpentry' });
+                      }}
+                    >
                       <img
                         src={carpentersImage}
                         width="40px"
@@ -157,7 +161,12 @@ export default class CategorySection extends React.PureComponent {
                 <Grid.Column>
                   <div className="column category-col right_border">
                     <div className="left-border no-border" />
-                    <button className="category-button">
+                    <button
+                      className="category-button"
+                      onClick={() => {
+                        this.props.goTo({ path: '/services/handyman' });
+                      }}
+                    >
                       <img src={handyImage} width="40px" height="40px" alt="" />
                       <h4>HandyMan</h4>
                     </button>
@@ -167,7 +176,12 @@ export default class CategorySection extends React.PureComponent {
                 <Grid.Column>
                   <div className="column category-col right_border">
                     <div className="left-border no-border" />
-                    <button className="category-button">
+                    <button
+                      className="category-button"
+                      onClick={() => {
+                        this.props.goTo({ path: '/services/pest-control' });
+                      }}
+                    >
                       <img
                         src={pestcontrolImage}
                         width="40px"
@@ -182,7 +196,12 @@ export default class CategorySection extends React.PureComponent {
                 <Grid.Column>
                   <div className="column category-col right_border">
                     <div className="left-border no-border" />
-                    <button className="category-button">
+                    <button
+                      className="category-button"
+                      onClick={() => {
+                        this.props.goTo({ path: '/services/airconditioning' });
+                      }}
+                    >
                       <img
                         src={airconditionerImage}
                         width="40px"
@@ -195,7 +214,7 @@ export default class CategorySection extends React.PureComponent {
                 </Grid.Column>
 
                 <Grid.Column id="view-all">
-                  <LinkWrapper className="category-button " href="/directory">
+                  <LinkWrapper className="category-button " href="/services">
                     <div id="category-button-content">
                       <Image src={dots} />
                       <h4>View All</h4>

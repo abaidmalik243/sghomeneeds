@@ -1,6 +1,8 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
+import v4 from 'uuid/v4';
 import PropTypes from 'prop-types';
-import { Grid, Icon } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import renderHTML from 'react-render-html';
 import CardContent from '../../components/Base/Card/CardContent';
 import IconWrapper from '../../components/Base/Icon';
@@ -14,21 +16,24 @@ import './styles.css';
 import ChatNowButton from '../../components/CustomButton/ChatNowButton';
 import Section from '../../components/Section/Section';
 import FavoriteButton from '../../components/CustomButton/FavoriteButton';
+import ButtonWrapper from '../../components/Base/Button';
+import UserIcon from '../../images/user-icon.png';
+import LinkWrapper from '../../components/Base/Link';
+import { CONSUMERS } from '../../actions/restApi';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class ProfessionalsInfoCard extends React.PureComponent {
   static propTypes = {
     professional: PropTypes.object,
+    view: PropTypes.string,
+    goTo: PropTypes.func,
+    categories: PropTypes.object,
+    user: PropTypes.object,
+    dispatchAction: PropTypes.func,
   };
   render() {
-    const { professional } = this.props;
+    const { professional, view } = this.props;
     const attributes = [
-      {
-        attribute: 'Average Response Time',
-        value: '1Hrs',
-        icon: 'stopwatch',
-        key: '1',
-      },
       {
         attribute: 'Phone Number',
         value: professional.phone,
@@ -64,41 +69,45 @@ export default class ProfessionalsInfoCard extends React.PureComponent {
       <Card>
         <CardContent>
           <TwoColumn stackable={false}>
-            <Grid.Column width={10}>
+            <Grid.Column>
               <button
                 className="ui circular facebook icon button"
-                style={{ float: 'left', textAlign: 'center', padding: "12px 7px 5px 7px", borderRadius: "50%" }}
+                style={{ float: 'left' }}
               >
-                {/* <i className="facebook icon" /> */}
-                <Icon name="facebook f" style={{ fontSize: '22px', padding: 0, margin: 0, color: 'white' }} />
+                <i className="facebook icon" />
               </button>
               <button
                 className="ui circular linkedin icon button"
-                style={{ float: 'left', padding: "10px 7px 6px 7px", borderRadius: "50%" }}
+                style={{ float: 'left' }}
               >
-                {/* <i className="linkedin icon" /> */}
-                <Icon name="linkedin in" style={{ fontSize: '22px', padding: 0, margin: 0, color: 'white' }} />
-                {/* <span style={{ fontSize: '18px' }}>in</span> */}
+                <i className="linkedin icon" />
               </button>
               <button
                 className="ui circular instagram icon button"
-                style={{ float: 'left', backgroundColor: "saddlebrown", padding: "10px 7px 5px 7px", borderRadius: "50%" }}
+                style={{ float: 'left' }}
               >
-                {/* <i className="instagram icon" /> */}
-                <Icon name="instagram" style={{ fontSize: '22px', padding: 0, margin: 0, color: 'white' }} />
+                <i className="instagram icon" />
               </button>
             </Grid.Column>
-            <Grid.Column width={6}>
-              <div className="favourite-wrapper">
+            <Grid.Column>
+              {this.props.user.isLoggedIn && this.props.user.LOAD_AUTH.data.consumerId !== null && (
                 <FavoriteButton
-                  buttonProps={{
-                    className: 'favourite',
-                    style: { float: 'right' },
-                  }}
+                  buttonProps={{ style: { float: 'right' }, onClick: () => {
+                    this.props.dispatchAction({
+                      type: CONSUMERS.POST.REQUESTED,
+                      payload: {
+                        url: 'favourite',
+                        id: this.props.user.LOAD_AUTH.data.consumerId,
+                        data: {
+                          listing_slug: professional.slug,
+                        },
+                      },
+                    })
+                  } }}
                   iconProps={{}}
+                  isFavourite={this.props.user[CONSUMERS.MODEL].favourite_listings && this.props.user[CONSUMERS.MODEL].favourite_listings.indexOf(professional.slug) !== -1}
                 />
-                {/* <Icon name="heart outline" className="heart" style={{ float: 'right', fontSize: '20px', marginRight: '25px' }} /> */}
-              </div>
+              )}
             </Grid.Column>
           </TwoColumn>
           {professional.logo ? (
@@ -124,7 +133,29 @@ export default class ProfessionalsInfoCard extends React.PureComponent {
               </h3>
             </div>
             <div className="inline">
-              <RatingStar defaultRating={5} maxRating={5} />
+              {((professional.reviews && professional.reviews.length === 0) ||
+                professional.reviews === undefined) && (
+                <RatingStar
+                  size="huge"
+                  maxRating={5}
+                  defaultRating={0}
+                  disabled
+                />
+              )}
+              {professional.reviews &&
+                professional.reviews.length > 0 && (
+                <RatingStar
+                  size="huge"
+                  maxRating={5}
+                  defaultRating={
+                    professional.reviews
+                      .map(r => r.rating)
+                      .reduce((a, b) => a + b, 0) /
+                      professional.reviews.length
+                  }
+                  disabled
+                />
+              )}
             </div>
             <div className="inline">
               <h3
@@ -134,37 +165,62 @@ export default class ProfessionalsInfoCard extends React.PureComponent {
                   fontSize: '12px',
                 }}
               >
-                (100)
+                ({professional.reviews ? professional.reviews.length : 0})
               </h3>
             </div>
           </OneColumn>
           <TwoColumn>
             <Grid.Column>
-              <div id="online-wrapper">
-                <i className="icon small circle" />
-                <h3 id="online">Online</h3>
-              </div>
+              {view === 'professionals' && (
+                <div id="online-wrapper">
+                  <i className="icon small circle" />
+                  {professional.chat_activated && (<h3 id="online">Online</h3>)}
+                </div>
+              )}
+              {view === 'gallery' && (
+                <div id="view-profile-wrapper">
+                  <ButtonWrapper
+                    design="outline"
+                    onClick={() => {
+                      this.props.goTo({
+                        path: `/professionals/${professional.slug}`,
+                      });
+                    }}
+                  >
+                    <ImageWrapper src={UserIcon} height="14px" />
+                    {' | '}View Profile
+                  </ButtonWrapper>
+                </div>
+              )}
             </Grid.Column>
             <Grid.Column>
-              <div id="chatnow-wrapper">
-                <ChatNowButton
-                  buttonProps={{
-                    className: 'category-button',
-                    style: { padding: '11px 0' },
-                  }}
-                />
-              </div>
+              {professional.chat_activated && (
+                <div id="chatnow-wrapper">
+                  <ChatNowButton buttonProps={{ style: { padding: '11px 0' } }} />
+                </div>
+              )}
             </Grid.Column>
           </TwoColumn>
         </CardContent>
         <CardContent className="services-content">
           <span>Services: </span>
-          {professional.cateogries_text &&
-            professional.cateogries_text.split(',').map(item => (
-              <Label key={item} color="rgb(225, 225, 225)">
-                {renderHTML(item)}
-              </Label>
-            ))}
+          {professional.categories &&
+            professional.categories.length > 0 &&
+            professional.categories.map(c => {
+              const category = this.getCategory(c)
+              return (
+                <div style={{display: 'inline'}}>
+                  {category && (
+                    <LinkWrapper key={v4()}  href={`/services/${category.slug}`}>
+                      <Label color="rgb(225, 225, 225)">
+                        {renderHTML(category.name)}
+                      </Label>
+                    </LinkWrapper>
+                  )}
+                </div>
+              )
+            }
+            )}
         </CardContent>
         {attributes.map(item => (
           <CardContent key={item.key}>
@@ -190,4 +246,5 @@ export default class ProfessionalsInfoCard extends React.PureComponent {
       </Card>
     );
   }
+  getCategory = categoryId => this.props.categories.results.filter(c => c.id === categoryId)[0]
 }

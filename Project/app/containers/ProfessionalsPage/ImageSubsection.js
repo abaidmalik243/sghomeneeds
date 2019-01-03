@@ -1,4 +1,5 @@
 import React from 'react';
+import v4 from 'uuid/v4';
 import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
 import PaperWrapper from '../../components/Base/Paper';
@@ -6,7 +7,7 @@ import Subsection from '../../components/Section/Subsection';
 import ImageWrapper from '../../components/Base/Image';
 import FiveColumn from '../../components/Section/FiveColumn';
 import NavButton from '../../components/CustomButton/NavButton';
-import './styles.css';
+
 /* eslint-disable react/prefer-stateless-function */
 export default class ImageSubsection extends React.PureComponent {
   static propTypes = {
@@ -69,20 +70,19 @@ export default class ImageSubsection extends React.PureComponent {
                     alt={images.results[imageIndex].name}
                   />
                 </div>
-                <Subsection style={{paddingLeft: '5px'}}>
+                <Subsection>
                   {Array.from(
                     Array(Math.ceil(images.results.length / 5)).keys(),
                   ).map(row => (
-                    <FiveColumn stackable key={row} >
+                    <FiveColumn stackable key={v4()}>
                       {images.results
                         .slice(row * 5, row * 5 + 5)
                         .map((item, index) => (
-                          <Grid.Column key={item.key}>
-                            <ImageWrapper 
-                              className="mobileViewImages"
+                          <Grid.Column key={v4()}>
+                            <ImageWrapper
                               src={item.file_field}
                               alt={item.name}
-                              style={{ cursor: 'pointer', }}
+                              style={{ cursor: 'pointer' }}
                               onClick={() => {
                                 this.setState({ imageIndex: index });
                               }}

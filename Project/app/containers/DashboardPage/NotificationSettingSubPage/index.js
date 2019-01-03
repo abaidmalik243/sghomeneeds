@@ -6,11 +6,12 @@ import Card from '../../../components/Base/Card/Card';
 import CardContent from '../../../components/Base/Card/CardContent';
 import { generateText } from '../../../utils/loremIpsumGenerator';
 import {
-  PushNotificationSettings,
-  TextSettings,
-  EmailSettings,
+  ConsumersEmailSettings,
+  ConsumersTextSettings,
+  ProfessionalsEmailSettings,
+  ProfessionalsTextSettings,
 } from './content';
-// import { DASHBOARD_VIEW } from '../../../reducers/dashboard';
+import { USERS } from '../../../actions/restApi';
 import SubPageWrapper from '../SubpageWrapper';
 import SubPageDescription from '../SubpageWrapper/SubPageDescription';
 import SubPageContent from '../SubpageWrapper/SubPageContent';
@@ -20,26 +21,10 @@ import './styles.css';
 export default class NotificationSettingSubPage extends React.PureComponent {
   static propTypes = {
     currentTab: PropTypes.string,
-    // dispatchAction: PropTypes.func.isRequired,
-    // [DASHBOARD_VIEW]: PropTypes.object,
-    // user: PropTypes.object.isRequired,
+    dispatchAction: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
   };
-
-  constructor() {
-    super();
-    this.state = {};
-    // TODO: Remove stubbed state
-    PushNotificationSettings.forEach(item => {
-      this.state[item.settingName] = item.defaultBool;
-    });
-    TextSettings.forEach(item => {
-      this.state[item.settingName] = item.defaultBool;
-    });
-    EmailSettings.forEach(item => {
-      this.state[item.settingName] = item.defaultBool;
-    });
-  }
-
+  state = {};
   renderSettings(title, settingsList) {
     const settingsListJsx = settingsList.map(item => (
       <CardContent className="setting-box" key={v4()}>
@@ -50,11 +35,20 @@ export default class NotificationSettingSubPage extends React.PureComponent {
         <div className="setting-toggle">
           <Checkbox
             toggle
-            checked={this.state[item.settingName]}
+            checked={this.state[item.id]}
             onChange={(e, data) => {
               const newState = { ...this.state };
-              newState[item.settingName] = data.checked;
+              newState[item.id] = data.checked;
               this.setState(newState);
+              this.props.dispatchAction({
+                type: USERS.PATCH.REQUESTED,
+                payload: {
+                  data: {
+                    notification_settings: newState,
+                  },
+                  id: this.props.user.user.id,
+                },
+              });
             }}
           />
         </div>
@@ -70,7 +64,7 @@ export default class NotificationSettingSubPage extends React.PureComponent {
   }
 
   render() {
-    const { currentTab } = this.props;
+    const { currentTab, user } = this.props;
     return (
       <SubPageWrapper
         currentTab={currentTab}
@@ -79,14 +73,71 @@ export default class NotificationSettingSubPage extends React.PureComponent {
       >
         <SubPageDescription>{generateText(200)}</SubPageDescription>
         <SubPageContent>
-          {this.renderSettings(
-            'Get push notifications when',
-            PushNotificationSettings,
-          )}
-          {this.renderSettings('Text me about', TextSettings)}
-          {this.renderSettings('Get email notifications when', EmailSettings)}
+          {user.LOAD_AUTH.data.consumerId > 0 &&
+            this.renderSettings(
+              'Get email notifications when',
+              ConsumersEmailSettings,
+            )}
+          {user.LOAD_AUTH.data.consumerId > 0 &&
+            this.renderSettings('Text me about', ConsumersTextSettings)}
+          {user.LOAD_AUTH.data.merchantId > 0 &&
+            this.renderSettings(
+              'Get email notifications when',
+              ProfessionalsEmailSettings,
+            )}
+          {user.LOAD_AUTH.data.merchantId > 0 &&
+            this.renderSettings('Text me about', ProfessionalsTextSettings)}
         </SubPageContent>
       </SubPageWrapper>
     );
   }
+  componentDidMount() {
+    this.updateNotifications();
+  }
+  // eslint-disable-next-line no-unused-vars
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const { user } = this.props;
+    if (
+      user.user.notification_settings !==
+      prevProps.user.user.notification_settings
+    ) {
+      this.updateNotifications();
+    }
+  }
+  updateNotifications = () => {
+    const { user } = this.props;
+    if (user.user.notification_settings) {
+      if (user.LOAD_AUTH.data.consumerId > 0) {
+        ConsumersEmailSettings.forEach(item => {
+          if (user.user.notification_settings[item.id] === undefined) {
+            this.state[item.id] = item.defaultBool;
+          } else {
+            this.state[item.id] = user.user.notification_settings[item.id];
+          }
+        });
+        ConsumersTextSettings.forEach(item => {
+          if (user.user.notification_settings[item.id] === undefined) {
+            this.state[item.id] = item.defaultBool;
+          } else {
+            this.state[item.id] = user.user.notification_settings[item.id];
+          }
+        });
+      } else if (user.LOAD_AUTH.data.merchantId > 0) {
+        ProfessionalsEmailSettings.forEach(item => {
+          if (user.user.notification_settings[item.id] === undefined) {
+            this.state[item.id] = item.defaultBool;
+          } else {
+            this.state[item.id] = user.user.notification_settings[item.id];
+          }
+        });
+        ProfessionalsTextSettings.forEach(item => {
+          if (user.user.notification_settings[item.id] === undefined) {
+            this.state[item.id] = item.defaultBool;
+          } else {
+            this.state[item.id] = user.user.notification_settings[item.id];
+          }
+        });
+      }
+    }
+  };
 }

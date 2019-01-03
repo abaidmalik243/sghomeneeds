@@ -15,6 +15,7 @@ import GalleryCarousel from '../../components/GalleryCarousel/GalleryCarousel';
 export default class GalleriesSubsection extends React.PureComponent {
   static propTypes = {
     galleries: PropTypes.object,
+    goTo: PropTypes.func,
     // galleriesActivePage: PropTypes.number,
     // isPhone: PropTypes.bool,
   };
@@ -37,15 +38,22 @@ export default class GalleriesSubsection extends React.PureComponent {
                       alt: f.name,
                     }))}
                   />
-                  <div
+                  <button
                     className="gallery-single-text"
-                    style={{ width: '277px', margin: '8px auto' }}
+                    style={{
+                      width: '277px',
+                      margin: '8px auto',
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => {
+                      this.props.goTo({ path: `/gallery/${gallery.slug}` });
+                    }}
                   >
                     <h4>{gallery.wp_post_title}</h4>
                     <p>
                       {gallery.property_type} - {gallery.estimated_project_cost}
                     </p>
-                  </div>
+                  </button>
                 </div>
               </PaperWrapper>
             </Grid.Column>

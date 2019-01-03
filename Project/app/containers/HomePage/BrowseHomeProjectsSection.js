@@ -1,23 +1,27 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
+import v4 from 'uuid/v4';
 import { Grid, Menu } from 'semantic-ui-react';
 import Subsection from '../../components/Section/Subsection';
 import Section from '../../components/Section/Section';
 import Card from '../../components/Base/Card/Card';
 import CardHeader from '../../components/Base/Card/CardHeader';
-import CardImage from '../../components/Base/Card/CardImage';
+// import CardImage from '../../components/Base/Card/CardImage';
 
 import './browse-home.css';
 import FavoriteButton from '../../components/CustomButton/FavoriteButton';
-import SliderCircle from '../../components/SliderCircle';
+// import SliderCircle from '../../components/SliderCircle';
+import { galleries } from './content';
+// import GalleryCarousel from '../../components/GalleryCarousel/GalleryCarousel';
+import GalleryCarouselFullWidth from '../../components/GalleryCarousel/GalleryCarouselFullWidth';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class BrowseHomeProjectsSection extends React.PureComponent {
   static propTypes = {
-    homeProjects: PropTypes.array,
+    // homeProjects: PropTypes.array,
   };
   render() {
-    const { homeProjects } = this.props;
+    // const {} = this.props;
     return (
       <Section id="browse-home">
         <div id="shape-2">
@@ -60,33 +64,47 @@ export default class BrowseHomeProjectsSection extends React.PureComponent {
           <Subsection style={{ width: '87%' }}>
             <Grid columns={3} stackable>
               <Grid.Row>
-                {homeProjects.map(item => (
-                  <Grid.Column key={item.key}>
-                    <Card style={{ boxShadow: 'none' }}>
-                      <CardImage source={item.imageSource} />
+                {galleries.results.map(gallery => (
+                  <Grid.Column key={v4()}>
+                    <Card
+                      className="gallery-card"
+                      style={{ boxShadow: 'none' }}
+                    >
+                      <GalleryCarouselFullWidth
+                        images={gallery.files.map(file => ({
+                          src: file.file_field,
+                          alt: file.name,
+                        }))}
+                      />
                       <div className="favourite-wrapper">
                         <FavoriteButton
                           buttonProps={{ className: 'favourite' }}
                           iconProps={{}}
                         />
                       </div>
-                      <div className="left-arrow">
-                        <i className="angle left icon" />
-                      </div>
-                      <div className="right-arrow">
-                        <i className="angle right icon" />
-                      </div>
-                      <div className="slider-circle-wrapper">
-                        <SliderCircle
-                          numDots={4}
-                          active={2}
-                          iconProps={{ style: { fontSize: '8px' } }}
-                        />
-                      </div>
+                      {/* <div className="left-arrow"> */}
+                      {/* <i className="angle left icon" /> */}
+                      {/* </div> */}
+                      {/* <div className="right-arrow"> */}
+                      {/* <i className="angle right icon" /> */}
+                      {/* </div> */}
+                      {/* <div className="slider-circle-wrapper"> */}
+                      {/* <SliderCircle */}
+                      {/* numDots={4} */}
+                      {/* active={2} */}
+                      {/* iconProps={{ style: { fontSize: '8px' } }} */}
+                      {/* /> */}
+                      {/* </div> */}
                       <CardHeader>
                         <div className="project-text-wrapper">
-                          <h1 className="project-title">{item.title}</h1>
-                          <h3 className="project-subtitle">Condo・S$40,000</h3>
+                          <h1 className="project-title">
+                            {gallery.wp_post_title}
+                          </h1>
+                          <h3 className="project-subtitle">
+                            {gallery.property_type}・{
+                              gallery.estimated_project_cost
+                            }
+                          </h3>
                         </div>
                       </CardHeader>
                     </Card>
@@ -94,13 +112,13 @@ export default class BrowseHomeProjectsSection extends React.PureComponent {
                 ))}
               </Grid.Row>
             </Grid>
-            <div className="projects-slider">
-              <SliderCircle
-                numDots={4}
-                active={2}
-                iconProps={{ style: { fontSize: '12px' } }}
-              />
-            </div>
+            {/* <div className="projects-slider"> */}
+            {/* <SliderCircle */}
+            {/* numDots={4} */}
+            {/* active={2} */}
+            {/* iconProps={{ style: { fontSize: '12px' } }} */}
+            {/* /> */}
+            {/* </div> */}
           </Subsection>
         </Subsection>
       </Section>

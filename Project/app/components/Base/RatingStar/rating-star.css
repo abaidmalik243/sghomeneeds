@@ -1,11 +1,5 @@
-/* .ui.star.rating i.active.icon,
+.ui.star.rating i.active.icon,
 .ui.star.rating i.active.icon:hover,
 .ui.star.rating i.icon:hover{
   color: rgb(255, 177, 0) !important;
-  text-shadow:none !important;
-} */
-.icon-stars .icon{
-  color: rgb(255, 177, 0) !important;
-  text-shadow:none !important;
-  outline: none;
 }

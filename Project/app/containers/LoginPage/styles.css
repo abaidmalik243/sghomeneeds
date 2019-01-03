@@ -118,3 +118,6 @@
 #user-type-menu {
   margin-bottom: 0px;
 }
+#user-type-menu .active {
+  background-color: rgba(247, 177, 0, 0.3);
+}

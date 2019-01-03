@@ -28,6 +28,9 @@ export default class AccountSubPage extends React.PureComponent {
   updateUser = payload => {
     this.props.dispatchAction({ type: USERS.PATCH.REQUESTED, payload });
   };
+  updateUserPassword = payload => {
+    this.props.dispatchAction({ type: USERS.POST.REQUESTED, payload });
+  };
 
   renderModal({ requestKey, formFieldProps, customTrigger }) {
     const trigger = customTrigger || (
@@ -113,7 +116,63 @@ export default class AccountSubPage extends React.PureComponent {
       >
         <SubPageDescription>{generateText(200)}</SubPageDescription>
         <SubPageContent>
-          <Card className="account-settings-options">{accountOptionsJsx}</Card>
+          <Card className="account-settings-options">
+            {accountOptionsJsx}
+            <CardContent key="Password">
+              <div className="account-settings-row">
+                <div className="settings-title">
+                  <h4>
+                    Password
+                    <span>******</span>
+                  </h4>
+                </div>
+                <div className="settings-edit">
+                  <Modal
+                    size="mini"
+                    trigger={
+                      <button
+                        className="ui button"
+                        onClick={() => {
+                          this.setState({ open: 'password' });
+                        }}
+                      >
+                        Edit
+                      </button>
+                    }
+                    open={this.state.open === 'password'}
+                    onClose={() => this.setState({ open: '' })}
+                  >
+                    <Subsection>
+                      <h4>Password</h4>
+                      <Form
+                        onSubmit={formData => {
+                          this.updateUserPassword({
+                            id: this.props.user.user.id,
+                            data: {
+                              password: formData.target.password.value,
+                            },
+                            url: 'set_password',
+                            contentType: APPLICATION_JSON,
+                          });
+                          this.setState({ open: '' });
+                        }}
+                      >
+                        <Form.Field
+                          name="password"
+                          type="password"
+                          control="input"
+                        />
+                        <button className="ui button" type="submit">
+                          Submit
+                        </button>
+                        <Message success header="Form Submitted" />
+                      </Form>
+                    </Subsection>
+                  </Modal>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
           <h3>Account Deletion:</h3>
           <Card>
             {this.renderSettingsCardContent({

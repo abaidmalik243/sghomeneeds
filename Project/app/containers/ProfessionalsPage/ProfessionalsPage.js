@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { push } from 'react-router-redux';
 import TwoColumn from '../../components/Section/TwoColumn';
 import PaperWrapper from '../../components/Base/Paper';
-import { merchant as professional, listing as defaultListing } from './content';
+import { listing as defaultListing } from './content';
 import Subsection from '../../components/Section/Subsection';
 import ProfessionalsInfoCard from './ProfessionalsInfoCard';
 import VideoSubsection from './VideoSubsection';
@@ -18,12 +18,11 @@ import TemplatePage from '../Common/PageWrapper';
 import GalleriesSubsection from './GalleriesSubsection';
 // import ArticlesTwoColumnSubsection from '../Common/Articles/ArticlesTwoColumnSubsection';
 import ReviewsSubsection from './ReviewsSubsection';
-import { LISTINGS, FILES, GALLERIES } from '../../actions/restApi';
+import { LISTINGS, FILES, GALLERIES, REVIEWS, CATEGORIES } from '../../actions/restApi';
 import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
 import saga from '../../sagas';
 import { DAEMON } from '../../utils/constants';
-import SearchBar from '../../components/SearchBar';
 import { orange } from '../../components/Base/constants';
 import ImageWrapper from '../../components/Base/Image';
 import { generateText } from '../../utils/loremIpsumGenerator';
@@ -31,6 +30,7 @@ import VerifiedIcon from '../../components/CustomIcon/VerifiedIcon';
 import professionalsReducer from '../../reducers/professionals';
 import FaqSubsection from './FaqSubsection';
 import { getS3Image } from '../../utils/images';
+import ConnectProfessionalsSubsection from './ConnectProfessionalsSubsection';
 // import { WP_POSTS } from '../../actions/wpApi';
 
 
@@ -78,6 +78,17 @@ const withGallerySaga = injectSaga({
   saga: saga(GALLERIES),
   mode: DAEMON,
 });
+const withReviewsSaga = injectSaga({
+  key: REVIEWS.MODEL,
+  saga: saga(REVIEWS),
+  mode: DAEMON,
+});
+const withCategoriesSaga = injectSaga({
+  key: CATEGORIES.MODEL,
+  saga: saga(CATEGORIES),
+  mode: DAEMON,
+});
+
 
 /* eslint-disable react/prefer-stateless-function */
 class ProfessionalsPage extends React.PureComponent {
@@ -85,8 +96,11 @@ class ProfessionalsPage extends React.PureComponent {
     location: PropTypes.object.isRequired,
     [PROFESSIONALS_VIEW]: PropTypes.object,
     dispatchAction: PropTypes.func.isRequired,
+    goTo: PropTypes.func,
+    user: PropTypes.object,
   };
   render() {
+    const {goTo} = this.props;
     let listing = this.props[PROFESSIONALS_VIEW][LISTINGS.MODEL].GET;
     if (listing === undefined) {
       listing = defaultListing;
@@ -99,14 +113,14 @@ class ProfessionalsPage extends React.PureComponent {
         <VerifiedIcon /> &nbsp; <span style={{ color: '#bbb' }}>Verified</span>
       </div>
     );
-
+    const categories = this.props[PROFESSIONALS_VIEW][CATEGORIES.MODEL].LIST;
     return (
       <MediaQuery query="(max-width: 768px)">
         {isPhone => (
           <TemplatePage {...this.props}>
             <Subsection id="professionals">
               <TwoColumn>
-                <Grid.Column width={10} style={{ paddingRight: '0px' }}>
+                <Grid.Column width={9}>
                   <Subsection id="name">
                     <PaperWrapper className="paper">
                       <Subsection>
@@ -117,39 +131,42 @@ class ProfessionalsPage extends React.PureComponent {
                     </PaperWrapper>
                   </Subsection>
                   {listing &&
-                    listing.video && <VideoSubsection professional={listing} />}
+                    listing.video_embed_code && <VideoSubsection professional={listing} />}
                   <AboutSubsection professional={listing} />
                   {images &&
                     images.results &&
                     images.results.length > 0 && (
-                      <ImageSubsection images={images} />
-                    )}
+                    <ImageSubsection images={images} />
+                  )}
                   {galleries &&
                     galleries.results &&
                     galleries.results.length > 0 && (
-                      <GalleriesSubsection
-                        galleries={galleries}
-                        isPhone={isPhone}
-                      />
-                    )}
-                  {/* <hr
+                    <GalleriesSubsection
+                      galleries={galleries}
+                      isPhone={isPhone}
+                      goTo={goTo}
+                    />
+                  )}
+                  <hr
                     style={{ background: '#ddd', height: '1px', border: 0 }}
-                  /> */}
+                  />
                   {/* <ArticlesTwoColumnSubsection /> */}
                   {listing &&
                     listing.faq_data &&
                     listing.faq_data.items &&
                     listing.faq_data.items.length > 0 && (
-                      <FaqSubsection professional={listing} />
-                    )}
+                    <FaqSubsection professional={listing} />
+                  )}
                   <ReviewsSubsection
-                    professional={professional}
-                    reviewsActivePage={1}
+                    professional={listing}
+                    reviews={this.props[PROFESSIONALS_VIEW][REVIEWS.MODEL].LIST}
+                    user={this.props.user}
+                    dispatchAction={this.props.dispatchAction}
                   />
                 </Grid.Column>
-                <Grid.Column width={6} style={{ paddingLeft: '0px' }}>
+                <Grid.Column width={7}>
                   <Subsection id="professionals-info">
-                    <ProfessionalsInfoCard professional={listing} />
+                    <ProfessionalsInfoCard dispatchAction={this.props.dispatchAction} user={this.props.user} professional={listing} view="professionals" goTo={this.props.goTo} categories={categories}/>
                     <div id="report-listing">
                       <div style={{ cursor: 'pointer' }}>
                         <i className="icon flag" />
@@ -157,52 +174,33 @@ class ProfessionalsPage extends React.PureComponent {
                       </div>
                     </div>
                   </Subsection>
-                  <Subsection>
-                    <PaperWrapper
-                      style={{
-                        backgroundImage:
-                          'linear-gradient(to bottom right, rgb(255, 177, 0), rgb(255, 120, 0)',
-                      }}
-                    >
-                      <Subsection>
-                        <div style={{ textAlign: 'left', padding: '10px' }}>
-                          <h2 style={{ color: '#fff' }}>
-                            CONNECT TO A PROFESSIONAL IN 60S!
-                          </h2>
-                          <SearchBar
-                            placeholder="Keywords"
-                            {...this.props}
-                            fluid
-                          />
-                        </div>
-                      </Subsection>
-                    </PaperWrapper>
-                  </Subsection>
-                  <Subsection>
-                    <PaperWrapper className="paper">
-                      <Subsection style={{ padding: '10px' }}>
-                        <h1 style={{ textAlign: 'left', marginTop: '20px' }}>
-                          Reliable Pro Badge:
-                        </h1>
-                        <Subsection>
-                          <ImageWrapper
-                            style={{ display: 'inline-block' }}
-                            src={ReliableProBadge}
-                          />
+                  <ConnectProfessionalsSubsection {...this.props} />
+                  {listing.best_pros_badge && (
+                    <Subsection>
+                      <PaperWrapper className="paper">
+                        <Subsection style={{ padding: '10px' }}>
+                          <h1 style={{ textAlign: 'left', marginTop: '20px' }}>
+                            Reliable Pro Badge:
+                          </h1>
+                          <Subsection>
+                            <ImageWrapper
+                              style={{ display: 'inline-block' }}
+                              src={ReliableProBadge}
+                            />
+                          </Subsection>
+                          <div
+                            style={{
+                              backgroundColor: '#eee',
+                              textAlign: 'left',
+                              margin: '10px',
+                              padding: '20px',
+                            }}
+                          >
+                          </div>
                         </Subsection>
-                        <div
-                          style={{
-                            backgroundColor: '#fafafa',
-                            textAlign: 'left',
-                            margin: '10px',
-                            padding: '20px',
-                          }}
-                        >
-                          <p className="textClr select-all">{generateText(200)}</p>
-                        </div>
-                      </Subsection>
-                    </PaperWrapper>
-                  </Subsection>
+                      </PaperWrapper>
+                    </Subsection>
+                  )}
                   <Subsection>
                     <PaperWrapper className="paper">
                       <Subsection style={{ padding: '10px' }}>
@@ -227,13 +225,13 @@ class ProfessionalsPage extends React.PureComponent {
                         </Subsection>
                         <div
                           style={{
-                            backgroundColor: '#fafafa',
+                            backgroundColor: '#eee',
                             textAlign: 'left',
                             margin: '10px',
                             padding: '20px',
                           }}
                         >
-                          <p className="textClr select-all">{generateText(200)}</p>
+                          <p>{generateText(200)}</p>
                         </div>
                       </Subsection>
                     </PaperWrapper>
@@ -246,16 +244,34 @@ class ProfessionalsPage extends React.PureComponent {
       </MediaQuery>
     );
   }
+  fetchCategories = () => {
+    this.props.dispatchAction({
+      type: CATEGORIES.LIST.REQUESTED,
+      payload: {
+        query: {
+          limit: 300,
+        },
+        showSpinner: false,
+      },
+    });
+  };
+
   componentDidMount() {
     const id = this.props.location.pathname.split('/')[2];
     this.props.dispatchAction({
       type: LISTINGS.GET.REQUESTED,
       payload: { id },
     });
-    // this.props.dispatchAction({
-    //   type: WP_POSTS.LIST.REQUESTED,
-    //   payload: {},
-    // });
+    this.props.dispatchAction({
+      type: REVIEWS.LIST.REQUESTED,
+      payload: {
+        query: {
+          listing: id,
+          limit: 200,
+        },
+      },
+    });
+    this.fetchCategories()
   }
   // eslint-disable-next-line no-unused-vars
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -289,6 +305,8 @@ export default compose(
   withListingSaga,
   withFileSaga,
   withGallerySaga,
+  withReviewsSaga,
+  withCategoriesSaga,
   // withBlogSaga,
   withConnect,
 )(ProfessionalsPage);

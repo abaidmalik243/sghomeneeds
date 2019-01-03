@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import injectReducer from '../../utils/injectReducer';
 import isFetchingReducer, { FETCHING_VIEW } from '../../reducers/isfetching';
 import injectSaga from '../../utils/injectSaga';
-import { RESTART_ON_REMOUNT } from '../../utils/constants';
+import { DAEMON } from '../../utils/constants';
 import spinnerSaga from '../../sagas/isfetching';
 
 const mapStateToProps = state => ({
@@ -22,7 +22,7 @@ const withIsFetchingReducer = injectReducer({
 const withIsFetchingSaga = injectSaga({
   key: FETCHING_VIEW,
   saga: spinnerSaga,
-  mode: RESTART_ON_REMOUNT,
+  mode: DAEMON,
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -40,8 +40,8 @@ class DashboardPage extends React.PureComponent {
           style={{
             width: '100vw',
             height: '100vh',
-            background: 'rgba(0,0,0,0.5)',
-            zIndex: 1000,
+            background: 'rgba(255,255,255,0.5)',
+            zIndex: 2000,
             position: 'fixed',
             top: 0,
             left: 0,
@@ -55,7 +55,7 @@ class DashboardPage extends React.PureComponent {
               position: 'absolute',
               top: '50%',
               left: '50%',
-              color: 'white',
+              color: 'black',
             }}
           />
         </div>

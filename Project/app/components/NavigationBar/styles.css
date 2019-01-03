@@ -18,7 +18,9 @@
   background-color: #fff;
   z-index: 102;
   border-bottom: solid 1px #eee;
-  /* box-shadow: 0px 12px 40px 0px rgba(0, 0, 0, 0.47); */
+  box-shadow: 0px 12px 40px 0px rgba(0, 0, 0, 0.47);
+  /* max-width: 1232px;
+    margin-left: 60px; */
 }
 
 #navbar-wrapper.desktop .navigation-menu {
@@ -39,6 +41,9 @@
   height: 60px;
 }
 
+#company-logo {
+  height: 20px;
+}
 
 .company-logo-wrapper {
   display: inline-block;
@@ -195,7 +200,7 @@ padding-left:50px
 
 }
 .box-show{
-/* box-shadow: 0px 12px 40px 0px rgba(0, 0, 0, 0.47); */
+box-shadow: 0px 12px 40px 0px rgba(0, 0, 0, 0.47);
 }
 
 .seach_bar_btn:hover{
@@ -213,4 +218,21 @@ padding-left:50px
 #user-menu {
   border: none;
   box-shadow: none;
+}
+
+#user-menu i.dropdown.icon {
+  display: none;
+}
+
+#user-menu .text-link {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.sidebar.menu .text-link {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.sidebar.menu .text-link a {
+  color: white;
 }

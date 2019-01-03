@@ -1,13 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
-import {
-  Grid,
-  TransitionablePortal,
-  Segment,
-  Header,
-  Menu,
-} from 'semantic-ui-react';
+import { Grid, Menu } from 'semantic-ui-react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
@@ -19,7 +13,7 @@ import LoginSubsection from './LoginSubsection';
 import SocialLoginSubsection from './SocialLoginSubsection';
 import injectReducer from '../../utils/injectReducer';
 import { USERS } from '../../actions/restApi';
-import { RESTART_ON_REMOUNT } from '../../utils/constants';
+import { DAEMON } from '../../utils/constants';
 import injectSaga from '../../utils/injectSaga';
 import reducer from '../../reducers/user';
 import saga from '../../sagas/user';
@@ -48,7 +42,7 @@ const withReducer = injectReducer({ key: USERS.MODEL, reducer });
 const withSaga = injectSaga({
   key: USERS.MODEL,
   saga,
-  mode: RESTART_ON_REMOUNT,
+  mode: DAEMON,
 });
 
 /* eslint-disable react/prefer-stateless-function */
@@ -59,7 +53,7 @@ class LoginPage extends React.PureComponent {
     location: PropTypes.object,
     goTo: PropTypes.func,
   };
-  state = { userType: 'consumer' };
+  state = { userType: 'consumer', openError: false, errorMessage: '' };
 
   loginWithEmail = event => {
     event.preventDefault();
@@ -72,7 +66,8 @@ class LoginPage extends React.PureComponent {
   };
 
   render() {
-    const { users, login } = this.props;
+    const { login } = this.props;
+    const { openError, errorMessage } = this.state;
     return (
       <TemplatePage {...this.props}>
         <TwoColumn id="content">
@@ -99,17 +94,14 @@ class LoginPage extends React.PureComponent {
                     I am a Professional
                   </Menu.Item>
                 </Menu>
-                <TransitionablePortal open={!!users.loginError.message}>
-                  <Segment id="login-fail">
-                    <Header>Login Failed</Header>
-                    <p style={{ color: 'red' }}>{users.loginError.message}</p>
-                  </Segment>
-                </TransitionablePortal>
                 <LoginSubsection
                   form={{
                     onSubmit: this.loginWithEmail,
                   }}
+                  error={openError ? errorMessage : ''}
+                  userType={this.state.userType}
                 />
+                {/* {openError && <p style={{ color: 'red' }}>{errorMessage}</p>} */}
               </PaperWrapper>
             </Subsection>
           </Grid.Column>
@@ -126,7 +118,6 @@ class LoginPage extends React.PureComponent {
     );
   }
   componentDidMount() {
-    // console.log(this.props);
     const { goTo, users, location } = this.props;
     if (users.isLoggedIn) {
       if (
@@ -140,10 +131,20 @@ class LoginPage extends React.PureComponent {
       }
     }
   }
+
   // eslint-disable-next-line no-unused-vars
   componentDidUpdate(prevProps, prevState, snapshot) {
     const { location, goTo, users } = this.props;
-    // console.log(prevProps, this.props);
+    if (
+      prevProps.users.loginError.message !== users.loginError.message &&
+      users.loginError.message
+    ) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({
+        openError: true,
+        errorMessage: users.loginError.message,
+      });
+    }
     if (!prevProps.users.isLoggedIn && users.isLoggedIn) {
       if (
         location.search &&

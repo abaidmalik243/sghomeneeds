@@ -56,6 +56,7 @@ class SearchBar extends React.PureComponent {
     // buttonStyle: PropTypes.object,
     buttonContent: PropTypes.oneOf(['icon', 'text']),
     buttonText: PropTypes.string,
+    size: PropTypes.string,
     dispatchAction: PropTypes.func,
     searchBar: PropTypes.object,
   };
@@ -75,6 +76,7 @@ class SearchBar extends React.PureComponent {
       buttonContent = 'icon',
       buttonText,
       searchBar,
+      size = 'large',
     } = this.props;
     return (
       <div
@@ -83,7 +85,7 @@ class SearchBar extends React.PureComponent {
         }}
       >
         <form className="search-form" onSubmit={this.handleSubmit}>
-          <div className={`ui large action input ${fluid ? 'fluid' : ''}`}>
+          <div className={`ui ${size} action input ${fluid ? 'fluid' : ''}`}>
             <input
               className="search-input seach_input"
               type="text"
@@ -112,7 +114,7 @@ class SearchBar extends React.PureComponent {
             style={{
               display: this.state.showMenu ? 'inherit' : 'none',
               position: this.state.showMenu ? 'absolute' : 'inherit',
-              zIndex: 100,
+              zIndex: 101,
             }}
             onMouseLeave={() => {
               this.setState({ showMenu: false });

@@ -1,11 +1,7 @@
-.inline , .inline_name {
+.inline {
   display: inline-block;
   margin-right: 5px;
   margin-left: 5px;
-}
-
-.inline_name{
-  margin-left: 0px !important;
 }
 
 #professionals {
@@ -162,12 +158,6 @@
   padding-left: 15px;
 }
 
-@media only screen and (max-width: 500px) {
-  #reviews h2.factor-label .rating {
-    padding-left: 0px;
-  }
-}
-
 #reviews .review-text {
   padding-top: 10px;
   line-height: 1.8em;
@@ -241,64 +231,4 @@
 
 #professionals-info .attribute-name {
   color: rgb(110, 110, 110);
-}
-
-
-/* Heart */
-
-.favourite {
-  box-shadow: rgba(0, 0, 0, 0.09) 0px 0px 9px 0px !important;
-}
-
-.favourite-wrapper>button.ui.basic.button.favourite {
-  background-color: white !important;
-}
-.favourite-wrapper>button.ui.basic.button.favourite:hover {
-  background: #fe0f37 !important;
-  color:#fff !important;
-}
-.favourite-wrapper>button.ui.basic.button.favourite:hover .heart {
-  color:#fff !important;
-}
-.heart{
-  color: rgb(250, 242, 242);
-}
-
-/* .heart:hover{
-  color: red;
-} */
-
-/* reviews */
-
-/* .inline:hover{
-  color: red;
-} */
-
-/* Chat now */
-
-#chatnow-wrapper .category-button:hover{
-  background: #e8a205 !important;
-  text-decoration: underline;
-  transition: all 0.3s ease-in-out !important;
-}
-
-
-
-/*  */
-
-#professionals .textClr{
-  color: rgb(110, 110, 110);
-}
-
-.select-all {
-  -webkit-user-select: all;
-  -moz-user-select: all;
-  -ms-user-select: all;
-  user-select: all;
-}
-
-
-.mobileViewImages{
-  width: 10px,
-  
 }

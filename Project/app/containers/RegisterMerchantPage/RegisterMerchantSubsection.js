@@ -5,6 +5,7 @@ import OneColumn from '../../components/Section/OneColumn';
 import { orange } from '../../components/Base/constants';
 import ButtonWrapper from '../../components/Base/Button';
 import Section from '../../components/Section/Section';
+import LinkWrapper from '../../components/Base/Link';
 
 function RegisterMerchantSubsection(props) {
   const loginInputIcon = iconName => (
@@ -46,6 +47,12 @@ function RegisterMerchantSubsection(props) {
             </OneColumn>
             <OneColumn>
               <div className="ui left icon input fluid">
+                <input name="name" type="text" placeholder="Name" required />
+                {loginInputIcon('user circle outline')}
+              </div>
+            </OneColumn>
+            <OneColumn>
+              <div className="ui left icon input fluid">
                 <input
                   name="password"
                   type="password"
@@ -67,7 +74,9 @@ function RegisterMerchantSubsection(props) {
             <div className="ui horizontal divider header">
               <span>Already have account?</span>
             </div>
-            <ButtonWrapper design="outline">Sign In</ButtonWrapper>
+            <LinkWrapper to="/login">
+              <ButtonWrapper design="outline">Sign In</ButtonWrapper>
+            </LinkWrapper>
           </OneColumn>
           <div className="ui divider" />
           <Subsection id="sign-up-tos">

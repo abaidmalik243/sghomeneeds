@@ -11,3 +11,35 @@
 .ui.button.chat-now span {
   margin-left: 6px;
 }
+
+button.favourite-button.ui.circular.basic.icon.button:hover {
+  background-color: red !important;
+}
+
+button.favourite-button.ui.circular.basic.icon.button i.heart.outline.icon {
+  color: red;
+  position: relative;
+  left: -1px;
+  top: 1px;
+}
+
+button.favourite-button.ui.circular.basic.icon.button:hover i.heart.outline.icon {
+  color: white;
+}
+
+button.favourite-button.ui.circular.basic.icon.button.favourite {
+  background-color: red !important;
+}
+
+button.favourite-button.ui.circular.basic.icon.button.favourite:hover {
+  background-color: transparent !important;
+}
+
+
+button.favourite-button.ui.circular.basic.icon.button.favourite i.heart.outline.icon.favourite {
+  color: white;
+}
+
+button.favourite-button.ui.circular.basic.icon.button.favourite:hover i.heart.outline.icon.favourite {
+  color: red;
+}

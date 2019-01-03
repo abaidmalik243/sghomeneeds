@@ -124,6 +124,7 @@ class ChatPage extends React.PureComponent {
       this.props[CHAT_VIEW][MESSAGES.MODEL].LIST !== undefined
         ? this.props[CHAT_VIEW][MESSAGES.MODEL].LIST
         : stubState.messages;
+    const listings = this.props[CHAT_VIEW][LISTINGS.MODEL].LIST;
     return (
       <TemplatePage {...this.props}>
         <MediaQuery query="(max-width: 991px)">
@@ -197,7 +198,14 @@ class ChatPage extends React.PureComponent {
                         only="computer"
                         width={4}
                       >
-                        <ConversationProfile />
+                        <ConversationProfile
+                          listing={
+                            listings.count && listings.count === 1
+                              ? listings.results[0]
+                              : null
+                          }
+                          handleHire={this.handleHire}
+                        />
                       </Grid.Column>
                     </Grid.Row>
                   </Grid>
@@ -277,6 +285,18 @@ class ChatPage extends React.PureComponent {
         payload: { channel: nextState.selectedChannel },
       });
     }
+    if (
+      this.props[CHAT_VIEW][PROJECTS.MODEL].POST.success_data === undefined &&
+      nextProps[CHAT_VIEW][PROJECTS.MODEL].POST.success_data !== undefined
+    ) {
+      this.props.dispatchAction({
+        type: CHAT_USER.CONNECT.REQUESTED,
+        payload: {
+          userId: nextProps.user.user.username,
+          accessToken: nextProps.user.user.send_bird_access_token,
+        },
+      });
+    }
   }
   getChannelInfo = (channel, userId) => {
     let other = '';
@@ -292,6 +312,14 @@ class ChatPage extends React.PureComponent {
   };
   setSelectedChannel = channel => {
     this.setState({ selectedChannel: channel });
+    this.props.dispatchAction({
+      type: LISTINGS.LIST.REQUESTED,
+      payload: {
+        query: {
+          id: JSON.parse(channel.data).listings[0],
+        },
+      },
+    });
   };
   onSubmitChat = event => {
     if (this.state.selectedChannel.url === null) {
@@ -310,6 +338,25 @@ class ChatPage extends React.PureComponent {
           message,
           data: null,
           customType: null,
+        },
+      },
+    });
+    const { user } = this.props;
+    const receiver = this.state.selectedChannel.members.filter(
+      member => member.userId !== user.user.username,
+    )[0];
+    const sender = this.state.selectedChannel.members.filter(
+      member => member.userId === user.user.username,
+    )[0];
+    this.props.dispatchAction({
+      type: USERS.POST.REQUESTED,
+      payload: {
+        url: 'send_chat_email',
+        data: {
+          to_email: 'sghomeneeds.dev@gmail.com',
+          receiver_name: receiver.nickname,
+          sender_name: sender.nickname,
+          message,
         },
       },
     });
@@ -341,6 +388,17 @@ class ChatPage extends React.PureComponent {
         channelFilter: e.target.value,
       });
     }
+  };
+  handleHire = listingId => {
+    this.props.dispatchAction({
+      type: PROJECTS.PATCH.REQUESTED,
+      payload: {
+        id: JSON.parse(this.state.selectedChannel.data).projects[0],
+        data: {
+          hired: listingId,
+        },
+      },
+    });
   };
 }
 

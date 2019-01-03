@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable';
-import { USERS } from '../actions/restApi';
+import { CONSUMERS, USERS } from '../actions/restApi';
 import { getToken } from '../utils/localStorage';
 
 // Initial routing state
@@ -17,6 +17,12 @@ const initialState = fromJS({
   // LOAD_AUTH will be called on every page load by AuthRoute,
   // and will change this if token is invalid
   isLoggedIn: !!getToken(),
+  LOGIN: {},
+  REGISTER: {},
+  ACTIVATE: {},
+  PASSWORD_RESET_EMAIL: {},
+  PASSWORD_RESET_SUBMIT: {},
+  [CONSUMERS.MODEL]: {},
 });
 
 /**
@@ -27,18 +33,38 @@ export default function userReducer(state = initialState, action) {
     /* istanbul ignore next */
     case USERS.REGISTER.SUCCESS:
       return state.merge({
-        user: action.payload,
-        isLoggedIn: true,
+        REGISTER: action.payload,
+      });
+    case USERS.REGISTER.FAILED:
+      return state.merge({
+        loginError: action.payload,
+      });
+    case USERS.REGISTER.REQUESTED:
+    case USERS.LOGIN.REQUESTED:
+      return state.merge({
+        loginError: {},
       });
     case USERS.LOGIN.SUCCESS:
       return state.merge({
-        user: action.payload,
+        LOGIN: action.payload,
         isLoggedIn: true,
       });
     case USERS.LOGIN.FAILED:
       return state.merge({
         loginError: action.payload,
         isLoggedIn: false,
+      });
+    case USERS.ACTIVATE.FAILED:
+      return state.merge({
+        ACTIVATE: action.payload,
+      });
+    case USERS.PASSWORD_RESET_EMAIL.SUCCESS:
+      return state.merge({
+        PASSWORD_RESET_EMAIL: action.payload,
+      });
+    case USERS.PASSWORD_RESET_SUBMIT.SUCCESS:
+      return state.merge({
+        PASSWORD_RESET_SUBMIT: action.payload,
       });
     case USERS.GET.SUCCESS:
       return state.merge({
@@ -70,6 +96,14 @@ export default function userReducer(state = initialState, action) {
         },
         loginError: {},
         isLoggedIn: false,
+      });
+    case CONSUMERS.GET.SUCCESS:
+      return state.merge({
+        [CONSUMERS.MODEL]: action.payload,
+      });
+    case CONSUMERS.POST.SUCCESS:
+      return state.merge({
+        [CONSUMERS.MODEL]: action.payload,
       });
     default:
       return state;

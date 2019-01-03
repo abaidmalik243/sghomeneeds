@@ -22,6 +22,7 @@
 
 #send-container {
   text-align: right;
+  margin-top: 20px;
 }
 
 #project-select .company-card.selected {

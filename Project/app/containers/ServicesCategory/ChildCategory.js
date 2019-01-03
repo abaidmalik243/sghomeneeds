@@ -8,7 +8,7 @@ import Form from '../../components/Form/Form';
 import CompanyList from '../../components/CompanyList';
 import CustomPagination from '../../components/CustomPagination';
 import './styles.css';
-import { Api, API_URL } from '../../utils/api';
+import { Api, API_URL, FORMIO_URL } from '../../utils/api';
 import PaperWrapper from '../../components/Base/Paper';
 import ButtonWrapper from '../../components/Base/Button';
 import TwoColumn from '../../components/Section/TwoColumn';
@@ -26,6 +26,7 @@ export default class ChildCategory extends React.Component {
     page: PropTypes.number,
     isPhone: PropTypes.bool,
     users: PropTypes.object,
+    dispatchAction: PropTypes.func,
   };
   state = {
     showForm: false,
@@ -92,15 +93,15 @@ export default class ChildCategory extends React.Component {
               </PaperWrapper>
             </Subsection>
           )}
-          {showForm && (
-            <Form
-              url={`https://sghomeneeds-formio.herokuapp.com/${slug}`}
-              onSubmit={this.handleSubmit}
-              ref={r => {
-                this.form = r;
-              }}
-            />
-          )}
+
+          <Form
+            url={`${FORMIO_URL}/${slug}`}
+            onSubmit={this.handleSubmit}
+            ref={r => {
+              this.form = r;
+            }}
+            showForm={showForm}
+          />
         </div>
         <TwoColumn>
           <Grid.Column width={10}>
@@ -109,7 +110,12 @@ export default class ChildCategory extends React.Component {
               {listings.results && listings.results.length > 0 ? (
                 <div>
                   {renderPagination()}
-                  <CompanyList companies={listings} goTo={goTo} />
+                  <CompanyList
+                    companies={listings}
+                    goTo={goTo}
+                    dispatchAction={this.props.dispatchAction}
+                    user={this.props.users}
+                  />
                   {renderPagination()}
                 </div>
               ) : (
@@ -143,11 +149,20 @@ export default class ChildCategory extends React.Component {
         form_data: this.form.form.formio.data,
       }),
     );
-    if (this.props.users.isLoggedIn) {
-      this.props.goTo('/dashboard/projects/create');
+    const { users } = this.props;
+    if (users.isLoggedIn) {
+      if (
+        users.LOAD_AUTH.data.consumerId !== null &&
+        users.LOAD_AUTH.data.consumerId !== -1
+      ) {
+        this.props.goTo('/dashboard/projects/create');
+      } else {
+        // eslint-disable-next-line no-alert
+        window.alert('Professionals cannot submit the form');
+      }
     } else {
       const email = this.form.form.formio.data.Email;
-      Api(`${API_URL}/api/users/exists_with_email/?email=${email}`, {
+      Api(`${API_URL}/api/users/exists_with_email?email=${email}`, {
         method: 'GET',
       }).then(response => {
         // Check if email is associated with a user

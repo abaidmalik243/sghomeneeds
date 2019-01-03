@@ -10,6 +10,7 @@ import './styles.css';
 import LinkWrapper from '../../components/Base/Link';
 
 function LoginSubsection(props) {
+  const { error } = props;
   const loginInputIcon = iconName => (
     <i
       className="ui icon"
@@ -33,6 +34,7 @@ function LoginSubsection(props) {
     <Section>
       <Subsection id="login-wrapper">
         <h3>Sign In to HomeNeeds!</h3>
+        {error !== '' && <p style={{ color: 'red' }}>{error}</p>}
         <Subsection id="login-form">
           <form method="POST" {...props.form}>
             <OneColumn>
@@ -62,7 +64,7 @@ function LoginSubsection(props) {
             <OneColumn>
               <ButtonWrapper design="filled">Sign In</ButtonWrapper>
               <p style={{ marginTop: '8px', color: 'grey' }}>
-                Forgot Username and Password?
+                <a href="/password_reset">Forgot Username and Password?</a>
               </p>
             </OneColumn>
           </form>
@@ -72,7 +74,13 @@ function LoginSubsection(props) {
             <div className="ui horizontal divider header">
               <span>New To HomeNeed?</span>
             </div>
-            <LinkWrapper to="/register">
+            <LinkWrapper
+              to={
+                props.userType === 'consumer'
+                  ? '/register'
+                  : '/register-merchant'
+              }
+            >
               <ButtonWrapper design="outline">Join Now</ButtonWrapper>
             </LinkWrapper>
           </OneColumn>
@@ -91,7 +99,8 @@ function LoginSubsection(props) {
 
 LoginSubsection.propTypes = {
   form: PropTypes.object,
-  // onSearchChange: PropTypes.func,
+  error: PropTypes.string,
+  userType: PropTypes.string,
 };
 
 export default LoginSubsection;

@@ -45,3 +45,82 @@
 .formio-component-submit {
   display: none !important;
 }
+
+@media only screen and (max-width: 768px) {
+  .profile-summary-nav .ui.secondary.menu {
+    display: contents;
+  }
+  .listing-category-field, .listing-name, .listing-address, .listing-description, .listing-about, .listing-postal-code {
+    width: 100%;
+  }
+}
+
+.listing-category-field, .listing-name, .listing-address, .listing-description, .listing-about, .listing-postal-code, .image-file_field,
+.gallery-name, .gallery-about, .gallery-style, .gallery-cost,
+.select-listing {
+  width: 60% !important;
+  margin: auto !important;
+}
+
+.listing-category-field, .listing-name, .listing-address, .listing-description, .listing-about, .listing-postal-code,
+.listing-logo, .listing-video, .listing-email, .listing-phone, .listing-website, .listing-facebook, .listing-twitter, .image-file_field,
+.gallery-name, .gallery-about, .gallery-style, .gallery-cost,
+.select-listing{
+  text-align: left;
+  padding-top: 10px;
+}
+
+.listing-category-field label, .listing-name label, .listing-address label, .listing-about label, .listing-postal-code label,
+.listing-logo label, .listing-video label, .listing-email label, .listing-phone label, .listing-website label, .listing-facebook label, .listing-twitter label,
+.image-file_field label,
+.gallery-name label, .gallery-about label, .gallery-style label, .gallery-cost label,
+.select-listing label{
+  font-family: Larsseit !important;
+  font-weight: bold;
+}
+
+h2.listing-options-title {
+  font-family: Larsseit !important;
+  font-weight: bold;
+  padding-top: 30px;
+}
+
+.file-table {
+  margin-bottom: 15px !important;
+  text-align: left !important;
+}
+
+h1.listing-image-table-title, h2.gallery-image-table-title {
+  text-align: left;
+}
+
+.listing-submit {
+  margin-top: 20px!important;
+}
+
+.image-file_field {
+
+}
+
+.editor {
+  border: solid 1px rgb(241, 241, 241);
+  padding: 10px;
+}
+
+.cancel-button-wrapper .cancel-button {
+  padding: 11px!important;
+  border-radius: 50% !important;
+}
+
+.cancel-button-wrapper {
+  position: relative;
+  top: 20px;
+  left: 20px;
+  width: 100%;
+  justify-content: flex-end;
+  display: flex;
+}
+
+i.close.icon {
+  color: black !important;
+}

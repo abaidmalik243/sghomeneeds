@@ -8,10 +8,10 @@ import PropTypes from 'prop-types';
 import Section from '../../components/Section/Section';
 import TemplatePage from '../Common/PageWrapper';
 import {
-  CATEGORIES,
+  CATEGORIES, FAVOURITES,
   FILES,
   GALLERIES,
-  LISTINGS,
+  LISTINGS, REVIEWS,
   USERS,
 } from '../../actions/restApi';
 import injectReducer from '../../utils/injectReducer';
@@ -22,7 +22,7 @@ import userReducer from '../../reducers/user';
 import userSaga from '../../sagas/user';
 import { DAEMON } from '../../utils/constants';
 import Subsection from '../../components/Section/Subsection';
-import { profile, reviews } from './content';
+import { profile } from './content';
 import AccountSubPage from './AccountSubPage';
 import ProfilePaper from './ProfilePaper';
 import ListingsSubPage from './ListingsSubPage';
@@ -76,6 +76,16 @@ const withFilesSaga = injectSaga({
   saga: saga(FILES),
   mode: DAEMON,
 });
+const withReviewsSaga = injectSaga({
+  key: REVIEWS.MODEL,
+  saga: saga(REVIEWS),
+  mode: DAEMON,
+});
+const withFavouritesSaga = injectSaga({
+  key: FAVOURITES.MODEL,
+  saga: saga(FAVOURITES),
+  mode: DAEMON,
+});
 const withUserReducer = injectReducer({
   key: USERS.MODEL,
   reducer: userReducer,
@@ -95,12 +105,13 @@ class DashboardPage extends React.PureComponent {
     currentTab: PropTypes.string,
     [DASHBOARD_VIEW]: PropTypes.object,
     dispatchAction: PropTypes.func.isRequired,
+    goTo: PropTypes.func,
   };
   render() {
     const { currentTab, user } = this.props;
     return (
       <TemplatePage {...this.props}>
-        <Section className="dashboard">
+        <Section className="dashboard" id="dashboard-section">
           <Subsection>
             <ProfilePaper profile={profile} {...this.props} />
             {currentTab === 'account' && (
@@ -112,7 +123,7 @@ class DashboardPage extends React.PureComponent {
               <ListingsSubPage {...this.props} />
             )}
             {currentTab === 'reviews' && (
-              <ReviewsSubPage {...this.props} reviews={reviews} />
+              <ReviewsSubPage {...this.props} />
             )}
             {currentTab === 'comments' && (
               <CommentsSubPage
@@ -148,5 +159,7 @@ export default compose(
   withCategorySaga,
   withFilesSaga,
   withGallerySaga,
+  withReviewsSaga,
+  withFavouritesSaga,
   withConnect,
 )(DashboardPage);

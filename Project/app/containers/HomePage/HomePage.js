@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MediaQuery from 'react-responsive';
 import queryString from 'query-string';
+import { push } from 'react-router-redux';
+import { compose } from 'redux';
+import connect from 'react-redux/es/connect/connect';
 import TemplatePage from '../Common/PageWrapper';
 import Section from '../../components/Section/Section';
 import {
@@ -20,6 +23,22 @@ import ClientReviewsSection from './ClientReviewsSection';
 import ArticlesThreeColumnSubsection from '../Common/Articles/ArticlesThreeColumnSubsection';
 
 import './homepage.css';
+import { GALLERY_VIEW } from '../../reducers/gallery';
+
+const mapDispatchToProps = dispatch => ({
+  dispatchAction: ({ type, payload }) => {
+    dispatch({ type, payload, view: GALLERY_VIEW });
+  },
+  goTo: payload => {
+    dispatch(push(payload.path));
+  },
+});
+// eslint-disable-next-line no-unused-vars
+const mapStateToProps = state => ({});
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
 
 /* eslint-disable react/prefer-stateless-function */
 class HomePage extends React.PureComponent {
@@ -69,4 +88,5 @@ class HomePage extends React.PureComponent {
     this.props.history.push(target);
   };
 }
-export default HomePage;
+
+export default compose(withConnect)(HomePage);

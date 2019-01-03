@@ -8,6 +8,13 @@ function* fetchCategories(action) {
         model: CATEGORIES.MODEL,
         id: action.payload.id,
       });
+      if (response.error) {
+        yield put({
+          type: CATEGORIES.GET.FAILED,
+          payload: response.error.response.data.msg,
+        });
+        return;
+      }
       yield put({
         type: CATEGORIES.GET.SUCCESS,
         payload: response.data,
@@ -27,6 +34,13 @@ function* fetchCategories(action) {
         model: CATEGORIES.MODEL,
         query: action.payload.query,
       });
+      if (response.error) {
+        yield put({
+          type: CATEGORIES.LIST.FAILED,
+          payload: response.error.response.data.msg,
+        });
+        return;
+      }
       yield put({
         type: CATEGORIES.LIST.SUCCESS,
         payload: response.data,
@@ -47,6 +61,13 @@ function* fetchCategories(action) {
         url: 'get_with_children',
         query: action.payload.query,
       });
+      if (response.error) {
+        yield put({
+          type: CATEGORIES.GET_WITH_CHILDREN.FAILED,
+          payload: response.error.response.data.msg,
+        });
+        return;
+      }
       yield put({
         type: CATEGORIES.GET_WITH_CHILDREN.SUCCESS,
         payload: response.data,

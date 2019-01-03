@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
 
 function ThreeColumn(props) {
+  const { children, ...others } = props;
   return (
-    <Grid columns={3} {...props}>
-      <Grid.Row>{props.children}</Grid.Row>
+    <Grid columns={3} {...others}>
+      <Grid.Row>{children}</Grid.Row>
     </Grid>
   );
 }

@@ -80,3 +80,8 @@
   padding-top: 20px;
   background: rgba(0, 0, 0, 0.02) url("https://s3-ap-southeast-1.amazonaws.com/sghomeneeds-gallery/images/DirectoryPage/orangeshades.png");
 }
+
+#services-page .search-menu-wrapper {
+  display: flex;
+  justify-content: center;
+}

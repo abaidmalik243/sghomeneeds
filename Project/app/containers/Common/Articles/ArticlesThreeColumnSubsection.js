@@ -11,7 +11,7 @@ import connect from 'react-redux/es/connect/connect';
 import injectReducer from '../../../utils/injectReducer';
 import injectSaga from '../../../utils/injectSaga';
 import blogSaga from '../../../sagas/blog';
-import { RESTART_ON_REMOUNT } from '../../../utils/constants';
+import { DAEMON } from '../../../utils/constants';
 import blogReducer, { BLOG_VIEW } from '../../../reducers/blog';
 // import LinkWrapper from '../../../components/Base/Link';
 
@@ -56,7 +56,7 @@ const withReducer = injectReducer({
 const withSaga = injectSaga({
   key: `${BLOG_VIEW}`,
   saga: blogSaga,
-  mode: RESTART_ON_REMOUNT,
+  mode: DAEMON,
 });
 
 /* eslint-disable react/prefer-stateless-function */

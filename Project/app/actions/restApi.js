@@ -29,6 +29,9 @@ export const USERS = {
   REGISTER: generateApiActions('users', 'REGISTER'),
   LOGIN: generateApiActions('users', 'LOGIN'),
   LOAD_AUTH: generateApiActions('users', 'LOAD_AUTH'),
+  ACTIVATE: generateApiActions('users', 'ACTIVATE'),
+  PASSWORD_RESET_EMAIL: generateApiActions('users', 'PASSWORD_RESET_EMAIL'),
+  PASSWORD_RESET_SUBMIT: generateApiActions('users', 'PASSWORD_RESET_SUBMIT'),
   ...generateRestActions('users'),
 };
 
@@ -52,9 +55,19 @@ export const PROJECTS = {
   ...generateRestActions('projects'),
 };
 
+export const REVIEWS = {
+  MODEL: 'reviews',
+  ...generateRestActions('reviews'),
+};
+
 export const SEO = {
   MODEL: 'seo',
   ...generateRestActions('seo'),
+};
+
+export const FAVOURITES = {
+  MODEL: 'favourites',
+  ...generateRestActions('favourites'),
 };
 
 export const MODELS_LIST = [
@@ -66,7 +79,9 @@ export const MODELS_LIST = [
   LISTINGS,
   FILES,
   PROJECTS,
+  REVIEWS,
   SEO,
+  FAVOURITES,
 ];
 
 export const MODEL_MAP = generateModelMap(MODELS_LIST);

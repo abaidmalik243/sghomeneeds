@@ -10,8 +10,8 @@
 
 .listing-group .content {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .listing-group .listing-logo {
@@ -20,12 +20,32 @@
 
 .listing-group .listing-text {
   max-width: 70%;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.listing-group .listing-buttons {
+  display: none;
+}
+
+.listing-group:hover .listing-buttons {
+
+  max-width: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+}
+
+#dashboard-section .edit-button, #dashboard-section .view-button {
+  margin: 10px;
 }
 
 .listing-group .listing-description {
   max-height: 40px;
   overflow: hidden;
   color: #888;
+  margin-left: 0px!important;
 }
 
 .listing-group .listing-image {

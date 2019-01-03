@@ -11,7 +11,7 @@ import TemplatePage from '../Common/PageWrapper';
 
 import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
-import { RESTART_ON_REMOUNT } from '../../utils/constants';
+import { DAEMON } from '../../utils/constants';
 import './blog-post.css';
 import blogPostReducer, { BLOG_POST_VIEW } from '../../reducers/blogPost';
 import blogSaga from '../../sagas/blog';
@@ -50,7 +50,7 @@ const withReducer = injectReducer({
 const withSaga = injectSaga({
   key: `${BLOG_POST_VIEW}`,
   saga: blogSaga,
-  mode: RESTART_ON_REMOUNT,
+  mode: DAEMON,
 });
 
 /* eslint-disable react/prefer-stateless-function */
