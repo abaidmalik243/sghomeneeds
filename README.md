@@ -30,7 +30,12 @@ https://sghomeneeds-react.herokuapp.com/services/aircon-maintenance-or-repair
 
 
 
+requirement for form:
+You able to use the new file right?
 
+For the form itself, I want these changes:
+- to look like the video (except for color - to follow our color, not blue) (follow font color and size, button size and position etc)
+- radio buttons should look like radio (now look like checkbox, you can follow video)
 
 
 guide-line:
